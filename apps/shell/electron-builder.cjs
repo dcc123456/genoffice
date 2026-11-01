@@ -27,7 +27,8 @@
  */
 
 const { execFileSync } = require('node:child_process')
-const { existsSync, readFileSync, rmSync } = require('node:fs')
+const { existsSync, readFileSync, rmSync, writeFileSync } = require('node:fs')
+const { tmpdir } = require('node:os')
 const { join } = require('node:path')
 
 function normalizeHttpsBaseUrl(name, value) {
@@ -128,9 +129,41 @@ function compileVisionOcr({ universalOnly } = { universalOnly: false }) {
 
 const WIN_OCR_HELPER = '../../packages/pdf2docx/ocr-helper/win-ocr.exe'
 
+/**
+ * Can this machine compile Swift at all? A CommandLineTools-only install (no
+ * Xcode) has a self-conflicting module map — even `import Foundation` fails with
+ * "redefinition of module 'SwiftBridging'". That is a machine defect, not a
+ * defect in the helper, and it must not block a local build; when Swift does
+ * work and the helper still fails to compile, that is our bug and fails loudly.
+ */
+function swiftToolchainWorks() {
+  const probe = join(tmpdir(), `officecc-swift-probe-${process.pid}.swift`)
+  try {
+    writeFileSync(probe, 'import Foundation\n')
+    execFileSync('swiftc', ['-O', probe, '-o', `${probe}.bin`], { stdio: 'ignore' })
+    return true
+  } catch {
+    return false
+  } finally {
+    rmSync(probe, { force: true })
+    rmSync(`${probe}.bin`, { force: true })
+  }
+}
+
 function ensurePlatformHelpers() {
   if (process.platform === 'darwin' && !existsSync(join(__dirname, VISION_OCR_HELPER))) {
-    compileVisionOcr()
+    if (swiftToolchainWorks()) {
+      compileVisionOcr()
+    } else {
+      console.warn(
+        '[electron-builder] WARNING: swiftc cannot compile Swift on this machine (a\n' +
+          '  CommandLineTools-only install redefines SwiftBridging), so vision-ocr is\n' +
+          '  left out of the bundle. Everything else works; only scanned-PDF text\n' +
+          '  recovery is unavailable, and those pages ship as bitmaps.\n' +
+          '  Install Xcode and run "xcode-select -s /Applications/Xcode.app/Contents/Developer"\n' +
+          '  to get it back.',
+      )
+    }
   }
   if (process.platform === 'win32' && !existsSync(join(__dirname, WIN_OCR_HELPER))) {
     try {
