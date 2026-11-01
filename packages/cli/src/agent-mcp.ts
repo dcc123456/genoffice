@@ -226,7 +226,12 @@ export function removeMcpEntry(id: AgentId, file: string): boolean {
   return true
 }
 
-const LAUNCHER_NAMES = new Set(['officecc', 'officecc.cmd', 'genoffice.exe'])
+// The app and the command are spelled differently on purpose: productName
+// "Office-cc" names the shipped binary (see mcp-launch.ts, which probes for
+// Office-cc.exe), while "officecc" is the CLI. Before the rename both spellings
+// folded to the same string ("GenOffice.exe" -> "genoffice.exe") and a single
+// entry covered both, which is how losing the app name went unnoticed.
+const LAUNCHER_NAMES = new Set(['officecc', 'officecc.cmd', 'officecc.exe', 'office-cc.exe'])
 
 /**
  * Any officecc launcher, whatever install it came from (an older app path is

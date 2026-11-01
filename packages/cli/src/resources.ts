@@ -27,15 +27,17 @@ export function repoRoot(): string | null {
   if (cachedRepo !== undefined) return cachedRepo
   let dir = scriptDir()
   for (let i = 0; i < 6; i++) {
-    const pkg = join(dir, 'package.json')
-    if (existsSync(pkg)) {
-      try {
-        if (JSON.parse(readFileSync(pkg, 'utf-8')).name === 'officecc') {
-          cachedRepo = dir
-          return dir
-        }
-      } catch {}
-    }
+    // The monorepo root is the one package.json carrying a `workspaces` array.
+    // Matching on its `name` instead looks equivalent and is not: the root has
+    // been renamed (genoffice -> office-cc) and never matched the hard-coded
+    // name anyway, so every checkout caller below silently got null.
+    try {
+      const pkg: unknown = JSON.parse(readFileSync(join(dir, 'package.json'), 'utf-8'))
+      if (pkg && typeof pkg === 'object' && Array.isArray((pkg as { workspaces?: unknown }).workspaces)) {
+        cachedRepo = dir
+        return dir
+      }
+    } catch {}
     const parent = dirname(dir)
     if (parent === dir) break
     dir = parent
