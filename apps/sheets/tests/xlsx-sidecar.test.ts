@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest'
 import JSZip from 'jszip'
 import { z } from 'zod'
 
-import { blankXlsxBuffer } from '@office-cc/xlsx-gateway/gateway/csv-import'
+import { blankXlsxBuffer, csvToXlsxBuffer } from '@office-cc/xlsx-gateway/gateway/csv-import'
 import { saveWorkbookViaSidecar } from '@office-cc/xlsx-gateway/gateway/xlsx-package-io'
 import { XlsxSidecarClient } from '../src/main/xlsx-sidecar-client'
 import { workbookRangeResultSchema } from '../src/shared/desktop-api'
@@ -63,6 +63,47 @@ describe('XLSX Rust sidecar', () => {
       expect(result.cells).toEqual([
         { row: 0, column: 0, value: 'Old', styleIndex: 0 },
         { row: 0, column: 1, value: 10, styleIndex: 0 },
+      ])
+    } finally {
+      if (sessionId) await client.close(sessionId)
+      client.stop()
+      await rm(directory, { recursive: true, force: true })
+    }
+  })
+
+  // The open-file path for .csv/.tsv ends here: a fresh minimal workbook the
+  // sidecar has never parsed, built with inline strings and no sharedStrings.
+  // The JS importer is covered on its own; this is the only test that crosses
+  // into the engine, and it is the half that decides whether the user sees a
+  // grid or an error toast.
+  it('opens a workbook built by the CSV importer and reads its cells', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'xlsx-csv-import-test-'))
+    const path = join(directory, 'imported.xlsx')
+    await writeFile(
+      path,
+      Buffer.from((await csvToXlsxBuffer('name,note,age\n"Doe, John","says ""hi""",30')).buffer),
+    )
+    const client = new XlsxSidecarClient(sidecarBinaryPath())
+    let sessionId: string | null = null
+    try {
+      const opened = openResultSchema.parse(await client.open(path))
+      sessionId = opened.sessionId
+      expect(opened.sheets[0]?.name).toBe('Sheet1')
+
+      const result = workbookRangeResultSchema.parse(
+        await client.readRange({
+          sessionId,
+          sheetId: opened.sheets[0]!.id,
+          range: { startRow: 0, endRow: 1, startColumn: 0, endColumn: 2 },
+        }),
+      )
+      expect(result.cells).toEqual([
+        { row: 0, column: 0, value: 'name', styleIndex: 0 },
+        { row: 0, column: 1, value: 'note', styleIndex: 0 },
+        { row: 0, column: 2, value: 'age', styleIndex: 0 },
+        { row: 1, column: 0, value: 'Doe, John', styleIndex: 0 },
+        { row: 1, column: 1, value: 'says "hi"', styleIndex: 0 },
+        { row: 1, column: 2, value: 30, styleIndex: 0 },
       ])
     } finally {
       if (sessionId) await client.close(sessionId)
