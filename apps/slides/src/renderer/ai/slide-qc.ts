@@ -9,9 +9,9 @@ import {
   type AgentImage,
   type AgentSkill,
   type AgentTransport,
-} from '@genoffice/agent-core'
-import { endpointSupportsVision, type AiSettings } from '@genoffice/ai-provider/browser'
-import { auditSlideLayout } from '@genoffice/pipelines/slides/layout-audit'
+} from '@office-cc/agent-core'
+import { endpointSupportsVision, type AiSettings } from '@office-cc/ai-provider/browser'
+import { auditSlideLayout } from '@office-cc/pipelines/slides/layout-audit'
 import { createSlidesSkill, formatSlideDump, type DeckAccess } from './slides-skill'
 import qcVisualPrompt from './prompts/qc-visual.md?raw'
 import qcGeometryPrompt from './prompts/qc-geometry.md?raw'

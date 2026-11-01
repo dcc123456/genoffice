@@ -29,9 +29,9 @@ import {
   installRendererProtocol,
   registerRendererScheme,
   rendererUrl,
-} from '@genoffice/electron-utils'
-import { createI18n, getUiLang } from '@genoffice/i18n'
-import { generateImageTool, documentMediaRoots } from '@genoffice/ai-search'
+} from '@office-cc/electron-utils'
+import { createI18n, getUiLang } from '@office-cc/i18n'
+import { generateImageTool, documentMediaRoots } from '@office-cc/ai-search'
 import { ImageExportSessions } from './image-export'
 import { printMarkdownPdf } from './print-pdf'
 import { atomicWriteFile } from './atomic-write'
@@ -373,7 +373,7 @@ interface RuntimePaths {
   preloadPath: string
   rendererUrl?: string
   rendererFile?: string
-  /** Shell router used to open exported PDFs in a new GenOffice tab. */
+  /** Shell router used to open exported PDFs in a new Office-cc tab. */
   openGeneratedPath?: (path: string) => boolean
 }
 
@@ -954,7 +954,7 @@ function registerMarkdownIpc(): void {
       ),
   )
 
-  // ---- image host (genoffice#388): bring-your-own storage for pasted images,
+  // ---- image host (officecc#388): bring-your-own storage for pasted images,
   // with the local assets/ copy kept as the renderer's fallback ----
   const imageHostConfigPath = (): string => join(app.getPath('userData'), 'markdown-settings.json')
 
@@ -1339,7 +1339,7 @@ export function createMarkdownView(openPath?: string | null): WebContentsView {
   return view
 }
 
-/** Standalone window mode: `npm run dev -w @genoffice/markdown`, md path passed via argv */
+/** Standalone window mode: `npm run dev -w @office-cc/markdown`, md path passed via argv */
 export function startMarkdownStandalone(): void {
   registerRendererScheme()
   installNavigationGuard(app)

@@ -26,16 +26,16 @@ import {
   type WebSearchResult,
 } from './shared'
 import {
-  genofficeApiKey,
-  genofficeAuthPath,
+  officeccApiKey,
+  officeccAuthPath,
   recoverFromRejectedGskKey,
-  reloadGenofficeAuth,
+  reloadOfficeccAuth,
   type GskRecoveryOutcome,
-} from './genoffice-auth'
-// deep import: the package root re-exports Electron-bound modules, and this file also runs in the genoffice CLI
-import { readBodyCapped } from '@genoffice/electron-utils/remote-image'
-import { createStreamWatchdog } from '@genoffice/ai-provider'
-import { fetchWithSsrfGuard } from '@genoffice/electron-utils/safe-remote-url'
+} from './officecc-auth'
+// deep import: the package root re-exports Electron-bound modules, and this file also runs in the officecc CLI
+import { readBodyCapped } from '@office-cc/electron-utils/remote-image'
+import { createStreamWatchdog } from '@office-cc/ai-provider'
+import { fetchWithSsrfGuard } from '@office-cc/electron-utils/safe-remote-url'
 
 const SEARCH_TIMEOUT_MS = 60_000
 const GENERATE_TIMEOUT_MS = 600_000
@@ -77,7 +77,7 @@ function electronCompatArgs(): string[] {
   if (!process.versions.electron) return []
   if (compatPath === undefined) {
     try {
-      const dir = join(homedir(), '.genoffice', 'bin')
+      const dir = join(homedir(), '.officecc', 'bin')
       mkdirSync(dir, { recursive: true })
       compatPath = join(dir, 'electron-compat.js')
       writeFileSync(compatPath, 'delete process.versions.electron;\n')
@@ -90,13 +90,13 @@ function electronCompatArgs(): string[] {
 
 /**
  * API key for Genspark LLM proxy / tool_cli auth; '' when not logged in.
- * Priority: GSK_API_KEY env → GenOffice's own key (bills to us via its
+ * Priority: GSK_API_KEY env → Office-cc's own key (bills to us via its
  * key_name) → shared gsk CLI login (bills to the Claw bucket).
  */
 export function gskApiKey(): string {
   const env = process.env.GSK_API_KEY
   if (env && !rejectedKeys.has(env)) return env
-  const own = genofficeApiKey()
+  const own = officeccApiKey()
   if (own && !rejectedKeys.has(own)) return own
   try {
     const configPath = join(homedir(), '.genspark-tool-cli', 'config.json')
@@ -112,7 +112,7 @@ export function gskApiKey(): string {
 // ── Rejected keys (401) ─────────────────────────────────────────────
 
 /**
- * Keys the server answered 401 for (expired / revoked). GenOffice's own key
+ * Keys the server answered 401 for (expired / revoked). Office-cc's own key
  * is also deleted from disk; env and shared gsk CLI keys belong to someone
  * else, so they are only skipped for the rest of this process.
  */
@@ -185,7 +185,7 @@ export function resetGskRejectedKeys(): void {
 }
 
 /**
- * Fires when the effective gsk key changes on disk — another GenOffice-family
+ * Fires when the effective gsk key changes on disk — another Office-cc-family
  * app re-logging in mints a new key and revokes the one this process holds.
  * Polls by path (watchFile): auth.json is replaced whole, and fs.watch misses
  * events for a moment after it is armed.
@@ -193,13 +193,13 @@ export function resetGskRejectedKeys(): void {
 export function watchGskApiKey(onChange: (key: string) => void, intervalMs = 2000): () => void {
   let last = gskApiKey()
   const check = (): void => {
-    reloadGenofficeAuth()
+    reloadOfficeccAuth()
     const key = gskApiKey()
     if (key === last) return
     last = key
     onChange(key)
   }
-  const files = [genofficeAuthPath(), join(homedir(), '.genspark-tool-cli', 'config.json')]
+  const files = [officeccAuthPath(), join(homedir(), '.genspark-tool-cli', 'config.json')]
   for (const f of files) watchFile(f, { persistent: false, interval: intervalMs }, check)
   return () => {
     for (const f of files) unwatchFile(f, check)
@@ -661,11 +661,11 @@ async function toolCliPostOnce(
   return watchdog.guard(async () => {
     const resp = await fetch(`${GSK_TOOL_CLI_BASE}${path}`, {
       method: 'POST',
-      // X-Agent-Type splits GenOffice usage out of the proxy's "Claw" billing bucket
+      // X-Agent-Type splits Office-cc usage out of the proxy's "Claw" billing bucket
       headers: {
         'X-Api-Key': key,
         'Content-Type': 'application/json',
-        'X-Agent-Type': 'genoffice',
+        'X-Agent-Type': 'officecc',
       },
       body: JSON.stringify(body),
       signal: watchdog.signal,

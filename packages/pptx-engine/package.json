@@ -1,5 +1,5 @@
 {
-  "name": "@genoffice/pptx-engine",
+  "name": "@office-cc/pptx-engine",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -19,10 +19,10 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@genoffice/zip-gate": "*",
+    "@office-cc/zip-gate": "*",
     "fast-xml-parser": "^5.3.4",
     "jszip": "^3.10.1",
-    "@genoffice/agent-core": "*"
+    "@office-cc/agent-core": "*"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",

@@ -1,5 +1,5 @@
 {
-  "name": "@genoffice/ui",
+  "name": "@office-cc/ui",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -37,9 +37,9 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "@genoffice/i18n": "*",
-    "@genoffice/pptx-render": "*",
-    "@genoffice/agent-core": "*",
-    "@genoffice/ai-provider": "*"
+    "@office-cc/i18n": "*",
+    "@office-cc/pptx-render": "*",
+    "@office-cc/agent-core": "*",
+    "@office-cc/ai-provider": "*"
   }
 }

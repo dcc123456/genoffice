@@ -1,4 +1,4 @@
-import type { AgentToolDef, MindMapTreeNode } from '@genoffice/agent-core'
+import type { AgentToolDef, MindMapTreeNode } from '@office-cc/agent-core'
 
 /**
  * Mind map generation for the docs assistant: the tool definition the model

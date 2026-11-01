@@ -1,25 +1,25 @@
 import { createRoot } from 'react-dom/client'
-import { htmlDir, htmlLang, type Lang } from '@genoffice/i18n'
+import { htmlDir, htmlLang, type Lang } from '@office-cc/i18n'
 import { App } from './App'
 import { setAuthorName } from './author-name'
 import { LocaleProvider, setModuleLang } from './i18n/locale'
 import type { DocTheme, UiTheme } from '../shared/ipc'
-import '@genoffice/ui/tokens.css'
-import '@genoffice/ui/screentip.css'
-import '@genoffice/ui/ai-model-picker.css'
-import '@genoffice/ui/ai-queue-strip.css'
-import '@genoffice/ui/ai-usage.css'
-import '@genoffice/ui/color-picker.css'
-import '@genoffice/ui/dropdown.css'
-import '@genoffice/ui/ribbon-collapse.css'
-import '@genoffice/ui/markdown.css'
-import '@genoffice/ui/ai-panel-prefs.css'
-import '@genoffice/ui/ai-scope-quote.css'
-import '@genoffice/ui/image-viewer.css'
+import '@office-cc/ui/tokens.css'
+import '@office-cc/ui/screentip.css'
+import '@office-cc/ui/ai-model-picker.css'
+import '@office-cc/ui/ai-queue-strip.css'
+import '@office-cc/ui/ai-usage.css'
+import '@office-cc/ui/color-picker.css'
+import '@office-cc/ui/dropdown.css'
+import '@office-cc/ui/ribbon-collapse.css'
+import '@office-cc/ui/markdown.css'
+import '@office-cc/ui/ai-panel-prefs.css'
+import '@office-cc/ui/ai-scope-quote.css'
+import '@office-cc/ui/image-viewer.css'
 import './styles.css'
 import './fonts/fonts.css'
-import { applyAiPanelPrefs, installScreenTips } from '@genoffice/ui'
-import { setAltChunkHtmlConverter } from '@genoffice/docx-engine'
+import { applyAiPanelPrefs, installScreenTips } from '@office-cc/ui'
+import { setAltChunkHtmlConverter } from '@office-cc/docx-engine'
 
 installScreenTips()
 if (window.desktop?.convertAltChunkHtml) {
@@ -32,7 +32,7 @@ function applyTheme(theme: UiTheme): void {
 }
 
 function applyDocumentTheme(theme: DocTheme): void {
-  // data-doc-theme drives the canvas/paper (genoffice#1811); absent means 'follow' the UI theme
+  // data-doc-theme drives the canvas/paper (officecc#1811); absent means 'follow' the UI theme
   if (theme === 'follow') document.documentElement.removeAttribute('data-doc-theme')
   else document.documentElement.setAttribute('data-doc-theme', theme)
 }

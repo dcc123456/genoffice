@@ -3,12 +3,12 @@ import {
   AiPanelSideButton,
   AiModelPicker,
   type AiModelPickerBridge,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import { useEffect, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent, ReactElement, ReactNode } from 'react'
-import { AgentLoop, composeSkills } from '@genoffice/agent-core'
-import type { AgentImage } from '@genoffice/agent-core'
-import type { AiSettings } from '@genoffice/ai-provider'
+import { AgentLoop, composeSkills } from '@office-cc/agent-core'
+import type { AgentImage } from '@office-cc/agent-core'
+import type { AiSettings } from '@office-cc/ai-provider'
 import { ATTACHMENT_IMAGE_EXTS } from '../../shared/ipc'
 import type { AttachmentAddResult, AttachmentMeta } from '../../shared/ipc'
 import {
@@ -24,7 +24,7 @@ import {
   useChatRunQueue,
   type AiScopeQuoteData,
   type AiTokenUsageView,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import { aiLangDirective, t as tGlobal, useI18n } from '../i18n/locale'
 import sendEnterOn from '../assets/send-enter-on.png'
 import sendEnterOff from '../assets/send-enter-off.png'

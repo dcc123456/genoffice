@@ -1,11 +1,11 @@
-import type { AiPanelPrefs } from '@genoffice/ui'
-import type { Lang } from '@genoffice/i18n'
+import type { AiPanelPrefs } from '@office-cc/ui'
+import type { Lang } from '@office-cc/i18n'
 import type {
   AiSettings,
   AiStreamChunk,
   AiStreamRequest,
   GenSparkAccountStatus,
-} from '@genoffice/ai-provider'
+} from '@office-cc/ai-provider'
 import type { ExportImageMime } from './export-image-mime'
 
 export const MAX_PASTED_IMAGE_BYTES = 50 * 1024 * 1024
@@ -40,7 +40,7 @@ export const MARKDOWN_CHANNELS = {
   getMarkdownTheme: 'markdown:get-theme',
   setMarkdownTheme: 'markdown:set-theme',
   uploadImage: 'markdown:upload-image',
-  viewImage: 'genoffice:view-image',
+  viewImage: 'officecc:view-image',
   exportRequest: 'markdown:export-request',
   exportDocx: 'markdown:export-docx',
   exportPdf: 'markdown:export-pdf',
@@ -117,14 +117,14 @@ export interface WikiGraph {
 export type UiTheme = 'light' | 'dark' | 'system'
 
 /**
- * Document page theme preference (genoffice#1811): what the editors' canvas/paper does
+ * Document page theme preference (officecc#1811): what the editors' canvas/paper does
  * relative to the UI theme. 'follow' keeps the previous single-theme behavior.
  */
 export type DocTheme = 'follow' | 'light' | 'dark'
 
 /**
  * Bring-your-own image host for pasted/dropped pictures in Markdown
- * (genoffice#388). Keys are stored plaintext in the user's own settings file,
+ * (officecc#388). Keys are stored plaintext in the user's own settings file,
  * like every other credential in the app. The local assets/ copy stays the
  * fallback whenever the host is disabled, unconfigured or the upload fails.
  */
@@ -336,7 +336,7 @@ export interface MarkdownApi {
    */
   saveImage(data: { base64: string; ext: string }): Promise<string | null>
   /**
-   * The configured image host (genoffice#388), or null when none was ever
+   * The configured image host (officecc#388), or null when none was ever
    * saved. Pasted/dropped images upload here first and fall back to the
    * local `assets/` copy when the upload fails or the host is disabled.
    */

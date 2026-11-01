@@ -1,6 +1,6 @@
 import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import type { Lang } from '@genoffice/i18n'
+import type { Lang } from '@office-cc/i18n'
 
 export type ConvertFormat = 'pdf' | 'html' | 'md' | 'images'
 import type {
@@ -40,13 +40,13 @@ import type {
   TextboxParaDisplay,
   ThemeColors,
   ThemeFonts,
-} from '@genoffice/docx-engine'
+} from '@office-cc/docx-engine'
 import {
   Dropdown,
   isSymbolFontFamily,
   useDismissablePopover,
   useRibbonCollapse,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import { HIGHLIGHT_CSS } from '../editor/extensions'
 import { applyCase, type CaseMode } from '../editor/case-transform'
 import { isRtlUiLang, setParagraphDirection, setSelectionAlign } from '../editor/direction'
@@ -824,7 +824,7 @@ function RibbonInner({
   const collapse = useRibbonCollapse('aidocs.ribbonCollapsed', {
     collapse: t('ribbonCollapse'),
     expand: t('ribbonExpand'),
-    // ⌥⌘K / Ctrl+Alt+K: the icon-only middle density (see genoffice#362)
+    // ⌥⌘K / Ctrl+Alt+K: the icon-only middle density (see officecc#362)
     compact: t('ribbonCompact'),
     expandFull: t('ribbonExpand'),
   })

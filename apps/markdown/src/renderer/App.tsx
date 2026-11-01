@@ -11,13 +11,13 @@ import {
   rememberAiPanelOpen,
   useAutoSavePref,
   useAiSidebarEnabled,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import {
   pollUntilReady,
   runHeadlessRendererExport,
-} from '@genoffice/electron-utils/headless-export'
+} from '@office-cc/electron-utils/headless-export'
 import { EditorContent, useEditor } from '@tiptap/react'
-import { FindPanel, type FindFocusRequest, type FindPanelStrings } from '@genoffice/ui'
+import { FindPanel, type FindFocusRequest, type FindPanelStrings } from '@office-cc/ui'
 import type { Editor } from '@tiptap/core'
 import { TextSelection } from '@tiptap/pm/state'
 import { exportImages } from './export/imageExport'

@@ -6,7 +6,7 @@ import {
   parseDocx,
   saveDocx,
   type SaveBlock,
-} from '@genoffice/docx-engine'
+} from '@office-cc/docx-engine'
 
 /**
  * M0 de-risking spike: the whole docx generation recipe

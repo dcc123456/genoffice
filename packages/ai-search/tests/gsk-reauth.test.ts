@@ -13,10 +13,10 @@ vi.mock('node:os', async (importOriginal) => {
 
 import {
   FRESH_AUTH_REQUIRED,
-  genofficeApiKey,
-  resetGenofficeAuthCache,
-  setGenofficeLoginOpener,
-} from '../src/genoffice-auth'
+  officeccApiKey,
+  resetOfficeccAuthCache,
+  setOfficeccLoginOpener,
+} from '../src/officecc-auth'
 import {
   GskAuthError,
   gskApiKey,
@@ -36,11 +36,11 @@ let dir: string
 beforeEach(() => {
   dir = mkdtempSync(join(tmpdir(), 'gsk-reauth-'))
   home.dir = dir
-  process.env.GENOFFICE_AUTH_DIR = dir
+  process.env.OFFICECC_AUTH_DIR = dir
   process.env.GSK_CLI_PATH = '/fake/gsk.js'
   delete process.env.GSK_API_KEY
   delete process.env.AI_SEARCH_DISABLE_GSK
-  resetGenofficeAuthCache()
+  resetOfficeccAuthCache()
   resetGskRejectedKeys()
   writeFileSync(
     join(dir, 'auth.json'),
@@ -50,12 +50,12 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals()
-  setGenofficeLoginOpener(null)
-  resetGenofficeAuthCache()
+  setOfficeccLoginOpener(null)
+  resetOfficeccAuthCache()
   resetGskRejectedKeys()
   rmSync(dir, { recursive: true, force: true })
   home.dir = ''
-  delete process.env.GENOFFICE_AUTH_DIR
+  delete process.env.OFFICECC_AUTH_DIR
   delete process.env.GSK_CLI_PATH
 })
 
@@ -115,19 +115,19 @@ describe('tool_cli 401 recovery', () => {
       response({ status: 0, data: { key_id: 'kid-2', token: 'gsk-new' } }),
     )
     const opener = vi.fn()
-    setGenofficeLoginOpener(opener)
+    setOfficeccLoginOpener(opener)
     await expect(gskSlideGenerate({ brief: 'x' })).resolves.toMatchObject({
       bytes: expect.any(Uint8Array),
     })
     expect(toolKeys).toEqual(['gsk-expired', 'gsk-new', 'gsk-new'])
-    expect(genofficeApiKey()).toBe('gsk-new')
+    expect(officeccApiKey()).toBe('gsk-new')
     expect(opener).not.toHaveBeenCalled()
   })
 
   it('signs out and opens the device-code login once when the re-mint needs a fresh login', async () => {
     const { toolKeys } = stubServer(() => response({ detail: FRESH_AUTH_REQUIRED }, 403))
     const opener = vi.fn()
-    setGenofficeLoginOpener(opener)
+    setOfficeccLoginOpener(opener)
     await expect(gskSlideGenerate({ brief: 'x' })).rejects.toBeInstanceOf(GskAuthError)
     // the expired key is not retried and ai:gsk-status now reports signed-out
     expect(toolKeys).toEqual(['gsk-expired'])
@@ -145,7 +145,7 @@ describe('tool_cli 401 recovery', () => {
       vi.fn(async () => response('boom', 500)),
     )
     await expect(gskSlideGenerate({ brief: 'x' })).rejects.toThrow(/HTTP 500/)
-    expect(genofficeApiKey()).toBe('gsk-expired')
+    expect(officeccApiKey()).toBe('gsk-expired')
   })
 })
 
@@ -205,7 +205,7 @@ describe('noteGskCallFailure (LLM proxy chat/stream)', () => {
       stubServer(() => response({ detail: FRESH_AUTH_REQUIRED }, 403))
       expect(gskApiKey()).toBe('gsk-env')
       noteGskCallFailure('gsk-env', 'HTTP 401: Unauthorized')
-      // falls through to GenOffice's own (still valid) key
+      // falls through to Office-cc's own (still valid) key
       expect(gskApiKey()).toBe('gsk-expired')
     } finally {
       delete process.env.GSK_API_KEY
@@ -217,7 +217,7 @@ describe('passive calls', () => {
   it('a 401 from a background call drops the key without opening the browser', async () => {
     stubServer(() => response({ detail: FRESH_AUTH_REQUIRED }, 403))
     const opener = vi.fn()
-    setGenofficeLoginOpener(opener)
+    setOfficeccLoginOpener(opener)
     await expect(noteGskKeyRejected('gsk-expired', { allowLogin: false })).resolves.toBe(
       'login_required',
     )

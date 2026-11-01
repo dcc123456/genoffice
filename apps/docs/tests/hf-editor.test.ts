@@ -8,7 +8,7 @@ import {
   TOTAL_PAGES_MARK,
   type HeaderFooter,
   type SaveBlock,
-} from '@genoffice/docx-engine'
+} from '@office-cc/docx-engine'
 import {
   hfDocJson,
   hfValueFromDoc,

@@ -11,12 +11,12 @@ import type {
   AiStreamChunk,
   AiStreamRequest,
   CodexModelCatalog,
-} from '@genoffice/ai-provider'
+} from '@office-cc/ai-provider'
 import type { UpdateChannel, UpdateUiState } from './update-api'
-import type { KbFileInfo, KbReadPage, KbSearchHit } from '@genoffice/agent-core'
-import type { AiPanelPrefs } from '@genoffice/ui/ai-panel-prefs'
+import type { KbFileInfo, KbReadPage, KbSearchHit } from '@office-cc/agent-core'
+import type { AiPanelPrefs } from '@office-cc/ui/ai-panel-prefs'
 
-/** UI language; kept self-contained here (mirrors Lang in @genoffice/i18n) */
+/** UI language; kept self-contained here (mirrors Lang in @office-cc/i18n) */
 
 export type UiLanguage =
   | 'zh'
@@ -45,14 +45,14 @@ export type UiLanguage =
 export type UiTheme = 'light' | 'dark' | 'system'
 
 /**
- * Document page theme preference (genoffice#1811): what the editors' canvas/paper does
+ * Document page theme preference (officecc#1811): what the editors' canvas/paper does
  * relative to the UI theme. 'follow' reproduces the previous single-theme
  * behavior; 'light'/'dark' pin the paper regardless of the UI theme.
  */
 export type DocTheme = 'follow' | 'light' | 'dark'
 
 /** shell-wide AutoSave default for every editor; updatedAt is 0 until first set */
-/** mirrors AUTHOR_NAME_MAX in @genoffice/electron-utils (the renderer cannot import it) */
+/** mirrors AUTHOR_NAME_MAX in @office-cc/electron-utils (the renderer cannot import it) */
 export const AUTHOR_NAME_MAX = 120
 
 export interface AuthorNameSetting {
@@ -330,7 +330,7 @@ export interface HomeApi {
   getTheme(): Promise<UiTheme>
   /** switch + persist the UI theme; broadcasts 'app:theme-changed' to all web contents */
   setTheme(theme: UiTheme): Promise<void>
-  /** current document page theme preference (genoffice#1811, persisted in userData/app-settings.json) */
+  /** current document page theme preference (officecc#1811, persisted in userData/app-settings.json) */
   getDocumentTheme(): Promise<DocTheme>
   /** switch + persist the document page theme; broadcasts 'app:document-theme-changed' to all web contents */
   setDocumentTheme(theme: DocTheme): Promise<void>
@@ -365,7 +365,7 @@ export interface HomeApi {
   getAiPanelPrefs(): Promise<AiPanelPrefs>
   /** merge + persist; broadcasts 'app:ai-panel-prefs-changed' to all web contents */
   setAiPanelPrefs(patch: Partial<AiPanelPrefs>): Promise<AiPanelPrefs>
-  /** effective default save folder for new/untitled files (configured in userData/app-settings.json, falls back to <Documents>/GenOffice) */
+  /** effective default save folder for new/untitled files (configured in userData/app-settings.json, falls back to <Documents>/Office-cc) */
   getDefaultSaveDir(): Promise<string>
   /** directory picker to change the default save folder; resolves to the new folder, or null when canceled or the pick was unusable */
   pickDefaultSaveDir(): Promise<string | null>

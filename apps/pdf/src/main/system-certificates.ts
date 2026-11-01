@@ -110,7 +110,7 @@ const defaultEnv = (): SystemStoreEnv => ({
 
 /** Scratch directory readable by this user only, removed when `work` settles */
 async function withPrivateDir<T>(work: (dir: string) => Promise<T>): Promise<T> {
-  const dir = await mkdtemp(join(tmpdir(), 'genoffice-cert-'))
+  const dir = await mkdtemp(join(tmpdir(), 'officecc-cert-'))
   try {
     return await work(dir)
   } finally {
@@ -257,9 +257,9 @@ export const WINDOWS_LIST_SCRIPT =
 export const WINDOWS_EXPORT_SCRIPT =
   // Without 'Stop' a refused export is only a printed error and the process still exits 0
   "$ErrorActionPreference = 'Stop'; " +
-  '$pw = ConvertTo-SecureString -String $env:GENOFFICE_PFX_PASSWORD -AsPlainText -Force; ' +
-  "Export-PfxCertificate -Cert ('Cert:\\CurrentUser\\My\\' + $env:GENOFFICE_THUMBPRINT) " +
-  '-FilePath $env:GENOFFICE_PFX_PATH -Password $pw -ChainOption BuildChain | Out-Null'
+  '$pw = ConvertTo-SecureString -String $env:OFFICECC_PFX_PASSWORD -AsPlainText -Force; ' +
+  "Export-PfxCertificate -Cert ('Cert:\\CurrentUser\\My\\' + $env:OFFICECC_THUMBPRINT) " +
+  '-FilePath $env:OFFICECC_PFX_PATH -Password $pw -ChainOption BuildChain | Out-Null'
 
 const THUMBPRINT = /^[0-9A-Fa-f]{40}$/
 
@@ -323,9 +323,9 @@ async function exportWindows(
       ['-NoProfile', '-NonInteractive', '-Command', WINDOWS_EXPORT_SCRIPT],
       {
         env: {
-          GENOFFICE_PFX_PASSWORD: password,
-          GENOFFICE_THUMBPRINT: ref.thumbprint,
-          GENOFFICE_PFX_PATH: out,
+          OFFICECC_PFX_PASSWORD: password,
+          OFFICECC_THUMBPRINT: ref.thumbprint,
+          OFFICECC_PFX_PATH: out,
         },
       },
     )

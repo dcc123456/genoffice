@@ -3,23 +3,23 @@
  * the App component passes a VisualActionContext built fresh per call so
  * refs and state never go stale.
  */
-import { columnLabel, parseAddress, parseRange } from '@genoffice/xlsx-gateway/domain/cell-address'
+import { columnLabel, parseAddress, parseRange } from '@office-cc/xlsx-gateway/domain/cell-address'
 import {
   hasNumericYearAxis,
   recommendCharts,
   type ChartRecommendations,
-} from '@genoffice/xlsx-gateway/domain/chart-recommend'
-import { buildChartVisual, chartDataFromValues } from '@genoffice/xlsx-gateway/domain/chart-visual'
-import type { InMemoryWorkbookAdapter } from '@genoffice/xlsx-gateway/domain/in-memory-workbook'
-import { buildPivotChartData } from '@genoffice/xlsx-gateway/domain/pivot-chart'
+} from '@office-cc/xlsx-gateway/domain/chart-recommend'
+import { buildChartVisual, chartDataFromValues } from '@office-cc/xlsx-gateway/domain/chart-visual'
+import type { InMemoryWorkbookAdapter } from '@office-cc/xlsx-gateway/domain/in-memory-workbook'
+import { buildPivotChartData } from '@office-cc/xlsx-gateway/domain/pivot-chart'
 import type {
   AddChartOperation,
   AddImageOperation,
   AddShapeOperation,
   EditChartOperation,
   EditShapeOperation,
-} from '@genoffice/xlsx-gateway/domain/workbook-dsl'
-import type { ChangePlan } from '@genoffice/xlsx-gateway/domain/workbook.types'
+} from '@office-cc/xlsx-gateway/domain/workbook-dsl'
+import type { ChangePlan } from '@office-cc/xlsx-gateway/domain/workbook.types'
 import { IRenderManagerService, Vector2 } from '@univerjs/engine-render'
 import { SheetSkeletonManagerService } from '@univerjs/preset-sheets-core'
 import type { WorkbookVisualObject } from '../shared/desktop-api'

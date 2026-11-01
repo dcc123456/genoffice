@@ -44,7 +44,7 @@ function touch(rel: string, content = 'x'): string {
 }
 
 beforeEach(() => {
-  root = realpathSync(mkdtempSync(join(tmpdir(), 'genoffice-folders-')))
+  root = realpathSync(mkdtempSync(join(tmpdir(), 'officecc-folders-')))
 })
 
 afterEach(() => {
@@ -75,7 +75,7 @@ describe('listFolder', () => {
   it('hides the Markdown assets folder only when it holds the asset manifest', () => {
     mkdirSync(join(root, 'assets'))
     expect(isHiddenEntry(root, 'assets', true)).toBe(false)
-    touch('assets/.genoffice-assets.json', '{}')
+    touch('assets/.officecc-assets.json', '{}')
     expect(isHiddenEntry(root, 'assets', true)).toBe(true)
     expect(listFolder(root, new Set()).folders).toEqual([])
   })
@@ -146,7 +146,7 @@ describe('isInsideRoot', () => {
   })
 
   it('rejects a symlink inside the root that points outside it', () => {
-    const outside = mkdtempSync(join(tmpdir(), 'genoffice-outside-'))
+    const outside = mkdtempSync(join(tmpdir(), 'officecc-outside-'))
     try {
       symlinkSync(outside, join(root, 'escape'))
       expect(isInsideRoot(root, join(root, 'escape'))).toBe(false)
@@ -366,10 +366,10 @@ describe('helpers', () => {
   })
 
   it('describeRoot creates a missing root and reports it usable', () => {
-    const fresh = join(root, 'GenOffice')
+    const fresh = join(root, 'Office-cc')
     expect(describeRoot(fresh)).toEqual({
       path: fresh,
-      name: 'GenOffice',
+      name: 'Office-cc',
       usable: true,
       readable: true,
       removable: false,

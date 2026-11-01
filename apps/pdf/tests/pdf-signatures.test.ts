@@ -24,7 +24,7 @@ function makeP12(commonName: string): Uint8Array {
       value: forge.util.encodeUtf8(commonName),
       valueTagClass: forge.asn1.Type.UTF8,
     },
-    { name: 'organizationName', value: 'GenOffice' },
+    { name: 'organizationName', value: 'Office-cc' },
   ]
   cert.setSubject(attrs)
   cert.setIssuer(attrs)

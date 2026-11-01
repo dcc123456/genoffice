@@ -31,36 +31,36 @@ function okFetch() {
 
 describe('extractAnalyticsKeys', () => {
   it('reads the injected block from package.json', () => {
-    expect(extractAnalyticsKeys({ genofficeAnalytics: KEYS })).toEqual(KEYS)
+    expect(extractAnalyticsKeys({ officeccAnalytics: KEYS })).toEqual(KEYS)
   })
 
   it('trims whitespace around the values', () => {
     expect(
       extractAnalyticsKeys({
-        genofficeAnalytics: { measurementId: ' G-1 ', apiSecret: ' s ' },
+        officeccAnalytics: { measurementId: ' G-1 ', apiSecret: ' s ' },
       }),
     ).toEqual({ measurementId: 'G-1', apiSecret: 's' })
   })
 
   it('returns null when the block is missing (source/fork builds)', () => {
-    expect(extractAnalyticsKeys({ name: '@genoffice/shell' })).toBeNull()
+    expect(extractAnalyticsKeys({ name: '@office-cc/shell' })).toBeNull()
     expect(extractAnalyticsKeys(null)).toBeNull()
     expect(extractAnalyticsKeys('nope')).toBeNull()
   })
 
   it('returns null when either credential is empty or not a string', () => {
     expect(
-      extractAnalyticsKeys({ genofficeAnalytics: { measurementId: 'G-1', apiSecret: '' } }),
+      extractAnalyticsKeys({ officeccAnalytics: { measurementId: 'G-1', apiSecret: '' } }),
     ).toBeNull()
     expect(
-      extractAnalyticsKeys({ genofficeAnalytics: { measurementId: 42, apiSecret: 's' } }),
+      extractAnalyticsKeys({ officeccAnalytics: { measurementId: 42, apiSecret: 's' } }),
     ).toBeNull()
-    expect(extractAnalyticsKeys({ genofficeAnalytics: { measurementId: 'G-1' } })).toBeNull()
+    expect(extractAnalyticsKeys({ officeccAnalytics: { measurementId: 'G-1' } })).toBeNull()
   })
 
   it('accepts metadata only for a packaged runtime', () => {
-    expect(extractPackagedAnalyticsKeys({ genofficeAnalytics: KEYS }, true)).toEqual(KEYS)
-    expect(extractPackagedAnalyticsKeys({ genofficeAnalytics: KEYS }, false)).toBeNull()
+    expect(extractPackagedAnalyticsKeys({ officeccAnalytics: KEYS }, true)).toEqual(KEYS)
+    expect(extractPackagedAnalyticsKeys({ officeccAnalytics: KEYS }, false)).toBeNull()
   })
 })
 

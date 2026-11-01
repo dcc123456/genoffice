@@ -1,5 +1,5 @@
 /**
- * GenOffice Slides main process — pptx parsing/render-tree building/edit application/saving all live
+ * Office-cc Slides main process — pptx parsing/render-tree building/edit application/saving all live
  * here (Node side). The renderer only gets plain-data RenderSlide; edit intents are sent back
  * here to apply. Structure mirrors apps/docs: exports embeddable configure/register/start for
  * future shell reuse.
@@ -27,7 +27,7 @@ import { basename, dirname, join, resolve } from 'node:path'
 import { cleanupExpiredGeneratedPages } from './generated-page-temp'
 import { exportSlidesPdf } from './pdf-export'
 import { printSlidesHtml } from './print-window'
-import { gskApiKey, gskSlideGenerate, setGskProxyUrl } from '@genoffice/ai-search'
+import { gskApiKey, gskSlideGenerate, setGskProxyUrl } from '@office-cc/ai-search'
 import {
   appMenuLabels,
   configuredDefaultSaveDir,
@@ -49,7 +49,7 @@ import {
   readBodyCapped,
   recoveryCopyDiskNewer,
   configuredAuthorName,
-} from '@genoffice/electron-utils'
+} from '@office-cc/electron-utils'
 import {
   resolveGroupChildId,
   runTxn,
@@ -58,9 +58,9 @@ import {
   type TxnRequest,
   type TxnResult,
   mapScriptOps,
-} from '@genoffice/pptx-ops'
-import { matchesElementRef } from '@genoffice/pptx-engine/identity'
-import { buildPagePptx, parsePageSpec } from '@genoffice/pipelines/slides'
+} from '@office-cc/pptx-ops'
+import { matchesElementRef } from '@office-cc/pptx-engine/identity'
+import { buildPagePptx, parsePageSpec } from '@office-cc/pipelines/slides'
 import { convertOdpToPptx } from '../../../../packages/odf2ooxml/src'
 import { sniffImageMime } from './media-mime'
 import {
@@ -77,8 +77,8 @@ import {
   isElementClipboardToken,
   writeElementClipboardImage,
 } from './element-clipboard'
-import { getUiLang, normalizeLang, setUiLang } from '@genoffice/i18n'
-import { ProjectStore } from '@genoffice/project-store'
+import { getUiLang, normalizeLang, setUiLang } from '@office-cc/i18n'
+import { ProjectStore } from '@office-cc/project-store'
 import {
   copyElementData,
   findGroupChild,
@@ -127,7 +127,7 @@ import {
   type Paragraph,
   type Slide,
   type TextElement,
-} from '@genoffice/pptx-engine'
+} from '@office-cc/pptx-engine'
 import {
   buildRenderSlide,
   layoutText,
@@ -136,10 +136,10 @@ import {
   imageDpiFromBytes,
   type RenderSlide,
   type RenderTextLayout,
-} from '@genoffice/pptx-render'
+} from '@office-cc/pptx-render'
 // From its own electron-utils subpath rather than the package barrel: the
 // barrel drags Electron-only modules into headless bundles.
-import { atomicWriteFile } from '@genoffice/electron-utils/atomic-write'
+import { atomicWriteFile } from '@office-cc/electron-utils/atomic-write'
 import { DEFAULT_PICTURE_DPI, pictureFrame } from './picture-frame'
 import { refineComplexWidths, shapedMetricsReady } from './shaped-metrics'
 import { cfbKind, isCfbHeader } from './cfb-sniff'
@@ -581,7 +581,7 @@ const AUTOSAVE_BACKOFF_TICKS = 10
 let autosaveRunning = false
 
 /**
- * Recovery drafts for never-saved decks (wcId → visible path in <Documents>/GenOffice):
+ * Recovery drafts for never-saved decks (wcId → visible path in <Documents>/Office-cc):
  * the sha1-keyed recovery copy needs session.path, so before the first save a freeze or
  * crash used to lose everything. Removed on save, explicit discard, or clean close.
  */
@@ -931,7 +931,7 @@ async function openAndBuild(
   }
 }
 
-/** Directory where AI-generated drafts are saved: the configurable default save folder (falls back to <Documents>/GenOffice) */
+/** Directory where AI-generated drafts are saved: the configurable default save folder (falls back to <Documents>/Office-cc) */
 function getDraftsDir(): string {
   return configuredDefaultSaveDir(app)
 }
@@ -974,7 +974,7 @@ function pickDraftPath(draftsDir: string, deckName?: string): string {
 }
 
 /**
- * Auto-save the draft to <Documents>/GenOffice/<name>.pptx after AI generation completes.
+ * Auto-save the draft to <Documents>/Office-cc/<name>.pptx after AI generation completes.
  * Append mode reuses the session's existing draft path (overwrite); replace mode generates a
  * new filename. On successful write, update session.path, pushRecent, slidesOpenedHook.
  * On write failure, degrade silently (console.warn) without blocking the in-memory session.
@@ -1839,8 +1839,8 @@ export function registerSlidesIpc(): void {
   })
   // ── Cloud single-page generation (gsk slide_generate): brief → cloud HTML+conversion → one-slide
   // pptx saved to a temp file. Returns a marker string that slides:land-generated-pages redeems for
-  // the bytes. Enabled when gsk is logged in; GENOFFICE_CLOUD_SLIDE=0 is the kill switch.
-  const cloudSlideEnabled = () => process.env.GENOFFICE_CLOUD_SLIDE !== '0' && !!gskApiKey()
+  // the bytes. Enabled when gsk is logged in; OFFICECC_CLOUD_SLIDE=0 is the kill switch.
+  const cloudSlideEnabled = () => process.env.OFFICECC_CLOUD_SLIDE !== '0' && !!gskApiKey()
 
   ipcMain.handle('slides:cloud-gen-status', () => ({ enabled: cloudSlideEnabled() }))
 
@@ -1875,7 +1875,7 @@ export function registerSlidesIpc(): void {
         // Ultra resolves to the opus-class slide model server-side; standard is the
         // lighter MiniMax M3 model. Keep an explicit escape hatch for quality
         // comparisons and emergency rollback.
-        const tier = process.env.GENOFFICE_CLOUD_SLIDE_TIER === 'standard' ? 'standard' : 'ultra'
+        const tier = process.env.OFFICECC_CLOUD_SLIDE_TIER === 'standard' ? 'standard' : 'ultra'
         const started = Date.now()
         // Stop must reach the cloud request: without this the generation keeps
         // running (and billing) after the user pressed stop
@@ -1904,7 +1904,7 @@ export function registerSlidesIpc(): void {
         console.log(
           `[cloud-slide] page generated: tier=${tier} model=${model} bytes=${bytes.length} ms=${Date.now() - started}`,
         )
-        const dir = join(app.getPath('temp'), 'genoffice-cloud-pages')
+        const dir = join(app.getPath('temp'), 'officecc-cloud-pages')
         mkdirSync(dir, { recursive: true })
         const path = join(dir, `${randomUUID()}.pptx`)
         await writeFile(path, bytes)
@@ -1960,7 +1960,7 @@ export function registerSlidesIpc(): void {
         console.log(
           `[local-slide] page generated: bytes=${bytes.length} imageFails=${imageFailures.length} ms=${Date.now() - started}`,
         )
-        const dir = join(app.getPath('temp'), 'genoffice-local-pages')
+        const dir = join(app.getPath('temp'), 'officecc-local-pages')
         mkdirSync(dir, { recursive: true })
         const path = join(dir, `${randomUUID()}.pptx`)
         await writeFile(path, bytes)
@@ -2254,7 +2254,7 @@ export function registerSlidesIpc(): void {
     return rebuilt ? { slide: rebuilt, sourceId: r.records![0]!.created![0]! } : null
   })
 
-  // Shim over the canonical op (see @genoffice/pptx-ops): the op owns validation/mutation/journal;
+  // Shim over the canonical op (see @office-cc/pptx-ops): the op owns validation/mutation/journal;
   // the shim keeps session lookup, undo bookkeeping, and RenderSlide rebuilding.
   ipcMain.handle('slides:delete-element', (e, op: DeleteElementOp) => {
     const session = sessions.get(e.sender.id)
@@ -2686,7 +2686,7 @@ export function registerSlidesIpc(): void {
     const pngs = op.pngs?.length === bundles.length ? op.pngs : undefined
     slideClipboard = { bundles, ...(pngs ? { pngs } : {}) }
     // Marker so plain ⌘V knows the latest copy was a slide (element copies / external copies overwrite it)
-    clipboard.writeBuffer('io.genoffice.slides.slide', Buffer.from('1'))
+    clipboard.writeBuffer('io.officecc.slides.slide', Buffer.from('1'))
     return true
   })
 
@@ -3561,7 +3561,7 @@ export function registerSlidesIpc(): void {
   }
 
   ipcMain.handle('slides:clipboard-external', () => {
-    if (slideClipboard && clipboardMarker('io.genoffice.slides.slide')) return { kind: 'slide' }
+    if (slideClipboard && clipboardMarker('io.officecc.slides.slide')) return { kind: 'slide' }
     if (elementClipboard && elementClipboardMarkerMatches(elementClipboard.token))
       return { kind: 'internal' }
     const img = clipboard.readImage()
@@ -3573,7 +3573,7 @@ export function registerSlidesIpc(): void {
 
   // Menu-enable probe: is there anything a paste would act on? (no image decode)
   ipcMain.handle('slides:clipboard-probe', () => {
-    if (slideClipboard && clipboardMarker('io.genoffice.slides.slide')) return true
+    if (slideClipboard && clipboardMarker('io.officecc.slides.slide')) return true
     if (elementClipboard && elementClipboardMarkerMatches(elementClipboard.token)) return true
     if (clipboard.availableFormats().some((f) => f.startsWith('image/'))) return true
     return clipboard.readText().trim().length > 0
@@ -4921,7 +4921,7 @@ export function createSlidesWindow(openPath?: string | null): BrowserWindow {
   const win = new BrowserWindow({
     width: 1280,
     height: 840,
-    title: 'GenOffice Slides',
+    title: 'Office-cc Slides',
     ...(process.platform === 'darwin'
       ? { titleBarStyle: 'hiddenInset' as const }
       : {
@@ -5166,11 +5166,11 @@ export function startSlidesStandalone(): void {
     app.commandLine.appendSwitch('remote-debugging-port', process.env.SLIDES_CDP_PORT)
     app.commandLine.appendSwitch('remote-allow-origins', '*')
   }
-  // GENOFFICE_USER_DATA: test drivers point this at a scratch dir so automated
+  // OFFICECC_USER_DATA: test drivers point this at a scratch dir so automated
   // instances get their own userData AND single-instance lock (the lock is scoped
   // to userData), allowing parallel instances alongside a normal dev run.
-  if (!app.isPackaged && process.env.GENOFFICE_USER_DATA) {
-    app.setPath('userData', process.env.GENOFFICE_USER_DATA)
+  if (!app.isPackaged && process.env.OFFICECC_USER_DATA) {
+    app.setPath('userData', process.env.OFFICECC_USER_DATA)
   }
   // The main process's Node fetch (undici) does not use the system proxy by default, so access
   // from mainland China to overseas LLM APIs like api.anthropic.com hits ETIMEDOUT on direct
@@ -5203,7 +5203,7 @@ export function startSlidesStandalone(): void {
 
   app.whenReady().then(async () => {
     installRendererProtocol({ slides: join(__dirname, '../renderer') })
-    setUiLang(normalizeLang(process.env.GENOFFICE_LANG ?? app.getLocale()))
+    setUiLang(normalizeLang(process.env.OFFICECC_LANG ?? app.getLocale()))
     registerSlidesIpc()
     registerAiIpc()
     registerProjectIpc()

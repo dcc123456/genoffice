@@ -13,7 +13,7 @@ import {
   parseMindMapTree,
   wrapLabel,
 } from '../src/renderer/ai/mind-map'
-import type { MindMapTreeNode } from '@genoffice/agent-core'
+import type { MindMapTreeNode } from '@office-cc/agent-core'
 
 // Undestroyed views leave DOMObserver flush timers that fire after jsdom teardown
 // ("document is not defined" unhandled error) — destroy every editor we create.

@@ -4,7 +4,7 @@ import {
   resolveCustomEndpoints,
   resolveProfileCredential,
   type AiCustomProfile,
-} from '@genoffice/ai-provider'
+} from '@office-cc/ai-provider'
 import {
   aiChatRequestSchema,
   aiSettingsInputSchema,

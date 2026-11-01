@@ -3,11 +3,11 @@ import {
   AiPanelSideButton,
   AiModelPicker,
   type AiModelPickerBridge,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import { useEffect, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent, ReactElement, ReactNode } from 'react'
-import { AgentLoop, composeSkills, streamText, type MindMapTreeNode } from '@genoffice/agent-core'
-import { imageGenerationAvailable, type AiSettings } from '@genoffice/ai-provider/browser'
+import { AgentLoop, composeSkills, streamText, type MindMapTreeNode } from '@office-cc/agent-core'
+import { imageGenerationAvailable, type AiSettings } from '@office-cc/ai-provider/browser'
 import {
   AiComposer,
   AiQueueStrip,
@@ -21,7 +21,7 @@ import {
   useChatRunQueue,
   type AiScopeQuoteData,
   type AiTokenUsageView,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import type { Editor } from '@tiptap/core'
 import { aiLangDirective, t as tGlobal, useI18n } from '../i18n/locale'
 import sendEnterOn from '../assets/send-enter-on.png'

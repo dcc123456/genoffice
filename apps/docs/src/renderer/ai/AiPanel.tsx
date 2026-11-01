@@ -9,10 +9,10 @@ import {
   addTokenUsage,
   type AiTokenUsageView,
   useChatRunQueue,
-} from '@genoffice/ui'
+} from '@office-cc/ui'
 import { useEffect, useRef, useState } from 'react'
 import type { Editor } from '@tiptap/core'
-import type { Block } from '@genoffice/docx-engine'
+import type { Block } from '@office-cc/docx-engine'
 import {
   AgentLoop,
   composeSkills,
@@ -21,9 +21,9 @@ import {
   type AgentImage,
   type KbFileInfo,
   type MindMapTreeNode,
-} from '@genoffice/agent-core'
+} from '@office-cc/agent-core'
 import { redactTextBetween, type RedactableNode } from './redact-view'
-import { imageGenerationAvailable, mediaAnalysisAvailable } from '@genoffice/ai-provider/browser'
+import { imageGenerationAvailable, mediaAnalysisAvailable } from '@office-cc/ai-provider/browser'
 import type { AiSettings, AttachmentAddResult, AttachmentMeta } from '../../shared/ipc'
 import { ATTACHMENT_IMAGE_EXTS } from '../../shared/ipc'
 import type { PmNode } from '../editor/convert'
@@ -65,8 +65,8 @@ import { createFilesSkill } from './files-skill'
 import { boundChatHistory } from './chat-retention'
 import { createElectronTransport } from './transport'
 import { useI18n, t as tModule, aiLangDirective, type StringKey } from '../i18n/locale'
-import { createFileNav, Markdown } from '@genoffice/ui'
-import { AiComposer, AiScopeQuote, AiTypingIndicator, type AiScopeQuoteData } from '@genoffice/ui'
+import { createFileNav, Markdown } from '@office-cc/ui'
+import { AiComposer, AiScopeQuote, AiTypingIndicator, type AiScopeQuoteData } from '@office-cc/ui'
 import { GensparkMark } from '../components/icons'
 import sendEnterOn from '../assets/send-enter-on.png'
 import sendEnterOff from '../assets/send-enter-off.png'
@@ -962,7 +962,7 @@ export function AiPanel({
           // Signed-out failures get an inline sign-in button; detected via
           // gsk status rather than matching the localized error text — but only
           // when Genspark is the provider: a BYOK user's error (e.g. their own
-          // provider's rate limit) must not advertise a Genspark sign-in (genoffice#1948)
+          // provider's rate limit) must not advertise a Genspark sign-in (officecc#1948)
           void window.desktop
             .aiGskStatus()
             .then((status) => {

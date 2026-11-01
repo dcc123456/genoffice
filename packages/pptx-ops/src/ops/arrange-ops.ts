@@ -17,7 +17,7 @@ import {
   type ConnectionSide,
   type Slide,
   type SlideElement,
-} from '@genoffice/pptx-engine'
+} from '@office-cc/pptx-engine'
 import {
   GuidedError,
   register,

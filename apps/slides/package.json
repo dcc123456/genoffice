@@ -1,6 +1,6 @@
 {
-  "name": "@genoffice/slides",
-  "productName": "GenOffice Slides",
+  "name": "@office-cc/slides",
+  "productName": "Office-cc Slides",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -18,16 +18,16 @@
     "dist:dir": "electron-vite build && electron-builder --dir"
   },
   "devDependencies": {
-    "@genoffice/agent-core": "*",
-    "@genoffice/ai-provider": "*",
-    "@genoffice/ai-search": "*",
-    "@genoffice/file-parse": "*",
-    "@genoffice/i18n": "*",
-    "@genoffice/pptx-engine": "*",
-    "@genoffice/pptx-ops": "*",
-    "@genoffice/pptx-render": "*",
-    "@genoffice/project-store": "*",
-    "@genoffice/ui": "*",
+    "@office-cc/agent-core": "*",
+    "@office-cc/ai-provider": "*",
+    "@office-cc/ai-search": "*",
+    "@office-cc/file-parse": "*",
+    "@office-cc/i18n": "*",
+    "@office-cc/pptx-engine": "*",
+    "@office-cc/pptx-ops": "*",
+    "@office-cc/pptx-render": "*",
+    "@office-cc/project-store": "*",
+    "@office-cc/ui": "*",
     "@types/opentype.js": "^1.3.8",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.14",
@@ -46,10 +46,10 @@
     "vite": "^7.3.1",
     "vitest": "^4.1.11"
   },
-  "author": "GenOffice",
+  "author": "Office-cc",
   "build": {
-    "appId": "com.genoffice.slides",
-    "productName": "GenOffice Slides",
+    "appId": "com.officecc.slides",
+    "productName": "Office-cc Slides",
     "electronVersion": "43.3.0",
     "directories": {
       "output": "release"
@@ -88,11 +88,11 @@
     }
   },
   "dependencies": {
-    "@genoffice/electron-utils": "*",
+    "@office-cc/electron-utils": "*",
     "acorn": "^8.18.0",
     "harfbuzzjs": "^1.4.0",
     "pngjs": "^7.0.0",
     "utif2": "^4.1.0",
-    "@genoffice/agent-core": "*"
+    "@office-cc/agent-core": "*"
   }
 }

@@ -48,7 +48,7 @@ import {
   type TextboxParaPatch,
   type TextboxParasPatchSet,
   type AutoSpace,
-} from '@genoffice/docx-engine'
+} from '@office-cc/docx-engine'
 import { t } from '../i18n/locale'
 import { symbolFontCovers } from '../font-check'
 import {

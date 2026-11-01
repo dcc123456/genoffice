@@ -29,7 +29,7 @@ pub struct ConvertResult {
 /// and opens plenty of those happily, so the reader's `Invalid OLE (signature
 /// ...)` tells the person holding the file nothing they can act on.
 ///
-/// An XML spreadsheet is not one of these: genoffice#2044 reads it directly,
+/// An XML spreadsheet is not one of these: officecc#2044 reads it directly,
 /// and this only has to speak about files no reader should open at all.
 fn unreadable_container_hint(source: &Path) -> Option<String> {
     let mut head = [0u8; 1024];
@@ -618,7 +618,7 @@ mod tests {
 
     #[test]
     fn an_xml_spreadsheet_is_the_converter_s_business_not_a_dead_end() {
-        // genoffice#2044 opens this shape instead of refusing it. Until that
+        // officecc#2044 opens this shape instead of refusing it. Until that
         // lands the reader still turns it away, and all this PR promises about
         // it is that the refusal is a sentence about the file rather than a
         // quoted byte signature.
@@ -638,7 +638,7 @@ mod tests {
         )
         .unwrap();
         let Err(error) = convert_to_xlsx(&source, &dir.path().join("out.xlsx")) else {
-            panic!("without genoffice#2044 this file must still be refused");
+            panic!("without officecc#2044 this file must still be refused");
         };
         let message = error.to_string();
         assert!(message.contains("not a workbook container"), "{message}");

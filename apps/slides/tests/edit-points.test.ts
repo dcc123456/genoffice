@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { presetPath, presetPolygon } from '@genoffice/pptx-render/preset-geometry'
-import { custGeomXml, parseCustGeom } from '@genoffice/pptx-engine'
-import type { ShapeRenderNode } from '@genoffice/pptx-render'
+import { presetPath, presetPolygon } from '@office-cc/pptx-render/preset-geometry'
+import { custGeomXml, parseCustGeom } from '@office-cc/pptx-engine'
+import type { ShapeRenderNode } from '@office-cc/pptx-render'
 import {
   canEditPoints,
   deleteVertex,

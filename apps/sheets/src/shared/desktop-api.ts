@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { normalizeCustomProfile } from '@genoffice/ai-provider/browser'
+import { normalizeCustomProfile } from '@office-cc/ai-provider/browser'
 
 import {
   HEADER_FOOTER_PICTURE_POSITION,
@@ -12,11 +12,11 @@ import {
   SAVE_EDITS_CHUNK_JSON_MAX,
   SAVE_EDITS_CHUNK_MAX,
 } from './ipc-channels'
-import { ADDABLE_SHAPE_TYPES } from '@genoffice/xlsx-gateway/shared/shape-types'
+import { ADDABLE_SHAPE_TYPES } from '@office-cc/xlsx-gateway/shared/shape-types'
 import {
   PIVOT_AGGREGATIONS,
   PIVOT_SHOW_DATA_AS,
-} from '@genoffice/xlsx-gateway/domain/pivot-value-modes'
+} from '@office-cc/xlsx-gateway/domain/pivot-value-modes'
 import {
   CHART_CATEGORY_WIRE_MAX,
   CHART_TEXT_WIRE_MAX,
@@ -27,7 +27,7 @@ import {
   workbookChartEditSchema,
   workbookStyleEditSchema,
   workbookVisualEditSchema,
-} from '@genoffice/xlsx-gateway/shared/edit-schemas'
+} from '@office-cc/xlsx-gateway/shared/edit-schemas'
 import type {
   AiChatRequest,
   AiChatResponse,
@@ -35,8 +35,8 @@ import type {
   AiStreamChunk,
   AiStreamRequest,
   GenSparkAccountStatus,
-} from '@genoffice/ai-provider'
-import type { AiPanelPrefs } from '@genoffice/ui'
+} from '@office-cc/ai-provider'
+import type { AiPanelPrefs } from '@office-cc/ui'
 
 // edit schemas shared with the xlsx gateway package; re-exported so IPC consumers keep one import site
 export {
@@ -47,13 +47,13 @@ export {
   workbookChartEditSchema,
   workbookStyleEditSchema,
   workbookVisualEditSchema,
-} from '@genoffice/xlsx-gateway/shared/edit-schemas'
+} from '@office-cc/xlsx-gateway/shared/edit-schemas'
 export type {
   WorkbookChartEdit,
   WorkbookRichRun,
   WorkbookStyleEdit,
   WorkbookVisualEdit,
-} from '@genoffice/xlsx-gateway/shared/edit-schemas'
+} from '@office-cc/xlsx-gateway/shared/edit-schemas'
 
 const MAX_RANGE_CELLS = 100_000
 const cellScalarSchema = z.union([z.string(), z.number().finite(), z.boolean(), z.null()])
@@ -2484,7 +2484,7 @@ export type WorkbookPivotAdd = z.infer<typeof workbookPivotAddSchema>
 export type WorkbookCellStyle = z.infer<typeof cellStyleSchema>
 export type WorkbookConditionalRule = z.infer<typeof conditionalRuleSchema>
 
-// ---- AI settings + chat/stream: canonical types live in @genoffice/ai-provider,
+// ---- AI settings + chat/stream: canonical types live in @office-cc/ai-provider,
 // shared with apps/docs. Validated here like every other renderer→main request in
 // this file; the validated shape is cast to AiSettings at the main-process call
 // site, which has every known provider key once merged through
@@ -2879,7 +2879,7 @@ export interface AttachmentImageResult {
 export type UiTheme = 'light' | 'dark' | 'system'
 
 /**
- * Document page theme preference (genoffice#1811): what the editors' canvas/paper does
+ * Document page theme preference (officecc#1811): what the editors' canvas/paper does
  * relative to the UI theme. 'follow' keeps the previous single-theme behavior.
  */
 export type DocTheme = 'follow' | 'light' | 'dark'
@@ -2932,7 +2932,7 @@ export interface DesktopApi {
   getTheme(): Promise<UiTheme>
   /** theme switched from the shell home page */
   onThemeChanged(handler: (theme: UiTheme) => void): () => void
-  /** current document page theme preference (genoffice#1811, persisted by the shell in app-settings.json) */
+  /** current document page theme preference (officecc#1811, persisted by the shell in app-settings.json) */
   getDocumentTheme(): Promise<DocTheme>
   /** document page theme switched from the shell home page */
   onDocumentThemeChanged(handler: (theme: DocTheme) => void): () => void

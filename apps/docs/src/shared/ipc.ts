@@ -33,7 +33,7 @@ export interface PickImageResult {
   name: string
 }
 
-// ---- AI provider settings/config/streaming: canonical types live in @genoffice/ai-provider ----
+// ---- AI provider settings/config/streaming: canonical types live in @office-cc/ai-provider ----
 
 import type {
   AiChatRequest,
@@ -42,10 +42,10 @@ import type {
   AiStreamChunk,
   AiStreamRequest,
   GenSparkAccountStatus,
-} from '@genoffice/ai-provider'
-import type { HeadlessExportTarget } from '@genoffice/electron-utils/headless-export'
-import type { FaceVerticalMetrics } from '@genoffice/font-metrics'
-import type { AiPanelPrefs } from '@genoffice/ui'
+} from '@office-cc/ai-provider'
+import type { HeadlessExportTarget } from '@office-cc/electron-utils/headless-export'
+import type { FaceVerticalMetrics } from '@office-cc/font-metrics'
+import type { AiPanelPrefs } from '@office-cc/ui'
 
 export type { FaceVerticalMetrics }
 
@@ -59,17 +59,17 @@ export type {
   AiStreamChunk,
   AiStreamRequest,
   GenSparkAccountStatus,
-} from '@genoffice/ai-provider'
-export { AI_PROVIDERS } from '@genoffice/ai-provider/browser'
+} from '@office-cc/ai-provider'
+export { AI_PROVIDERS } from '@office-cc/ai-provider/browser'
 
-// ---- agent protocol: canonical types live in @genoffice/agent-core ----
+// ---- agent protocol: canonical types live in @office-cc/agent-core ----
 
 export type {
   AgentMessage,
   AgentToolCall,
   AgentToolDef,
   AgentToolResult,
-} from '@genoffice/agent-core'
+} from '@office-cc/agent-core'
 
 // ---- PDF export ----
 
@@ -102,7 +102,7 @@ export interface MarkdownImage {
  * for the real `<file>_files` folder once the save path is known. User text
  * can never spell it: `_` is escaped on the way out.
  */
-export const MARKDOWN_MEDIA_DIR_TOKEN = '__genoffice_media__'
+export const MARKDOWN_MEDIA_DIR_TOKEN = '__officecc_media__'
 
 // ---- chat attachments (local files fed to the agent via tools) ----
 
@@ -226,7 +226,7 @@ export type MenuCommand =
 export type UiTheme = 'light' | 'dark' | 'system'
 
 /**
- * Document page theme preference (genoffice#1811): what the canvas/paper does relative
+ * Document page theme preference (officecc#1811): what the canvas/paper does relative
  * to the UI theme. 'follow' keeps the previous single-theme behavior.
  */
 export type DocTheme = 'follow' | 'light' | 'dark'
@@ -360,7 +360,7 @@ export interface DesktopApi {
   getTheme(): Promise<UiTheme>
   /** theme switched from the shell home page */
   onThemeChanged(handler: (theme: UiTheme) => void): () => void
-  /** current document page theme preference (genoffice#1811, persisted by the shell in app-settings.json) */
+  /** current document page theme preference (officecc#1811, persisted by the shell in app-settings.json) */
   getDocumentTheme(): Promise<DocTheme>
   /** document page theme switched from the shell home page */
   onDocumentThemeChanged(handler: (theme: DocTheme) => void): () => void
@@ -658,5 +658,5 @@ export interface DesktopApi {
   reportViewMenuState(state: { aiSidebar: boolean; darkCanvas: boolean }): void
 }
 
-/** mirrors VIEW_IMAGE_CHANNEL in @genoffice/electron-utils (kept literal so the preload stays free of main-only deps) */
-export const VIEW_IMAGE_CHANNEL = 'genoffice:view-image'
+/** mirrors VIEW_IMAGE_CHANNEL in @office-cc/electron-utils (kept literal so the preload stays free of main-only deps) */
+export const VIEW_IMAGE_CHANNEL = 'officecc:view-image'

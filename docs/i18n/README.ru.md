@@ -2,21 +2,21 @@
   <a href="https://genoffice.ai/">
     <picture>
       <source srcset="../assets/readme/hero-dark.webp" media="(prefers-color-scheme: dark)">
-      <img src="../assets/readme/hero.webp" alt="GenOffice — свободный офисный пакет с ИИ и открытым исходным кодом: Docs, Sheets, Slides, PDF, Markdown и HTML со встроенной ИИ-панелью" width="100%">
+      <img src="../assets/readme/hero.webp" alt="Office-cc — свободный офисный пакет с ИИ и открытым исходным кодом: Docs, Sheets, Slides, PDF, Markdown и HTML со встроенной ИИ-панелью" width="100%">
     </picture>
   </a>
 </p>
 
-<h1 align="center">GenOffice</h1>
+<h1 align="center">Office-cc</h1>
 
 <p align="center"><b>Первый в мире полнофункциональный офисный пакет с открытым исходным кодом и ИИ.</b><br>
 Файлы Word, Excel, PowerPoint и PDF, редактируемые вами и вашим ИИ, сохраняются обратно в реальных форматах.</p>
 
 <p align="center">
-  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/genspark-ai/genoffice" alt="Лицензия: Apache-2.0"></a>
-  <a href="https://github.com/genspark-ai/genoffice/releases/latest"><img src="https://img.shields.io/github/v/release/genspark-ai/genoffice" alt="Последний релиз"></a>
-  <a href="https://github.com/genspark-ai/genoffice/releases"><img src="https://img.shields.io/github/downloads/genspark-ai/genoffice/total" alt="Загрузки"></a>
-  <a href="https://github.com/genspark-ai/genoffice/stargazers"><img src="https://img.shields.io/github/stars/genspark-ai/genoffice?style=flat" alt="Звёзды на GitHub"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/dcc123456/genoffice" alt="Лицензия: Apache-2.0"></a>
+  <a href="https://github.com/dcc123456/genoffice/releases/latest"><img src="https://img.shields.io/github/v/release/dcc123456/genoffice" alt="Последний релиз"></a>
+  <a href="https://github.com/dcc123456/genoffice/releases"><img src="https://img.shields.io/github/downloads/dcc123456/genoffice/total" alt="Загрузки"></a>
+  <a href="https://github.com/dcc123456/genoffice/stargazers"><img src="https://img.shields.io/github/stars/dcc123456/genoffice?style=flat" alt="Звёзды на GitHub"></a>
 </p>
 
 <p align="center"><a href="../../README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.de.md">Deutsch</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · <a href="README.ko.md">한국어</a> · <a href="README.ja.md">日本語</a> · <a href="README.ar.md">العربية</a> · <b>Русский</b> · <a href="README.it.md">Italiano</a> · <a href="README.nl.md">Nederlands</a> · <a href="README.pl.md">Polski</a> · <a href="README.cs.md">Čeština</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ms.md">Bahasa Melayu</a> · <a href="README.th.md">ไทย</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.he.md">עברית</a> · <a href="README.vi.md">Tiếng Việt</a></p>
@@ -30,7 +30,7 @@
   <a href="../../PRIVACY.md"><b>Конфиденциальность</b></a>
 </p>
 
-GenOffice — бесплатная альтернатива Microsoft Office с открытым исходным
+Office-cc — бесплатная альтернатива Microsoft Office с открытым исходным
 кодом для macOS, Windows и Linux. Она открывает и сохраняет нативные файлы
 `.docx`, `.xlsx` и `.pptx`, редактирует PDF, Markdown и HTML и размещает
 ИИ-агента рядом с каждым документом — не чат-бокс, прикрученный сбоку, а
@@ -54,14 +54,14 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
   DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty или
   любого совместимого с OpenAI эндпоинта, включая локальные серверы.
 - **Скриптуемость и готовность к агентам.** В комплекте с приложением идёт
-  командная строка `genoffice` и скилл для Claude Code, Codex, Cursor,
+  командная строка `officecc` и скилл для Claude Code, Codex, Cursor,
   Gemini CLI, GitHub Copilot, OpenCode и Windsurf, так что кодинг-агент может
   создавать, конвертировать, читать и редактировать настоящие файлы Office на
   вашем компьютере, не открывая ни одного окна.
 
-**Скачать:** [macOS](https://github.com/genspark-ai/genoffice/releases/latest) (Apple Silicon и Intel) ·
-[Windows](https://github.com/genspark-ai/genoffice/releases/latest) (x64 и Arm) ·
-[Linux](https://github.com/genspark-ai/genoffice/releases/latest) (deb, rpm, AppImage) —
+**Скачать:** [macOS](https://github.com/dcc123456/genoffice/releases/latest) (Apple Silicon и Intel) ·
+[Windows](https://github.com/dcc123456/genoffice/releases/latest) (x64 и Arm) ·
+[Linux](https://github.com/dcc123456/genoffice/releases/latest) (deb, rpm, AppImage) —
 подробности и системные требования в разделе [Скачать](#download).
 
 ## Демонстрация
@@ -74,8 +74,8 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/docs-report.webp" alt="GenOffice Docs отображает страницу годового отчёта в две колонки с полноширинным изображением на обложке, затемнённой таблицей KPI, верхним и нижним колонтитулами при масштабе 80% и свёрнутой ИИ-панелью"></td>
-<td width="50%"><img src="../assets/readme/docs-ai.webp" alt="GenOffice Docs: обзор компании с изображением-баннером; ИИ сократил раздел Overview и добавил новый раздел со списком, а панель предлагает откат одним щелчком"></td>
+<td width="50%"><img src="../assets/readme/docs-report.webp" alt="Office-cc Docs отображает страницу годового отчёта в две колонки с полноширинным изображением на обложке, затемнённой таблицей KPI, верхним и нижним колонтитулами при масштабе 80% и свёрнутой ИИ-панелью"></td>
+<td width="50%"><img src="../assets/readme/docs-ai.webp" alt="Office-cc Docs: обзор компании с изображением-баннером; ИИ сократил раздел Overview и добавил новый раздел со списком, а панель предлагает откат одним щелчком"></td>
 </tr>
 <tr>
 <td><b>Открывает файл с той же вёрсткой, что и в Word</b> — двухколоночные разделы, изображения на всю страницу, затемнённые таблицы, колонтитулы, разбиение на страницы по метрикам строк Word. Стили, комментарии, отслеживаемые изменения, формулы и рукописный ввод сохраняются без изменений после открытия и сохранения.</td>
@@ -87,8 +87,8 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/sheets-ai.webp" alt="GenOffice Sheets: ИИ добавил лист Summary с доходом по регионам и категориям на формулах SUMIF, плюс столбчатую диаграмму, и сообщает о 43 применённых изменениях с кнопкой отмены"></td>
-<td width="50%"><img src="../assets/readme/sheets-qa.webp" alt="GenOffice Sheets: на вопрос о том, какой регион лидировал по доходу во втором квартале, ИИ отвечает «Европа» с разбивкой по категориям и указывает точные ячейки как ссылки-цитаты, рядом с листом Orders"></td>
+<td width="50%"><img src="../assets/readme/sheets-ai.webp" alt="Office-cc Sheets: ИИ добавил лист Summary с доходом по регионам и категориям на формулах SUMIF, плюс столбчатую диаграмму, и сообщает о 43 применённых изменениях с кнопкой отмены"></td>
+<td width="50%"><img src="../assets/readme/sheets-qa.webp" alt="Office-cc Sheets: на вопрос о том, какой регион лидировал по доходу во втором квартале, ИИ отвечает «Европа» с разбивкой по категориям и указывает точные ячейки как ссылки-цитаты, рядом с листом Orders"></td>
 </tr>
 <tr>
 <td><b>Соберите сводку</b> — из одного предложения агент добавляет лист Summary с настоящими формулами <code>SUMIF</code> по регионам и категориям, вставляет столбчатую диаграмму и применяет все 43 изменения одним отменяемым пакетом.</td>
@@ -98,15 +98,15 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 
 ### 3 · Slides — от промпта до готовой презентации `.pptx`
 
-<img src="../assets/readme/slides-generate.webp" alt="Таймлапс создания презентации GenOffice Slides для инвесторов Aurora Home: ИИ планирует сюжет в панели, слайды появляются на холсте один за другим, а готовая презентация завершается финальным призывом к действию" width="100%">
+<img src="../assets/readme/slides-generate.webp" alt="Таймлапс создания презентации Office-cc Slides для инвесторов Aurora Home: ИИ планирует сюжет в панели, слайды появляются на холсте один за другим, а готовая презентация завершается финальным призывом к действию" width="100%">
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/slides-cover.webp" alt="GenOffice Slides: титульный слайд презентации для инвесторов Aurora Home, созданной ИИ, на холсте, с исходным однострочным промптом и резюме ИИ о том, что было построено, на панели"></td>
-<td width="50%"><img src="../assets/readme/slides-ai.webp" alt="GenOffice Slides: оформленный финальный слайд той же презентации из 11 слайдов, с полосой миниатюр слева и ИИ-панелью, подытоживающей сюжетную линию"></td>
+<td width="50%"><img src="../assets/readme/slides-cover.webp" alt="Office-cc Slides: титульный слайд презентации для инвесторов Aurora Home, созданной ИИ, на холсте, с исходным однострочным промптом и резюме ИИ о том, что было построено, на панели"></td>
+<td width="50%"><img src="../assets/readme/slides-ai.webp" alt="Office-cc Slides: оформленный финальный слайд той же презентации из 11 слайдов, с полосой миниатюр слева и ИИ-панелью, подытоживающей сюжетную линию"></td>
 </tr>
 <tr>
-<td><b>Одна строка на входе</b> — «Создай презентацию для инвесторов из 10 слайдов для Aurora Home…». GenOffice выстраивает сюжетную линию, собирает цифры и создаёт каждый слайд прямо на холсте как настоящий файл <code>.pptx</code>.</td>
+<td><b>Одна строка на входе</b> — «Создай презентацию для инвесторов из 10 слайдов для Aurora Home…». Office-cc выстраивает сюжетную линию, собирает цифры и создаёт каждый слайд прямо на холсте как настоящий файл <code>.pptx</code>.</td>
 <td><b>Готовая презентация на выходе</b> — одиннадцать оформленных слайдов с единой типографикой, иллюстрациями и завершающим призывом к действию; продолжайте редактировать с помощью мастер-слайдов, макетов, умных направляющих и неразрушающей обрезки, либо попросите панель изменить стиль, переписать текст или переставить слайды.</td>
 </tr>
 </table>
@@ -115,8 +115,8 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/pdf-edit.webp" alt="GenOffice PDF: режим редактирования текста обводит каждый текстовый блок на странице для редактирования на месте, а ИИ-панель отвечает на вопрос об отчёте со ссылками на страницы"></td>
-<td width="50%"><img src="../assets/readme/pdf-convert.webp" alt="GenOffice Docs показывает документ Word, конвертированный локально из квартального отчёта Helios в формате PDF, открытый во второй вкладке рядом с исходным PDF"></td>
+<td width="50%"><img src="../assets/readme/pdf-edit.webp" alt="Office-cc PDF: режим редактирования текста обводит каждый текстовый блок на странице для редактирования на месте, а ИИ-панель отвечает на вопрос об отчёте со ссылками на страницы"></td>
+<td width="50%"><img src="../assets/readme/pdf-convert.webp" alt="Office-cc Docs показывает документ Word, конвертированный локально из квартального отчёта Helios в формате PDF, открытый во второй вкладке рядом с исходным PDF"></td>
 </tr>
 <tr>
 <td><b>Редактируйте прямо на странице</b> — режим редактирования текста обводит каждый текстовый блок для повторного набора на месте; поток содержимого страницы переписывается через PDFium с сохранением исходных шрифтов, а не поверх маскирующей аннотацией. Спросите ИИ о длинном отчёте и получите ответ со ссылками на страницы.</td>
@@ -130,11 +130,11 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 **дизайн-бриф** — главную идею, палитру, типографику и варианты стиля — а
 затем собирает единый самодостаточный файл `.html` на основе этих токенов.
 
-<img src="../assets/readme/html-restyle-motion.webp" alt="Таймлапс изменения стиля GenOffice HTML для лендинга Lumen: один запрос Restyle в панели превращает тёмную страницу Midnight Studio в тёплую версию Solar Daybreak, при этом все разделы и весь текст остаются на месте" width="100%">
+<img src="../assets/readme/html-restyle-motion.webp" alt="Таймлапс изменения стиля Office-cc HTML для лендинга Lumen: один запрос Restyle в панели превращает тёмную страницу Midnight Studio в тёплую версию Solar Daybreak, при этом все разделы и весь текст остаются на месте" width="100%">
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/html-ai.webp" alt="GenOffice HTML: сгенерированный лендинг для настольной лампы на солнечных батареях в тёмном стиле Midnight Studio, показанный в живом предпросмотре, с ИИ-панелью, резюмирующей только что созданную страницу"></td>
+<td width="50%"><img src="../assets/readme/html-ai.webp" alt="Office-cc HTML: сгенерированный лендинг для настольной лампы на солнечных батареях в тёмном стиле Midnight Studio, показанный в живом предпросмотре, с ИИ-панелью, резюмирующей только что созданную страницу"></td>
 <td width="50%"><img src="../assets/readme/html-restyle.webp" alt="Тот же лендинг Lumen, переоформленный ИИ в тёплом стиле Solar Daybreak: бумажный фон, серифные заголовки и оранжевый акцент, с сохранением всех разделов и всего текста"></td>
 </tr>
 <tr>
@@ -144,8 +144,8 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 </table>
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/html-dashboard.webp" alt="GenOffice HTML: сгенерированный интерфейс личного дашборда для дизайнера-фрилансера в тёплом «льняном» стиле, с боковой панелью, серифным приветствием и четырьмя карточками показателей"></td>
-<td width="50%"><img src="../assets/readme/html-report.webp" alt="GenOffice HTML: сгенерированный отчёт о рынке электромобилей в стиле широкоформатной газеты, с серифной шапкой, ключевой цифрой 17,3 миллиона и строкой статистики"></td>
+<td width="50%"><img src="../assets/readme/html-dashboard.webp" alt="Office-cc HTML: сгенерированный интерфейс личного дашборда для дизайнера-фрилансера в тёплом «льняном» стиле, с боковой панелью, серифным приветствием и четырьмя карточками показателей"></td>
+<td width="50%"><img src="../assets/readme/html-report.webp" alt="Office-cc HTML: сгенерированный отчёт о рынке электромобилей в стиле широкоформатной газеты, с серифной шапкой, ключевой цифрой 17,3 миллиона и строкой статистики"></td>
 </tr>
 <tr>
 <td><b>Макеты интерфейсов</b> — стартовый шаблон «личный дашборд» превращает персону в рабочий макет: боковая панель, приветствие, спарклайн оплачиваемых часов, карточки счетов и загрузки — всё в виде настоящего HTML, который можно передать разработчику.</td>
@@ -157,8 +157,8 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/markdown-ai.webp" alt="GenOffice Markdown: у выделенного абзаца всплывает окно «Спросить ИИ» с введённой инструкцией и чипами-подсказками, такими как «Отполировать», «Сделать короче», «Развернуть» и «Исправить грамматику», а также кнопками «Отправить сейчас» и «Добавить в очередь»"></td>
-<td width="50%"><img src="../assets/readme/markdown-render.webp" alt="GenOffice Markdown отображает документ с заметками о релизе, содержащий таблицу, блок-схему Mermaid и список задач, со стартовыми промптами ИИ-панели слева"></td>
+<td width="50%"><img src="../assets/readme/markdown-ai.webp" alt="Office-cc Markdown: у выделенного абзаца всплывает окно «Спросить ИИ» с введённой инструкцией и чипами-подсказками, такими как «Отполировать», «Сделать короче», «Развернуть» и «Исправить грамматику», а также кнопками «Отправить сейчас» и «Добавить в очередь»"></td>
+<td width="50%"><img src="../assets/readme/markdown-render.webp" alt="Office-cc Markdown отображает документ с заметками о релизе, содержащий таблицу, блок-схему Mermaid и список задач, со стартовыми промптами ИИ-панели слева"></td>
 </tr>
 <tr>
 <td><b>Спросите ИИ о выделенном фрагменте</b> — выделите любой отрывок, и появится чип <b>Спросить ИИ</b>: введите инструкцию или выберите подсказку, отправьте её сразу или поставьте несколько привязанных правок в очередь и выполните их за один проход. Такая же точка входа есть в каждом приложении.</td>
@@ -166,41 +166,41 @@ GenOffice — бесплатная альтернатива Microsoft Office с 
 </tr>
 </table>
 
-### 7 · CLI — ваш кодинг-агент управляет GenOffice на вашем компьютере
+### 7 · CLI — ваш кодинг-агент управляет Office-cc на вашем компьютере
 
-В GenOffice входит командная строка `genoffice` и агентный скилл. Установите
+В Office-cc входит командная строка `officecc` и агентный скилл. Установите
 скилл — и Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode или
 Windsurf смогут создавать, конвертировать, читать и редактировать настоящие
 файлы Office через те же движки, что и приложения, не открывая ни одного окна.
 
-<img src="../assets/readme/cli-deck-in-app.webp" alt="GenOffice Slides показывает презентацию о Солнечной системе из восьми слайдов, которую кодинг-агент собрал через командную строку genoffice: титульный слайд на холсте, восемь миниатюр слева и открытая ИИ-панель" width="100%">
+<img src="../assets/readme/cli-deck-in-app.webp" alt="Office-cc Slides показывает презентацию о Солнечной системе из восьми слайдов, которую кодинг-агент собрал через командную строку officecc: титульный слайд на холсте, восемь миниатюр слева и открытая ИИ-панель" width="100%">
 
 <table>
 <tr>
 <td width="50%"><img src="../assets/readme/cli-slides-grid.webp" alt="Восемь отрисованных слайдов презентации о Солнечной системе рядом друг с другом: обложка, хронология исследований, четыре ключевых числа, столбчатая диаграмма диаметров планет, каменистые миры против гигантов, ключевая цифра 99,8% для Солнца, сетка четырёх гигантов и выводы"></td>
-<td width="50%"><img src="../assets/readme/cli-integrations.webp" alt="GenOffice Settings, страница Integrations: скилл genoffice установлен в Claude Code, рядом с Codex и Cursor — кнопки Install"></td>
+<td width="50%"><img src="../assets/readme/cli-integrations.webp" alt="Office-cc Settings, страница Integrations: скилл officecc установлен в Claude Code, рядом с Codex и Cursor — кнопки Install"></td>
 </tr>
 <tr>
-<td><b>Один промпт вашему агенту</b> — «Сделай презентацию о Солнечной системе из восьми слайдов». Агент читает скилл, пишет таблицу стилей, план и по одной спецификации страницы на слайд, генерирует две фотографии через <code>genoffice image</code> и даёт <code>genoffice slides check</code> отклонить всё, что выходит за границы или перекрывается, прежде чем <code>genoffice create</code> соберёт <code>.pptx</code>, а <code>slides render</code> вернёт по одному PNG на слайд для просмотра.</td>
-<td><b>Установите один раз в разделе «Настройки → Интеграции»</b> — GenOffice перечисляет кодинг-агентов, найденных на этом компьютере, и записывает скилл в каждый выбранный вами. Либо скачайте скилл в виде zip или выполните <code>npx skills add genspark-ai/genoffice</code>. Команды и полный рабочий процесс — в разделе <a href="#command-line-and-agent-skill">Командная строка и агентный скилл</a>.</td>
+<td><b>Один промпт вашему агенту</b> — «Сделай презентацию о Солнечной системе из восьми слайдов». Агент читает скилл, пишет таблицу стилей, план и по одной спецификации страницы на слайд, генерирует две фотографии через <code>officecc image</code> и даёт <code>officecc slides check</code> отклонить всё, что выходит за границы или перекрывается, прежде чем <code>officecc create</code> соберёт <code>.pptx</code>, а <code>slides render</code> вернёт по одному PNG на слайд для просмотра.</td>
+<td><b>Установите один раз в разделе «Настройки → Интеграции»</b> — Office-cc перечисляет кодинг-агентов, найденных на этом компьютере, и записывает скилл в каждый выбранный вами. Либо скачайте скилл в виде zip или выполните <code>npx skills add dcc123456/genoffice</code>. Команды и полный рабочий процесс — в разделе <a href="#command-line-and-agent-skill">Командная строка и агентный скилл</a>.</td>
 </tr>
 </table>
 
 ### 8 · MCP — те же инструменты через Model Context Protocol
 
-Каждая команда `genoffice` — это ещё и инструмент MCP. Claude Code, Claude
-Desktop, Cursor и любой другой MCP-клиент могут сами запустить `genoffice
+Каждая команда `officecc` — это ещё и инструмент MCP. Claude Code, Claude
+Desktop, Cursor и любой другой MCP-клиент могут сами запустить `officecc
 mcp`, без установки скилла и без открытого окна, и получить 29
 инструментов, а также справочники по операциям в виде ресурсов. Второй,
 HTTP-сервер внутри приложения позволяет агенту собирать документ Word
 прямо во вкладке редактора у вас на глазах.
 
-<img src="../assets/readme/mcp-deck-motion.webp" alt="Ускоренная съёмка того, как Claude Code строит презентацию для инвесторов из восьми слайдов о возобновляемой энергетике через MCP-сервер genoffice: ищет иллюстрации и фотографии, проверяет каждую фотографию-кандидата с помощью media, deck_start пишет таблицу стилей и план, deck_page добавляет по одной проверенной странице за раз, deck_build собирает .pptx и slides_render возвращает изображение каждого слайда; готовая презентация затем открывается в GenOffice Slides" width="100%">
+<img src="../assets/readme/mcp-deck-motion.webp" alt="Ускоренная съёмка того, как Claude Code строит презентацию для инвесторов из восьми слайдов о возобновляемой энергетике через MCP-сервер officecc: ищет иллюстрации и фотографии, проверяет каждую фотографию-кандидата с помощью media, deck_start пишет таблицу стилей и план, deck_page добавляет по одной проверенной странице за раз, deck_build собирает .pptx и slides_render возвращает изображение каждого слайда; готовая презентация затем открывается в Office-cc Slides" width="100%">
 
 <table>
 <tr>
-<td width="50%"><img src="../assets/readme/mcp-deck-in-app.webp" alt="GenOffice Slides показывает презентацию Renewable Energy 2026 из восьми слайдов, которую Claude Code построил через MCP-сервер genoffice: титульный слайд с фотографией ветропарка на холсте и восемь миниатюр слева"></td>
-<td width="50%"><img src="../assets/readme/mcp-integrations.webp" alt="GenOffice Settings, страница Integrations, часть MCP: однострочная команда claude mcp add для Claude Code, JSON-блок для Cursor, Claude Desktop и других MCP-клиентов, и опция локального HTTP-сервера ниже"></td>
+<td width="50%"><img src="../assets/readme/mcp-deck-in-app.webp" alt="Office-cc Slides показывает презентацию Renewable Energy 2026 из восьми слайдов, которую Claude Code построил через MCP-сервер officecc: титульный слайд с фотографией ветропарка на холсте и восемь миниатюр слева"></td>
+<td width="50%"><img src="../assets/readme/mcp-integrations.webp" alt="Office-cc Settings, страница Integrations, часть MCP: однострочная команда claude mcp add для Claude Code, JSON-блок для Cursor, Claude Desktop и других MCP-клиентов, и опция локального HTTP-сервера ниже"></td>
 </tr>
 <tr>
 <td><b>Один промпт, 38 вызовов инструментов, никакого терминала</b> — «Сделай инвесторскую презентацию из восьми слайдов о возобновляемой энергетике в 2026 году, с настоящей фотографией на обложке и везде, где фото уместно». Агент забирает иллюстрации и фотографии через <code>search</code>, спрашивает <code>media</code>, является ли каждая фотография-кандидат настоящей фотографией, вызывает <code>deck_start</code> с таблицей стилей и планом, затем <code>deck_page</code> для каждого слайда; каждая страница проверяется на соответствие плану и палитре, прежде чем её примут, <code>deck_build</code> собирает <code>.pptx</code>, <code>slides_audit</code> ищет переполнения, <code>slides_render</code> возвращает PNG для каждого слайда как графическое содержимое, которое модель может рассмотреть, а <code>deck_replace</code> исправляет три страницы, которые ей не понравились.</td>
@@ -208,7 +208,7 @@ HTTP-сервер внутри приложения позволяет аген�
 </tr>
 </table>
 
-## Почему GenOffice
+## Почему Office-cc
 
 - **Открытый исходный код**, Apache-2.0, разрабатывается открыто на GitHub.
 - **Всё под вашим контролем.** Нативные приложения для macOS, Windows и Linux; файлы
@@ -227,7 +227,7 @@ HTTP-сервер внутри приложения позволяет аген�
   в систему OCR для сканов.
 - **А также Markdown и HTML**, с той же панелью ИИ и локальным экспортом в
   Word.
-- **Скриптуемость.** Командная строка `genoffice`, агентный скилл и
+- **Скриптуемость.** Командная строка `officecc`, агентный скилл и
   MCP-сервер отдают каждый движок в распоряжение Claude Code, Claude
   Desktop, Codex, Cursor и других агентов — по-прежнему на устройстве.
 - **Бесплатно**, как для отдельных пользователей, так и для команд.
@@ -257,10 +257,10 @@ MiniMax или любой совместимый с OpenAI эндпоинт дл
 
 ## Командная строка и агентный скилл
 
-Всё, что приложения умеют делать с файлом, командная строка `genoffice` умеет
+Всё, что приложения умеют делать с файлом, командная строка `officecc` умеет
 делать из терминала: инспектировать, конвертировать, создавать, читать и
 редактировать Word, Excel, PowerPoint, PDF, Markdown и HTML на тех же движках,
-без графического интерфейса. Она устанавливается вместе с GenOffice, не
+без графического интерфейса. Она устанавливается вместе с Office-cc, не
 требует собственной среды выполнения и никогда никуда не отправляет документы.
 В паре со встроенным **агентным скиллом** она превращает кодинг-агента в
 работника с документами, который выдаёт настоящие файлы Office вместо
@@ -275,30 +275,30 @@ MCP-клиентом.
 
 | Как                                     | Что происходит                                                                                                                                                                   |
 | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Настройки → Интеграции** в приложении | Показывает агентов, найденных на этом компьютере; один клик записывает скилл в каждый выбранный. Когда релиз GenOffice приносит более новый скилл, появляется кнопка **Update**. |
+| **Настройки → Интеграции** в приложении | Показывает агентов, найденных на этом компьютере; один клик записывает скилл в каждый выбранный. Когда релиз Office-cc приносит более новый скилл, появляется кнопка **Update**. |
 | **Скачать как zip** на той же странице  | Формат, который claude.ai, десктопные приложения Claude и другие ассистенты принимают как загружаемый скилл.                                                                     |
-| `npx skills add genspark-ai/genoffice`  | Устанавливает скилл из этого репозитория в любой агент, поддерживающий скиллы.                                                                                                   |
+| `npx skills add dcc123456/genoffice`  | Устанавливает скилл из этого репозитория в любой агент, поддерживающий скиллы.                                                                                                   |
 
 Затем начните новый чат и попросите документ. Скилл учит агента, когда
-обращаться к `genoffice`, как прочитать файл перед редактированием и как
+обращаться к `officecc`, как прочитать файл перед редактированием и как
 проверять собственную работу.
 
 ### Быстрый старт из терминала
 
 ```bash
-genoffice --version
-genoffice info report.docx --json                  # headings and blocks; or sheets, slides, pages
-genoffice convert report.md --to pdf               # md/html/docx/xlsx/pptx → pdf, pdf → docx/xlsx/pptx/md/html, …
-genoffice create --type docx --from notes.md --out notes.docx
-genoffice create --type xlsx --from table.json --out sales.xlsx   # "=SUM(B2:B9)" cells stay live formulas
-genoffice docs read report.docx --range 0-9 --json # then `docs apply --ops edits.json` edits in place
-genoffice render report.docx --out shots/          # one PNG per page, to look at what you made
-genoffice open sales.xlsx                          # hand the result to the editor
+officecc --version
+officecc info report.docx --json                  # headings and blocks; or sheets, slides, pages
+officecc convert report.md --to pdf               # md/html/docx/xlsx/pptx → pdf, pdf → docx/xlsx/pptx/md/html, …
+officecc create --type docx --from notes.md --out notes.docx
+officecc create --type xlsx --from table.json --out sales.xlsx   # "=SUM(B2:B9)" cells stay live formulas
+officecc docs read report.docx --range 0-9 --json # then `docs apply --ops edits.json` edits in place
+officecc render report.docx --out shots/          # one PNG per page, to look at what you made
+officecc open sales.xlsx                          # hand the result to the editor
 ```
 
 Каждая команда выводит однострочную сводку или один JSON-объект с `--json`.
 Правки атомарны: отклонённая операция оставляет файл нетронутым и возвращается
-с подсказкой об ошибке. `genoffice help` показывает актуальный набор команд;
+с подсказкой об ошибке. `officecc help` показывает актуальный набор команд;
 полный справочник — в [packages/cli/README.md](../../packages/cli/README.md).
 
 ### Что на самом деле запускает агент
@@ -308,21 +308,21 @@ Claude Code. За кулисами агент следовал поэтапно�
 проверял каждый этап, прежде чем начинался следующий:
 
 ```bash
-genoffice capabilities --json                        # which cloud tools GenOffice has configured
-genoffice guide slides design                        # the deck workflow and layout library
-genoffice image "the eight planets in a row …" --aspect 16:9 --out deck/assets/cover.jpg
-genoffice slides check deck/outline.json --json      # 8 pages, no findings
-genoffice slides check deck/pages/01.json --json     # builds one slide, audits overflow and overlap
+officecc capabilities --json                        # which cloud tools Office-cc has configured
+officecc guide slides design                        # the deck workflow and layout library
+officecc image "the eight planets in a row …" --aspect 16:9 --out deck/assets/cover.jpg
+officecc slides check deck/outline.json --json      # 8 pages, no findings
+officecc slides check deck/pages/01.json --json     # builds one slide, audits overflow and overlap
 …                                                    # one page file per slide, fixed until each check is clean
-genoffice create --type pptx --spec deck/pages --outline deck/outline.json --out deck/solar-system.pptx --json
-genoffice slides render deck/solar-system.pptx --out deck/shots --json
-genoffice slides audit deck/solar-system.pptx --json    # 8 slides, no layout issues
-genoffice slides replace deck/solar-system.pptx --slide 4 --spec deck/pages/05.json --json
-genoffice open deck/solar-system.pptx
+officecc create --type pptx --spec deck/pages --outline deck/outline.json --out deck/solar-system.pptx --json
+officecc slides render deck/solar-system.pptx --out deck/shots --json
+officecc slides audit deck/solar-system.pptx --json    # 8 slides, no layout issues
+officecc slides replace deck/solar-system.pptx --slide 4 --spec deck/pages/05.json --json
+officecc open deck/solar-system.pptx
 ```
 
-Внутри `genoffice` не происходит ни одного вызова модели: агент думает, CLI
-собирает и проверяет, а результат открывается в GenOffice или PowerPoint как
+Внутри `officecc` не происходит ни одного вызова модели: агент думает, CLI
+собирает и проверяет, а результат открывается в Office-cc или PowerPoint как
 обычный `.pptx`.
 
 <a id="mcp-server"></a>
@@ -336,33 +336,33 @@ genoffice open deck/solar-system.pptx
 
 | Способ                                  | Что это                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **A · `genoffice mcp`** (рекомендуется) | stdio-сервер, который ассистент запускает сам; GenOffice не обязательно держать открытым. По одному инструменту на команду (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`), а также поэтапный сценарий сборки презентации `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Операции, спецификации и Markdown передаются прямо в аргументах, так что клиент без файловой системы тоже работает. |
-| **B · Локальный HTTP-сервер**           | Работает внутри приложения GenOffice по адресу `http://127.0.0.1:3093/mcp` (Streamable HTTP, с поддержкой устаревшего SSE). Его инструменты управляют видимой вкладкой редактора Word: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session` — и вы видите, как документ обретает форму. По умолчанию выключен; включается на той же панели настроек.                                                                                                                                                                |
+| **A · `officecc mcp`** (рекомендуется) | stdio-сервер, который ассистент запускает сам; Office-cc не обязательно держать открытым. По одному инструменту на команду (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`), а также поэтапный сценарий сборки презентации `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Операции, спецификации и Markdown передаются прямо в аргументах, так что клиент без файловой системы тоже работает. |
+| **B · Локальный HTTP-сервер**           | Работает внутри приложения Office-cc по адресу `http://127.0.0.1:3093/mcp` (Streamable HTTP, с поддержкой устаревшего SSE). Его инструменты управляют видимой вкладкой редактора Word: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session` — и вы видите, как документ обретает форму. По умолчанию выключен; включается на той же панели настроек.                                                                                                                                                                |
 
 ```bash
 # Claude Code
-claude mcp add --transport stdio genoffice -- genoffice mcp
+claude mcp add --transport stdio officecc -- officecc mcp
 ```
 
 ```jsonc
 // Cursor, Claude Desktop или любой другой MCP-клиент
-{ "mcpServers": { "genoffice": { "command": "genoffice", "args": ["mcp"] } } }
+{ "mcpServers": { "officecc": { "command": "officecc", "args": ["mcp"] } } }
 ```
 
-Здесь `genoffice` — это CLI, встроенный в приложение (на macOS —
-`/Applications/GenOffice.app/Contents/Resources/cli/genoffice`; панель
+Здесь `officecc` — это CLI, встроенный в приложение (на macOS —
+`/Applications/Office-cc.app/Contents/Resources/cli/officecc`; панель
 настроек показывает точный путь для вашей установки). Сервер несёт
 собственные инструкции по рабочему процессу и предоставляет справочники по
-операциям как ресурсы `genoffice://guide/*`, так что скилл не нужен; скилл
+операциям как ресурсы `officecc://guide/*`, так что скилл не нужен; скилл
 и MCP-сервер могут сосуществовать, и ассистент выбирает один из них.
 Облачные возможности (`search`, `image`, `media`) по-прежнему идут через
-провайдера, настроенного в GenOffice; всё остальное выполняется локально, а
-`GENOFFICE_ALLOWED_ROOTS` ограничивает каждый инструмент папками из вашего
+провайдера, настроенного в Office-cc; всё остальное выполняется локально, а
+`OFFICECC_ALLOWED_ROOTS` ограничивает каждый инструмент папками из вашего
 списка.
 
 Презентация о возобновляемой энергетике из демо выше — вот как выглядит со
 стороны протокола единственный промпт в Claude Code, к которому подключён
-только MCP-сервер `genoffice`:
+только MCP-сервер `officecc`:
 
 ```text
 capabilities · guide(slides, spec) · guide(slides, design)
@@ -382,7 +382,7 @@ deck_replace(dir, n, page) ×3 · slides_render(file, out)
 Тридцать восемь вызовов, около тринадцати минут, и ассистент ни разу не
 прикоснулся к терминалу: иллюстрации, фотографии, все гайды, проверки и
 рендеры прошли как результаты вызовов MCP-инструментов. Только `search` и
-`media` покидали машину — к провайдеру, настроенному в GenOffice.
+`media` покидали машину — к провайдеру, настроенному в Office-cc.
 
 <a id="download"></a>
 
@@ -390,33 +390,33 @@ deck_replace(dir, n, page) ×3 · slides_render(file, out)
 
 | Платформа                            | Требования                                            | Скачать                                                                                       |
 | ------------------------------------ | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [Последний `.dmg` (arm64)](https://github.com/genspark-ai/genoffice/releases/latest)          |
-| **macOS** — Intel (x64)              | macOS 11+                                             | [Последний `.dmg` (x64)](https://github.com/genspark-ai/genoffice/releases/latest)            |
-| **Windows** (x64, большинство ПК)    | Windows 10+, Intel/AMD                                | [Последний установщик `-x64.exe`](https://github.com/genspark-ai/genoffice/releases/latest)   |
-| **Windows** на Arm (ARM64)           | Windows 11 на Arm (Snapdragon X и аналогичные)        | [Последний установщик `-arm64.exe`](https://github.com/genspark-ai/genoffice/releases/latest) |
-| **Linux** — Debian / Ubuntu          | x86_64, glibc 2.34+ (Ubuntu 22.04 или новее)          | [Последний `.deb`](https://github.com/genspark-ai/genoffice/releases/latest)                  |
-| **Linux** — Fedora / RHEL / openSUSE | x86_64, glibc 2.34+ (Fedora 35+, RHEL 9+, Leap 15.6+) | [Последний `.rpm`](https://github.com/genspark-ai/genoffice/releases/latest)                  |
-| **Linux** — другие дистрибутивы      | x86_64, glibc 2.34+, FUSE 2                           | [Последний `.AppImage`](https://github.com/genspark-ai/genoffice/releases/latest)             |
+| **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [Последний `.dmg` (arm64)](https://github.com/dcc123456/genoffice/releases/latest)          |
+| **macOS** — Intel (x64)              | macOS 11+                                             | [Последний `.dmg` (x64)](https://github.com/dcc123456/genoffice/releases/latest)            |
+| **Windows** (x64, большинство ПК)    | Windows 10+, Intel/AMD                                | [Последний установщик `-x64.exe`](https://github.com/dcc123456/genoffice/releases/latest)   |
+| **Windows** на Arm (ARM64)           | Windows 11 на Arm (Snapdragon X и аналогичные)        | [Последний установщик `-arm64.exe`](https://github.com/dcc123456/genoffice/releases/latest) |
+| **Linux** — Debian / Ubuntu          | x86_64, glibc 2.34+ (Ubuntu 22.04 или новее)          | [Последний `.deb`](https://github.com/dcc123456/genoffice/releases/latest)                  |
+| **Linux** — Fedora / RHEL / openSUSE | x86_64, glibc 2.34+ (Fedora 35+, RHEL 9+, Leap 15.6+) | [Последний `.rpm`](https://github.com/dcc123456/genoffice/releases/latest)                  |
+| **Linux** — другие дистрибутивы      | x86_64, glibc 2.34+, FUSE 2                           | [Последний `.AppImage`](https://github.com/dcc123456/genoffice/releases/latest)             |
 
 Все сборки собираются из ветки `main`; установщики для macOS и Windows
 подписаны. Более старые версии доступны на странице
-[Releases](https://github.com/genspark-ai/genoffice/releases).
+[Releases](https://github.com/dcc123456/genoffice/releases).
 
 <details>
 <summary><b>Установка на Linux</b></summary>
 
 Deb-пакет устанавливается через apt — он подтягивает зависимости и
-добавляет GenOffice в меню приложений:
+добавляет Office-cc в меню приложений:
 
 ```bash
-sudo apt install ./genoffice_<version>_amd64.deb
+sudo apt install ./officecc_<version>_amd64.deb
 ```
 
 На Fedora / в семействе RHEL / openSUSE вместо этого установите rpm-пакет:
 
 ```bash
-sudo dnf install ./genoffice-<version>.x86_64.rpm     # Fedora / RHEL family
-sudo zypper install ./genoffice-<version>.x86_64.rpm  # openSUSE
+sudo dnf install ./officecc-<version>.x86_64.rpm     # Fedora / RHEL family
+sudo zypper install ./officecc-<version>.x86_64.rpm  # openSUSE
 ```
 
 AppImage запускается прямо на месте: установите runtime FUSE 2
@@ -424,8 +424,8 @@ AppImage запускается прямо на месте: установите
 `libfuse2t64`), сделайте файл исполняемым и запустите его:
 
 ```bash
-chmod +x GenOffice-<version>.AppImage
-./GenOffice-<version>.AppImage
+chmod +x Office-cc-<version>.AppImage
+./Office-cc-<version>.AppImage
 ```
 
 </details>
@@ -466,37 +466,37 @@ npm run dist:linux   # package Linux AppImage + deb + rpm
 ```
 
 Приложению Sheets также нужен инструментарий Rust для его xlsx sidecar
-(`cargo` в PATH); команда `npm run build -w @genoffice/sheets` собирает его
+(`cargo` в PATH); команда `npm run build -w @office-cc/sheets` собирает его
 автоматически. Список проверок, которые должно проходить каждое изменение, и
 порядок принятия pull request-ов — в [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 ## Сообщество
 
-GenOffice активно развивается, и ваши отзывы влияют на его развитие.
+Office-cc активно развивается, и ваши отзывы влияют на его развитие.
 
 - **Сообщите об ошибке или предложите функцию** в
-  [GitHub Issues](https://github.com/genspark-ai/genoffice/issues).
-- **Присоединяйтесь к групповому чату GenOffice** в
+  [GitHub Issues](https://github.com/dcc123456/genoffice/issues).
+- **Присоединяйтесь к групповому чату Office-cc** в
   [GenTeam](https://genoffice.ai/join), чтобы общаться с командой и другими
   пользователями.
-- **Поставьте звезду репозиторию**, если GenOffice вам полезен — это лучший
+- **Поставьте звезду репозиторию**, если Office-cc вам полезен — это лучший
   способ поддержать проект.
 
 ## Часто задаваемые вопросы
 
 <details>
-<summary><b>GenOffice бесплатен?</b></summary>
+<summary><b>Office-cc бесплатен?</b></summary>
 
-Да. GenOffice бесплатен и распространяется с открытым исходным кодом по
+Да. Office-cc бесплатен и распространяется с открытым исходным кодом по
 лицензии Apache-2.0 — ни пробного периода, ни платного тарифа для самих
 приложений.
 
 </details>
 
 <details>
-<summary><b>Может ли GenOffice открывать файлы Microsoft Word, Excel и PowerPoint?</b></summary>
+<summary><b>Может ли Office-cc открывать файлы Microsoft Word, Excel и PowerPoint?</b></summary>
 
-Да. GenOffice открывает и сохраняет нативные файлы `.docx`, `.xlsx` и
+Да. Office-cc открывает и сохраняет нативные файлы `.docx`, `.xlsx` и
 `.pptx`. Сохранение выполняется побайтово: части файла, которые вы не
 трогали, записываются обратно байт в байт, поэтому документы продолжают
 работать в Microsoft Office.
@@ -504,7 +504,7 @@ GenOffice активно развивается, и ваши отзывы вли
 </details>
 
 <details>
-<summary><b>Работает ли GenOffice офлайн?</b></summary>
+<summary><b>Работает ли Office-cc офлайн?</b></summary>
 
 Редактирование документов полностью локально — файлы никогда не покидают
 ваш компьютер при открытии, редактировании, сохранении или конвертации.
@@ -515,7 +515,7 @@ GenOffice активно развивается, и ваши отзывы вли
 </details>
 
 <details>
-<summary><b>Может ли GenOffice редактировать файлы PDF?</b></summary>
+<summary><b>Может ли Office-cc редактировать файлы PDF?</b></summary>
 
 Да — это настоящее редактирование текста и изображений PDF, которое
 переписывает поток содержимого страницы с сохранением исходных шрифтов, а не
@@ -524,7 +524,7 @@ GenOffice активно развивается, и ваши отзывы вли
 </details>
 
 <details>
-<summary><b>Может ли GenOffice конвертировать PDF в Word, Excel или PowerPoint?</b></summary>
+<summary><b>Может ли Office-cc конвертировать PDF в Word, Excel или PowerPoint?</b></summary>
 
 Да — полностью на устройстве: посимвольное извлечение через PDFium плюс
 анализ вёрстки на основе геометрии, без облачных сервисов и без загрузки
@@ -537,7 +537,7 @@ Windows их читает системный OCR, поэтому они конв
 <details>
 <summary><b>Могу ли я использовать свою ИИ-модель или API-ключ?</b></summary>
 
-Да. Помимо входа через Genspark без ключей, GenOffice поддерживает
+Да. Помимо входа через Genspark без ключей, Office-cc поддерживает
 собственный ключ для Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen,
 Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty и OpenCode Zen/Go, а также любой
 совместимый с OpenAI эндпоинт — включая локальные серверы моделей. Поиск,
@@ -547,7 +547,7 @@ Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty и OpenCode Zen/Go, а та
 </details>
 
 <details>
-<summary><b>Может ли GenOffice конвертировать HTML в Word?</b></summary>
+<summary><b>Может ли Office-cc конвертировать HTML в Word?</b></summary>
 
 Да — функция Export as Word в приложении HTML создаёт нативный редактируемый
 файл `.docx` полностью на устройстве. Страница отрисовывается во встроенном
@@ -559,9 +559,9 @@ Chromium и сводится к настоящим структурам Word: з
 </details>
 
 <details>
-<summary><b>Могу ли я управлять GenOffice из Claude Code, Codex, Cursor или скрипта?</b></summary>
+<summary><b>Могу ли я управлять Office-cc из Claude Code, Codex, Cursor или скрипта?</b></summary>
 
-Да. GenOffice устанавливает командную строку `genoffice`, которая запускает те
+Да. Office-cc устанавливает командную строку `officecc`, которая запускает те
 же движки без графического интерфейса: инспектируйте, конвертируйте,
 создавайте, читайте и редактируйте документы из терминала или скрипта, с
 выводом `--json` для программ. Встроенный агентный скилл учит Claude Code,
@@ -572,14 +572,14 @@ Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode и Windsurf пользова
 </details>
 
 <details>
-<summary><b>Собирает ли GenOffice какие-либо данные?</b></summary>
+<summary><b>Собирает ли Office-cc какие-либо данные?</b></summary>
 
 Официальные сборки по умолчанию отправляют ограниченную
 аналитику использования, и вы можете отключить её в любой момент в разделе
 «Настройки → Общие». Аналитика никогда не передаёт содержимое документов,
 имена и пути файлов, идентификатор учётной записи или адреса электронной
 почты. Полный перечень событий и раскрытие данных — в
-[GenOffice Privacy](../../PRIVACY.md).
+[Office-cc Privacy](../../PRIVACY.md).
 
 </details>
 
@@ -591,7 +591,7 @@ Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode и Windsurf пользова
 
 ## Благодарности
 
-GenOffice был бы невозможен без этих проектов с открытым исходным кодом:
+Office-cc был бы невозможен без этих проектов с открытым исходным кодом:
 
 - [Electron](https://www.electronjs.org/) — среда выполнения для каждого
   приложения.
@@ -641,10 +641,10 @@ MIT/Apache-2.0/BSD-3-Clause/OFL.
 
 ## Лицензия
 
-GenOffice распространяется по лицензии [Apache License 2.0](../../LICENSE),
+Office-cc распространяется по лицензии [Apache License 2.0](../../LICENSE),
 с одним исключением: каталог `ee/` зарезервирован для будущих корпоративных
-модулей и покрывается [GenOffice Enterprise License](../../ee/LICENSE).
+модулей и покрывается [Office-cc Enterprise License](../../ee/LICENSE).
 
-Названия и логотипы GenOffice и Genspark являются товарными знаками Mainfunc,
+Названия и логотипы Office-cc и Genspark являются товарными знаками Mainfunc,
 Inc. Лицензия Apache-2.0 не даёт права использовать их (см. раздел 6);
 форки должны использовать собственный брендинг.

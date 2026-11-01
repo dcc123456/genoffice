@@ -1,6 +1,6 @@
 {
-  "name": "@genoffice/pdf",
-  "productName": "GenOffice PDF",
+  "name": "@office-cc/pdf",
+  "productName": "Office-cc PDF",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -15,13 +15,13 @@
   },
   "devDependencies": {
     "@embedpdf/pdfium": "^2.15.1",
-    "@genoffice/agent-core": "*",
-    "@genoffice/ai-provider": "*",
-    "@genoffice/ai-search": "*",
-    "@genoffice/electron-utils": "*",
-    "@genoffice/font-metrics": "*",
-    "@genoffice/i18n": "*",
-    "@genoffice/ui": "*",
+    "@office-cc/agent-core": "*",
+    "@office-cc/ai-provider": "*",
+    "@office-cc/ai-search": "*",
+    "@office-cc/electron-utils": "*",
+    "@office-cc/font-metrics": "*",
+    "@office-cc/i18n": "*",
+    "@office-cc/ui": "*",
     "@types/node-forge": "^1.3.14",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -40,5 +40,5 @@
     "vite-plugin-static-copy": "^3.0.0",
     "vitest": "^4.1.11"
   },
-  "author": "GenOffice"
+  "author": "Office-cc"
 }

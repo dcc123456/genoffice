@@ -13,9 +13,9 @@ import {
 } from '@univerjs/core'
 import { IRenderManagerService, SHEET_VIEWPORT_KEY } from '@univerjs/engine-render'
 import { SheetSkeletonManagerService } from '@univerjs/preset-sheets-core'
-import { columnLabel, formatAddress } from '@genoffice/xlsx-gateway/domain/cell-address'
-import type { WorkbookOperation } from '@genoffice/xlsx-gateway/domain/workbook-dsl'
-import type { ApplyOutcome } from '@genoffice/xlsx-gateway/domain/workbook.types'
+import { columnLabel, formatAddress } from '@office-cc/xlsx-gateway/domain/cell-address'
+import type { WorkbookOperation } from '@office-cc/xlsx-gateway/domain/workbook-dsl'
+import type { ApplyOutcome } from '@office-cc/xlsx-gateway/domain/workbook.types'
 import { SET_ROW_IS_AUTO_HEIGHT_COMMAND } from './autofit-multi-row'
 import { CELL_HIDDEN_KEY, CELL_LOCKED_KEY, effectiveSheetProtection } from './sheet-protection'
 import { fullColumnSpans, fullRowSpans } from './autofit-selection'
@@ -24,11 +24,11 @@ import { nextSheetName } from './op-executor'
 import {
   transposeChartSeries,
   type ChartSeriesVisualState,
-} from '@genoffice/xlsx-gateway/domain/chart-visual'
+} from '@office-cc/xlsx-gateway/domain/chart-visual'
 import {
   applyFlashFillTemplate,
   inferFlashFillTemplate,
-} from '@genoffice/xlsx-gateway/domain/flash-fill'
+} from '@office-cc/xlsx-gateway/domain/flash-fill'
 import type {
   WorkbookChartEdit,
   WorkbookStyleEdit,

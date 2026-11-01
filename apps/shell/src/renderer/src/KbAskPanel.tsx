@@ -8,7 +8,7 @@ import {
   createKnowledgeBaseSkill,
   type CreateDocumentFormat,
   type KbFileInfo,
-} from '@genoffice/agent-core'
+} from '@office-cc/agent-core'
 import {
   AiComposer,
   AiTypingIndicator,
@@ -17,8 +17,8 @@ import {
   createFileNav,
   Markdown,
   type AiTokenUsageView,
-} from '@genoffice/ui'
-import type { AiSettings } from '@genoffice/ai-provider'
+} from '@office-cc/ui'
+import type { AiSettings } from '@office-cc/ai-provider'
 import { useI18n } from './locale'
 import sendEnterOn from './assets/send-enter-on.png'
 import sendEnterOff from './assets/send-enter-off.png'

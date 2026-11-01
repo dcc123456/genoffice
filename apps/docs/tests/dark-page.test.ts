@@ -14,7 +14,7 @@ import type {
   StyleDisplay,
   StyleInfo,
   TableStyleDisplay,
-} from '@genoffice/docx-engine'
+} from '@office-cc/docx-engine'
 import {
   DARK_PAPER_HEX,
   darkPageBorderCss,

@@ -1,8 +1,8 @@
 /**
- * GenOffice's own Genspark identity: device-code login (office_addin_auth,
- * app_type=genoffice) minting a gsk API key named "genoffice" — the key_name
+ * Office-cc's own Genspark identity: device-code login (office_addin_auth,
+ * app_type=officecc) minting a gsk API key named "officecc" — the key_name
  * lands in billing as billing_tag, attributing all traffic (incl. gsk CLI
- * subprocesses) to GenOffice. Stored in ~/.genoffice/auth.json, deliberately
+ * subprocesses) to Office-cc. Stored in ~/.officecc/auth.json, deliberately
  * NOT the shared config.json that Claw Desktop overwrites on every launch.
  *
  * Flow: POST /device_code → browser approve → poll /token for a 30-day Bearer
@@ -25,8 +25,8 @@ export interface GskLoginProgress {
   error?: string
 }
 
-const APP_TYPE = 'genoffice'
-const KEY_NAME = 'genoffice'
+const APP_TYPE = 'officecc'
+const KEY_NAME = 'officecc'
 const HTTP_TIMEOUT_MS = 30_000
 
 /** https on the endpoint's registrable domain only; IP literals and single-label
@@ -106,7 +106,7 @@ async function proxyFallbackFetch(): Promise<typeof fetch | null> {
         session?: { fromPartition: (partition: string) => ProxySession }
       }
       if (session) {
-        const ses = session.fromPartition('genoffice-login-proxy')
+        const ses = session.fromPartition('officecc-login-proxy')
         await ses.setProxy({ proxyRules: proxyUrl })
         impl = ses.fetch.bind(ses)
       }
@@ -126,22 +126,22 @@ async function loginFetchChannels(): Promise<(typeof fetch)[]> {
   return proxyFallbackPreferred ? [fallback, primary] : [primary, fallback]
 }
 
-/** Override dir via GENOFFICE_AUTH_DIR (test isolation). */
-export function genofficeAuthPath(): string {
-  return join(process.env.GENOFFICE_AUTH_DIR || join(homedir(), '.genoffice'), 'auth.json')
+/** Override dir via OFFICECC_AUTH_DIR (test isolation). */
+export function officeccAuthPath(): string {
+  return join(process.env.OFFICECC_AUTH_DIR || join(homedir(), '.officecc'), 'auth.json')
 }
 
-export interface GenofficeAuth {
+export interface OfficeccAuth {
   apiKey: string
   keyId?: string
   accessToken?: string
 }
 
-let cachedAuth: GenofficeAuth | null | undefined
+let cachedAuth: OfficeccAuth | null | undefined
 
-function readAuthFile(): GenofficeAuth | null {
+function readAuthFile(): OfficeccAuth | null {
   try {
-    const raw = asRecord(JSON.parse(readFileSync(genofficeAuthPath(), 'utf-8')))
+    const raw = asRecord(JSON.parse(readFileSync(officeccAuthPath(), 'utf-8')))
     if (typeof raw.api_key !== 'string' || !raw.api_key) return null
     return {
       apiKey: raw.api_key,
@@ -155,23 +155,23 @@ function readAuthFile(): GenofficeAuth | null {
   }
 }
 
-export function loadGenofficeAuth(): GenofficeAuth | null {
+export function loadOfficeccAuth(): OfficeccAuth | null {
   if (cachedAuth === undefined) cachedAuth = readAuthFile()
   return cachedAuth
 }
 
 /** Drop the cache so the next read sees a key written by another process. */
-export function reloadGenofficeAuth(): void {
+export function reloadOfficeccAuth(): void {
   cachedAuth = undefined
 }
 
-/** The GenOffice-named api key; '' when not signed in. Cached (invalidated by login/logout). */
-export function genofficeApiKey(): string {
-  return loadGenofficeAuth()?.apiKey ?? ''
+/** The Office-cc-named api key; '' when not signed in. Cached (invalidated by login/logout). */
+export function officeccApiKey(): string {
+  return loadOfficeccAuth()?.apiKey ?? ''
 }
 
-function saveAuth(auth: GenofficeAuth): void {
-  const path = genofficeAuthPath()
+function saveAuth(auth: OfficeccAuth): void {
+  const path = officeccAuthPath()
   mkdirSync(dirname(path), { recursive: true })
   writeFileSync(
     path,
@@ -187,7 +187,7 @@ function saveAuth(auth: GenofficeAuth): void {
 
 function clearAuth(): void {
   try {
-    if (existsSync(genofficeAuthPath())) unlinkSync(genofficeAuthPath())
+    if (existsSync(officeccAuthPath())) unlinkSync(officeccAuthPath())
   } catch {
     /* local sign-out must not throw */
   }
@@ -390,7 +390,7 @@ async function runDeviceLogin(
   const minted = await mintKey(cookie, signal)
   if (minted.kind === 'fresh_auth_required') throw new LoginFlowError('fresh_auth_required')
   if (minted.kind === 'error') throw new LoginFlowError(minted.reason)
-  const previousKeyId = loadGenofficeAuth()?.keyId ?? staleKeyId
+  const previousKeyId = loadOfficeccAuth()?.keyId ?? staleKeyId
   saveAuth({
     apiKey: minted.apiKey,
     ...(minted.keyId ? { keyId: minted.keyId } : {}),
@@ -416,11 +416,11 @@ async function runDeviceLogin(
 let activeLogin: { cancel: () => void } | null = null
 
 /**
- * Starts the GenOffice device-code login, cancelling a previous in-flight one
+ * Starts the Office-cc device-code login, cancelling a previous in-flight one
  * (its device code would otherwise be approved into a dead flow). The caller
  * opens `url` in the system browser. Returns whether the flow was started.
  */
-export function startGenofficeLogin(onEvent?: (progress: GskLoginProgress) => void): boolean {
+export function startOfficeccLogin(onEvent?: (progress: GskLoginProgress) => void): boolean {
   activeLogin?.cancel()
   const emit = onEvent ?? (() => {})
   const controller = new AbortController()
@@ -480,20 +480,20 @@ export type GskRecoveryOutcome =
  * is Electron-free). Registered by the main process; without one, recovery
  * only signs out locally and the existing login button takes over.
  */
-export function setGenofficeLoginOpener(openUrl: ((url: string) => void) | null): void {
+export function setOfficeccLoginOpener(openUrl: ((url: string) => void) | null): void {
   loginOpener = openUrl
 }
 
 /**
- * Drops GenOffice's own key from memory and disk when it equals `key` (the
+ * Drops Office-cc's own key from memory and disk when it equals `key` (the
  * server answered 401: expired or revoked), so hasGskAuth() turns false and
  * the existing sign-in UI shows. Returns whether our key was dropped.
  */
-export function invalidateGenofficeKey(key: string): boolean {
+export function invalidateOfficeccKey(key: string): boolean {
   // re-read disk: another process may already have replaced the rejected key
   // with a fresh one, which must survive
-  reloadGenofficeAuth()
-  const auth = loadGenofficeAuth()
+  reloadOfficeccAuth()
+  const auth = loadOfficeccAuth()
   if (!key || !auth || auth.apiKey !== key) return false
   staleKeyId = auth.keyId
   staleAccessToken = auth.accessToken
@@ -512,8 +512,8 @@ async function remintWithStoredSession(accessToken: string, generation: number):
     // the user signed out while this was in flight: the key must not land
     if (generation !== signOutGeneration) return false
     // another process may have logged in meanwhile; never overwrite its key
-    reloadGenofficeAuth()
-    if (loadGenofficeAuth()) return true
+    reloadOfficeccAuth()
+    if (loadOfficeccAuth()) return true
     saveAuth({
       apiKey: minted.apiKey,
       ...(minted.keyId ? { keyId: minted.keyId } : {}),
@@ -554,7 +554,7 @@ export function recoverFromRejectedGskKey(
   }
   const run = (async (): Promise<GskRecoveryOutcome> => {
     const wasReminted = !!key && key === lastRemintedKey
-    invalidateGenofficeKey(key)
+    invalidateOfficeccKey(key)
     // the Bearer gets one silent attempt: a refused re-mint will be refused again
     const bearer = staleAccessToken
     staleAccessToken = undefined
@@ -564,7 +564,7 @@ export function recoverFromRejectedGskKey(
     if (
       !allowLogin ||
       generation !== signOutGeneration ||
-      genofficeLoginInFlight() ||
+      officeccLoginInFlight() ||
       autoLoginLaunched ||
       !loginOpener
     ) {
@@ -572,7 +572,7 @@ export function recoverFromRejectedGskKey(
     }
     autoLoginLaunched = true
     const open = loginOpener
-    startGenofficeLogin((progress) => {
+    startOfficeccLogin((progress) => {
       if (progress.phase === 'url' && progress.url) open(progress.url)
     })
     return 'login_started'
@@ -583,8 +583,8 @@ export function recoverFromRejectedGskKey(
   return run
 }
 
-/** True while a login started via startGenofficeLogin is in flight. */
-export function genofficeLoginInFlight(): boolean {
+/** True while a login started via startOfficeccLogin is in flight. */
+export function officeccLoginInFlight(): boolean {
   return activeLogin !== null
 }
 
@@ -593,22 +593,22 @@ export function genofficeLoginInFlight(): boolean {
  * in-flight flow (restarting would strand it on a dead device code); openUrl
  * is the caller's browser opener (this module is Electron-free).
  */
-export function ensureGenofficeLogin(openUrl: (url: string) => void): void {
-  if (genofficeLoginInFlight()) return
-  startGenofficeLogin((progress) => {
+export function ensureOfficeccLogin(openUrl: (url: string) => void): void {
+  if (officeccLoginInFlight()) return
+  startOfficeccLogin((progress) => {
     if (progress.url) openUrl(progress.url)
   })
 }
 
 /**
- * Signs out of GenOffice only: best-effort server-side revoke of the
- * genoffice key, then local removal. The shared gsk CLI login
+ * Signs out of Office-cc only: best-effort server-side revoke of the
+ * officecc key, then local removal. The shared gsk CLI login
  * (~/.genspark-tool-cli) is untouched — terminal gsk and Claw keep working.
  */
-export async function genofficeLogout(): Promise<void> {
+export async function officeccLogout(): Promise<void> {
   // invalidate any in-flight recovery first: its re-mint or login must not undo this sign-out
   signOutGeneration++
-  const auth = loadGenofficeAuth()
+  const auth = loadOfficeccAuth()
   if (auth?.accessToken && auth.keyId) {
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), HTTP_TIMEOUT_MS)
@@ -628,7 +628,7 @@ export async function genofficeLogout(): Promise<void> {
 }
 
 /** Test hook: drop the auth cache, fetch-channel and recovery state. */
-export function resetGenofficeAuthCache(): void {
+export function resetOfficeccAuthCache(): void {
   cachedAuth = undefined
   staleKeyId = undefined
   staleAccessToken = undefined
@@ -642,6 +642,6 @@ export function resetGenofficeAuthCache(): void {
 }
 
 /** Test hook: whether the proxy fallback channel is currently preferred. */
-export function genofficeProxyFallbackPreferred(): boolean {
+export function officeccProxyFallbackPreferred(): boolean {
   return proxyFallbackPreferred
 }
