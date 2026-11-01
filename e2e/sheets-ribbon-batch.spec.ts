@@ -39,7 +39,6 @@ test.describe('sheets: ribbon batch-1 features', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-ribbon-batch',
       openFile: workbook,
     })
@@ -103,7 +102,6 @@ test.describe('sheets: ribbon batch-1 features', () => {
 
     // ── reopen: headers stay hidden (loads through the snapshot path) ──
     const second = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-ribbon-reopen',
       openFile: workbook,
     })
@@ -129,7 +127,6 @@ test.describe('sheets: ribbon batch-2 features', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-ribbon-batch2',
       openFile: workbook,
     })
@@ -209,7 +206,6 @@ test.describe('sheets: ribbon batch-3 features', () => {
     )
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-ribbon-batch3',
       openFile: workbook,
     })

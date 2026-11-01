@@ -121,7 +121,6 @@ test.describe('sheets: Enter runs the context-menu insert-N action', () => {
   test('insert 3 columns left of B via the count box and Enter', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-menu-enter-'))
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-menu-input-enter',
     })
     try {
@@ -159,7 +158,6 @@ test.describe('sheets: cell context menu Excel entries', () => {
   test('Pick From Drop-down List writes the pick and Filter by value hides the rest', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-menu-pick-'))
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-menu-pick-from-list',
     })
     try {

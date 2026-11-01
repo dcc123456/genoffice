@@ -21,7 +21,6 @@ for (const { ext, url, channel } of KINDS) {
     const filePath = join(dir, `empty.${ext}`)
     await writeFile(filePath, '')
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: `open-empty-${ext}`,
       openFile: filePath,
     })

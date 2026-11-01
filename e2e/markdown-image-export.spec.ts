@@ -41,7 +41,6 @@ test('Markdown File menu exports paginated PNG files with formula and local imag
       ).join('\n\n'),
   )
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'markdown-image-export',
     openFile: source,
   })

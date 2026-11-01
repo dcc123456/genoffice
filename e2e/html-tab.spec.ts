@@ -6,7 +6,7 @@ import { launchShell, closeAndSaveVideo, waitForPageWithUrl, screenshotPath } fr
 
 test.describe('html editor', () => {
   test('AI HTML quick card opens an html editor tab in preview view with a ribbon', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'new-html-tab' })
+    const launched = await launchShell({ videoDir: 'new-html-tab' })
     const { app, page } = launched
     try {
       const card = page.locator('.quick-card', { hasText: 'AI HTML' })
@@ -47,7 +47,6 @@ test.describe('html editor', () => {
     await writeFile(htmlPath, source)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'open-html-file',
       openFile: htmlPath,
     })
@@ -111,7 +110,6 @@ test.describe('html editor', () => {
     )
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-relative-assets',
       openFile: htmlPath,
     })
@@ -166,7 +164,6 @@ test.describe('html editor', () => {
     await writeFile(htmlPath, source, 'utf8')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-identity-save',
       openFile: htmlPath,
     })
@@ -190,7 +187,6 @@ test.describe('html editor', () => {
     await writeFile(htmlPath, '<html><body><h1>Topic</h1><p>Body.</p></body></html>\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-ai-panel',
       openFile: htmlPath,
     })
@@ -277,7 +273,6 @@ test.describe('html editor', () => {
     await writeFile(htmlPath, source)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-inspector',
       openFile: htmlPath,
     })
@@ -449,7 +444,6 @@ test.describe('html editor', () => {
       '<!doctype html>\n<html>\n<body>\n<h1>Alpha</h1>\n<p class="note">Beta</p>\n</body>\n</html>\n',
     )
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-undo-zoom',
       openFile: htmlPath,
     })
@@ -503,7 +497,6 @@ test.describe('html editor', () => {
     await writeFile(htmlPath, source)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-find-replace',
       openFile: htmlPath,
     })

@@ -196,7 +196,7 @@ test('docs: typing works immediately after opening a file from Home', async () =
   const docx = join(scratch, 'open-focus.docx')
   await copyFile(DOCX, docx)
 
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'open-focus-docs' })
+  const launched = await launchShell({ videoDir: 'open-focus-docs' })
   try {
     await openFromHome(launched.app, launched.page, docx)
     const docs = await waitForPageWithUrl(launched.app, '://docs/')
@@ -221,7 +221,6 @@ test('sheets: typing works when a spare view opens the next workbook', async () 
   await copyFile(XLSX, secondXlsx)
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'open-focus-sheets',
     // Keep prewarming enabled: the focus bug only shows when a spare is reused.
     env: { OFFICECC_DEBUG_HOOKS: '1', OFFICECC_NO_SPARE_VIEW: '' },

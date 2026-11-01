@@ -56,7 +56,6 @@ test.describe('docs list completion', () => {
   test('set numbering value, adjust indents and define a number format reach numbering.xml', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-list-completion',
       openFile: docPath,
     })

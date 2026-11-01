@@ -142,13 +142,12 @@ test.describe('MCP sheet values and addressing', () => {
     const outDir = await mkdtemp(join(tmpdir(), 'officecc-sheet-values-'))
     const outFile = join(outDir, 'values.xlsx')
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-sheet-values-userdata-'))
-    // seed settings that skip onboarding and turn MCP on (launchShell only
-    // writes its own file when onboardingSeen/settings are passed)
+    // seed settings that turn MCP on (launchShell only writes its own file
+    // when the settings option is passed)
     const { writeFile } = await import('node:fs/promises')
     await writeFile(
       join(userDataDir, 'app-settings.json'),
       JSON.stringify({
-        onboardingSeen: true,
         mcpEnabled: true,
         mcpPort: port,
         defaultSaveDir: outDir,
@@ -247,7 +246,7 @@ test.describe('MCP sheet values and addressing', () => {
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-sheet-names-userdata-'))
     await writeFile(
       join(userDataDir, 'app-settings.json'),
-      JSON.stringify({ onboardingSeen: true, mcpEnabled: true, mcpPort: port }),
+      JSON.stringify({ mcpEnabled: true, mcpPort: port }),
     )
     const launched = await launchShell({
       videoDir: 'mcp-sheet-names',

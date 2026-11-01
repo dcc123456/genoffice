@@ -86,7 +86,6 @@ test.describe('page break inside a table cell', () => {
     writeFileSync(docPath, await minimalDocx())
 
     const app = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-cell-page-break',
       openFile: docPath,
     })

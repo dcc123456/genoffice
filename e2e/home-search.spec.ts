@@ -55,7 +55,6 @@ test.describe('home file search', () => {
 
   test('finds files by content and name, highlights hits, opens a result', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { defaultSaveDir: root },
       videoDir: 'home-search',
     })

@@ -11,7 +11,7 @@ const POLL = { timeout: 15_000, intervals: [250, 500, 1000] }
 
 test('multiple pages grid follows clicks and the caret, collapses at 100%', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-multipage-view' })
+  const launched = await launchShell({ videoDir: 'docs-multipage-view' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

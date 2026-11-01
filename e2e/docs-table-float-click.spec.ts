@@ -78,7 +78,6 @@ test.describe('docs floating table click', () => {
   test('clicking a cell of a floating table puts the caret in that cell', async () => {
     test.setTimeout(120_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-table-float-click',
       openFile: docPath,
     })

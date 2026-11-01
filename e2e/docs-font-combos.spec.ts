@@ -15,7 +15,7 @@ interface AidocsWindow {
 test.describe('docs font and size combos', () => {
   test('type-ahead commits on Enter while Esc and blur restore', async () => {
     test.setTimeout(120_000)
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-font-combos' })
+    const launched = await launchShell({ videoDir: 'docs-font-combos' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

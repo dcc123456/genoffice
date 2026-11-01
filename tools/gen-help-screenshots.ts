@@ -127,7 +127,6 @@ async function makeScratch(): Promise<Scratch> {
     join(userData, 'app-settings.json'),
     JSON.stringify(
       {
-        onboardingSeen: true,
         folderRoots: [samples],
         defaultSaveDir: saveDir,
       },

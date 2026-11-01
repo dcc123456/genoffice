@@ -51,7 +51,6 @@ test.describe('sheets: edit and save an external workbook', () => {
 
     // ── session 1: open, edit A1, save ──
     const first = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-edit-save',
       openFile: workbook,
     })
@@ -88,7 +87,6 @@ test.describe('sheets: edit and save an external workbook', () => {
 
     // ── session 2: reopen the saved file, the edited value is really in the grid ──
     const second = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-reopen',
       openFile: workbook,
     })

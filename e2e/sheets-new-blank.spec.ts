@@ -16,7 +16,7 @@ import { launchShell, closeAndSaveVideo, waitForPageWithUrl, screenshotPath } fr
 test.describe('sheets: new blank workbook', () => {
   test('quick-create saves the first edit through Save As and leaves the default folder empty', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-sheets-blank-'))
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'sheets-new-blank' })
+    const launched = await launchShell({ videoDir: 'sheets-new-blank' })
     try {
       const { app, page } = launched
       // keep the auto-created workbook out of the real ~/Documents/Office-cc

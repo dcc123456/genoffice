@@ -59,7 +59,6 @@ test.describe('docs layout breaks menu', () => {
   test('page, column, text wrapping and section breaks save as OOXML; cover page removal', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-layout-breaks',
       openFile: docPath,
     })

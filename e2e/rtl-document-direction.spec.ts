@@ -30,7 +30,7 @@ const directionOf = (page: Page, host: string) =>
 
 test('the UI chrome itself mirrors under ar', async () => {
   test.setTimeout(180_000)
-  const launched = await launchShell({ onboardingSeen: true, lang: 'ar', videoDir: 'rtl-chrome' })
+  const launched = await launchShell({ lang: 'ar', videoDir: 'rtl-chrome' })
   try {
     await expect(launched.page.locator('html')).toHaveAttribute('dir', 'rtl')
   } finally {
@@ -42,7 +42,6 @@ for (const { name, card, url, host } of APPS) {
   test(`${name}: a new document's surface stays ltr`, async () => {
     test.setTimeout(240_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       lang: 'ar',
       videoDir: `rtl-${name}`,
     })

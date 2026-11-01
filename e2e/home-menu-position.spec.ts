@@ -26,7 +26,6 @@ test.describe('home row menu position', () => {
 
   test('the tree row menu opens below its button and inside the window', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { defaultSaveDir: root },
       videoDir: 'home-menu-position',
     })

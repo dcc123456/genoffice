@@ -112,7 +112,6 @@ test.describe('MCP visible grid session', () => {
       join(userDataDir, 'app-settings.json'),
       // the blank workbook create_session writes lands in the default save folder
       JSON.stringify({
-        onboardingSeen: true,
         mcpEnabled: true,
         mcpPort: port,
         defaultSaveDir: outDir,

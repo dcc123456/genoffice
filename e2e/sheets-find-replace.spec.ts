@@ -74,7 +74,6 @@ test('sheets: Excel-style Find & Replace panel', async () => {
   await writeFile(workbook, await buildWorkbook())
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'sheets-find-replace',
     openFile: workbook,
     lang: 'en',

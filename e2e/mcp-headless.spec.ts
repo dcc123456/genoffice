@@ -66,7 +66,6 @@ test.describe('MCP headless generation', () => {
     await writeFile(
       join(userDataDir, 'app-settings.json'),
       JSON.stringify({
-        onboardingSeen: true,
         mcpEnabled: true,
         mcpPort: port,
         mcpBackground: true,

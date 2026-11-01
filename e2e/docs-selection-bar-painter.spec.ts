@@ -128,7 +128,6 @@ test.describe('docs selection bar and format painter', () => {
   test('selection bar selects line, lines, paragraph and document', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-selection-bar',
       openFile: docPath,
     })
@@ -198,7 +197,6 @@ test.describe('docs selection bar and format painter', () => {
   test('format painter brushes the clicked word, locks on double-click, has copy/paste chords', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-format-painter',
       openFile: docPath,
     })

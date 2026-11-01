@@ -119,7 +119,7 @@ test('the composing font rule leaves rendered lines byte-identical and reports i
   // probe pass: pick an EA face this host is missing so the standIn strut
   // activates, exactly as on a machine without the document's fonts. Home
   // has no '://home/' URL — launchShell's own page IS the Home window.
-  const probe = await launchShell({ onboardingSeen: true, videoDir: 'docs-cjk-compose-probe' })
+  const probe = await launchShell({ videoDir: 'docs-cjk-compose-probe' })
   // no initialiser: the try either assigns it or throws, so an initial `null`
   // could never be read (no-useless-assignment)
   let eaFace: string | null
@@ -135,7 +135,6 @@ test('the composing font rule leaves rendered lines byte-identical and reports i
   writeFileSync(docPath, await cjkDocx(face))
 
   const launched = await launchShell({
-    onboardingSeen: true,
     openFile: docPath,
     videoDir: 'docs-cjk-compose-scope',
   })

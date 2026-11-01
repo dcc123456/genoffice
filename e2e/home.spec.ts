@@ -3,7 +3,7 @@ import { launchShell, closeAndSaveVideo, screenshotPath } from './helpers'
 
 test.describe('home screen', () => {
   test('shows hero, quick-create cards and tab bar', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'home-basics' })
+    const launched = await launchShell({ videoDir: 'home-basics' })
     const { page } = launched
     try {
       await expect(page.locator('.home-hero')).toBeVisible()
@@ -24,7 +24,6 @@ test.describe('home screen', () => {
 
   test('renders localized UI when OFFICECC_LANG=zh-CN', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       lang: 'zh-CN',
       videoDir: 'home-zh-cn',
     })

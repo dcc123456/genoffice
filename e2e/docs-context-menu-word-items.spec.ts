@@ -50,7 +50,7 @@ const menuLabels = (page: Page) =>
 
 test('hyperlink context menu items and Review comment navigation', async () => {
   test.setTimeout(150_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'ctx-word-items' })
+  const launched = await launchShell({ videoDir: 'ctx-word-items' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

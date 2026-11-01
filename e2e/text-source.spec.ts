@@ -23,7 +23,6 @@ test.describe('source text files', () => {
 
     // a watch folder is what puts the file on Home in the first place
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { defaultSaveDir: dir },
       videoDir: 'txt-open-from-home',
     })
@@ -62,7 +61,6 @@ test.describe('source text files', () => {
     await writeFile(txtPath, Buffer.from(ORIGINAL_TEXT, 'utf8'))
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'txt-roundtrip',
       openFile: txtPath,
     })

@@ -40,7 +40,6 @@ test.describe('sheets: Insert → Recommended Charts and Icons', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-insert-gallery',
       openFile: workbook,
     })

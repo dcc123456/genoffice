@@ -19,7 +19,6 @@ test.describe('sheets: tiled paste of formulas survives save', () => {
   test('followers keep their (shifted) formula in the saved xlsx', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-paste-save-'))
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-paste-shared-formula-save',
     })
     try {

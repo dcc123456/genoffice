@@ -27,7 +27,6 @@ test('markdown theme picker applies, persists and restarts', async () => {
     '# Theme probe\n\n\u4e00\u6bb5\u4e2d\u6587\u6b63\u6587\uff0c\u7528\u4e8e\u89c2\u5bdf\u7eb8\u9762\u4e0e\u58a8\u8272\u3002\n\n```js\nconst x = 1\n```\n',
   )
   const launched = await launchShell({
-    onboardingSeen: true,
     openFile: docPath,
     videoDir: 'markdown-theme-picker',
   })
@@ -62,7 +61,6 @@ test('markdown theme picker applies, persists and restarts', async () => {
     closed = true
     await closeAndSaveVideo(launched, 'markdown-theme-picker')
     const relaunch = await launchShell({
-      onboardingSeen: true,
       openFile: docPath,
       videoDir: 'markdown-theme-picker',
       userDataDir: launched.userDataDir,

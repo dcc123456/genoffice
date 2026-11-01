@@ -50,7 +50,6 @@ async function clickSequenceVideoDeck(): Promise<string> {
 test('click-sequence video plays on the first click of the show', async () => {
   const deck = await clickSequenceVideoDeck()
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'slides-show-media-play',
     openFile: deck,
   })

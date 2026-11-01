@@ -57,7 +57,6 @@ test.describe('sheets: export the active sheet as CSV', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-csv-export',
       openFile: workbook,
     })
@@ -100,7 +99,6 @@ test.describe('sheets: export the active sheet as CSV', () => {
     await copyFile(FORMULA_FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-csv-export-formula',
       openFile: workbook,
     })
@@ -145,7 +143,6 @@ test.describe('sheets: export the active sheet as CSV', () => {
     await copyFile(FORMULA_FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-csv-saveas',
       openFile: workbook,
     })

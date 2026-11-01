@@ -86,7 +86,6 @@ test('a reader can withhold a value in the source view without changing the page
   await writeFile(htmlPath, SOURCE)
 
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { lang: 'en' },
     videoDir: 'redact-html',
     openFile: htmlPath,

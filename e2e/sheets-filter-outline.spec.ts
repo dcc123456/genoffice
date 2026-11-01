@@ -99,7 +99,6 @@ function rightEdge(page: Page, rect: CellRect): Promise<number> {
 test.describe('sheets: no outline around a filtered range', () => {
   test('creating a filter draws funnel buttons but no range border', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-filter-outline',
     })
     try {

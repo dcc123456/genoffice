@@ -68,7 +68,7 @@ test.describe('MCP read_pdf', () => {
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-mcp-pdf-userdata-'))
     await writeFile(
       join(userDataDir, 'app-settings.json'),
-      JSON.stringify({ onboardingSeen: true, mcpEnabled: true, mcpPort: port }),
+      JSON.stringify({ mcpEnabled: true, mcpPort: port }),
     )
     const launched = await launchShell({ videoDir: 'mcp-read-pdf', userDataDir })
     try {

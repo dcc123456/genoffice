@@ -13,7 +13,6 @@ test.describe('html editor: insert, resize, drag', () => {
     await writeFile(htmlPath, source)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'html-insert-drag',
       openFile: htmlPath,
     })

@@ -71,7 +71,6 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms))
 test('page-crossing justified lines keep natural word gaps across reflows', async () => {
   test.setTimeout(150_000)
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'justify-pagegap',
     openFile: FIXTURE,
   })

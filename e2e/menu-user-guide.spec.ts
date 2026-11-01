@@ -41,7 +41,7 @@ test('the manual survives an editor switch that swaps the application menu', asy
   const pptx = join(dir, 'deck.pptx')
   execFileSync('zip', ['-X', '-q', '-r', pptx, '.'], { cwd: fixture })
 
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'menu-user-guide' })
+  const launched = await launchShell({ videoDir: 'menu-user-guide' })
   const { page } = launched
   try {
     await expect(page.locator('.recent-row'))

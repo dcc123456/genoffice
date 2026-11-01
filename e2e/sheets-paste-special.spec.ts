@@ -32,7 +32,7 @@ interface SheetDims {
 
 test('paste special: transpose, add operation, paste link, undo', async () => {
   const scratch = await mkdtemp(join(tmpdir(), 'officecc-paste-special-'))
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'sheets-paste-special' })
+  const launched = await launchShell({ videoDir: 'sheets-paste-special' })
   try {
     const { app, page } = launched
     await app.evaluate(({ app: electronApp }, dir) => {

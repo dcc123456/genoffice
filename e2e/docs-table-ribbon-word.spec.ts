@@ -65,7 +65,6 @@ test.describe('docs table ribbon (Word layout)', () => {
   test('group order, Select ▾ row, Borders ▾ default, Shading palette, Cell Margins', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-table-ribbon-word',
       openFile: docPath,
     })

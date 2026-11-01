@@ -50,7 +50,7 @@ test.describe.configure({ retries: 1 })
 
 test('re-enabling spellcheck respells existing text without user input', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'spellcheck-reenable' })
+  const launched = await launchShell({ videoDir: 'spellcheck-reenable' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()
@@ -104,7 +104,7 @@ test('re-enabling spellcheck respells existing text without user input', async (
 
 test('toggling spellcheck never scrolls the view to the caret', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'spellcheck-noscroll' })
+  const launched = await launchShell({ videoDir: 'spellcheck-noscroll' })
   const { app } = launched
   try {
     await launched.page.locator('.quick-card').first().click()

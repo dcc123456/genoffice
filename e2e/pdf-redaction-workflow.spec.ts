@@ -18,7 +18,6 @@ test('redaction stays in the current tab and accumulates on its working copy', a
   const original = await pdf.save()
   await writeFile(source, original)
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'pdf-redaction',
     openFile: source,
   })

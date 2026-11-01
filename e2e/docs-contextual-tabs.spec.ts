@@ -67,7 +67,6 @@ test.describe('docs contextual ribbon tabs', () => {
   test('existing table keeps the tab, new table and pictures activate theirs', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-contextual-tabs',
       openFile: docPath,
     })

@@ -42,7 +42,6 @@ test.describe('sheets: whole-row move', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-move-rows',
       openFile: workbook,
     })

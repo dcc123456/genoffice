@@ -250,7 +250,6 @@ test.describe.serial('docs Word interaction smoke', () => {
     test.setTimeout(90_000)
     dir = realpathSync(mkdtempSync(join(tmpdir(), 'officecc-e2e-word-smoke-')))
     launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-word-interaction-smoke',
       settings: { defaultSaveDir: dir },
     })

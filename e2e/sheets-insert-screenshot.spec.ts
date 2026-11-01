@@ -22,7 +22,6 @@ test.describe('sheets: Insert → Screenshot', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-insert-screenshot',
       openFile: workbook,
     })

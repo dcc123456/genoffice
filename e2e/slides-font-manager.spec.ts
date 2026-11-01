@@ -29,7 +29,6 @@ async function buildRubikFixture(): Promise<string> {
 test('font download UI follows CDN configuration', async () => {
   test.setTimeout(180_000)
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'slides-font-manager',
     openFile: await buildRubikFixture(),
   })

@@ -41,7 +41,6 @@ test.describe('theme pipeline', () => {
     await writeFile(mdPath, '# Doc\n\nBody.\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'theme-pipeline',
       openFile: mdPath,
     })
@@ -71,7 +70,7 @@ test.describe('theme pipeline', () => {
     }
 
     // relaunch with the same userData: the persisted theme applies before first
-    // paint (no onboardingSeen — that option rewrites app-settings.json wholesale)
+    // paint (no settings option — that would rewrite app-settings.json wholesale)
     const relaunched = await launchShell({
       userDataDir: launched.userDataDir,
       videoDir: 'theme-pipeline-relaunch',

@@ -72,7 +72,6 @@ test.describe('docs ruler indent and margin handles', () => {
   test('markers write paragraph indents, margin handle writes page margins', async () => {
     test.setTimeout(150_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-ruler-indent',
       openFile: docPath,
     })

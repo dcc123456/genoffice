@@ -33,7 +33,6 @@ for (const locale of locales) {
     const launched = await launchShell({
       userDataDir,
       lang: locale.lang,
-      onboardingSeen: true,
       settings: { starPrompt: { resolved: true } },
       videoDir: 'settings-endpoint-layout',
     })

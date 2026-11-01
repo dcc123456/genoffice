@@ -26,7 +26,6 @@ interface SheetFacade {
 test('Insert Function leads into Function Arguments; fx reopens the call pre-filled', async () => {
   const scratch = await mkdtemp(join(tmpdir(), 'officecc-fn-args-'))
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'sheets-function-arguments',
   })
   try {

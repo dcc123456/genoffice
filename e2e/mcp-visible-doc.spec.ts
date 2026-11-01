@@ -106,13 +106,12 @@ test.describe('MCP visible document session', () => {
     const port = await freePort()
     const outDir = await mkdtemp(join(tmpdir(), 'officecc-mcp-e2e-'))
     const outFile = join(outDir, 'mcp-visible.docx')
-    // seed an app-settings.json that both skips onboarding and turns MCP on;
-    // launchShell only writes its own file when onboardingSeen is requested,
-    // so seed it here and leave that option off.
+    // seed app-settings.json that turns MCP on; launchShell only writes its
+    // own file when the settings option is passed, so seed it here.
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-mcp-userdata-'))
     await writeFile(
       join(userDataDir, 'app-settings.json'),
-      JSON.stringify({ onboardingSeen: true, mcpEnabled: true, mcpPort: port }),
+      JSON.stringify({ mcpEnabled: true, mcpPort: port }),
     )
     const launched = await launchShell({
       videoDir: 'mcp-visible',

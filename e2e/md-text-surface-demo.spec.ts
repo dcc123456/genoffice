@@ -47,7 +47,6 @@ test.describe('the same bytes under three names', () => {
   test('as .md', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { lang: 'en' },
       videoDir: 'demo-md',
       openFile: asMd,
@@ -123,7 +122,6 @@ test.describe('the same bytes under three names', () => {
   test('as .txt', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { lang: 'en' },
       videoDir: 'demo-txt',
       openFile: asTxt,
@@ -147,7 +145,6 @@ test.describe('the same bytes under three names', () => {
   test('as .json', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { lang: 'en' },
       videoDir: 'demo-json',
       openFile: asJson,

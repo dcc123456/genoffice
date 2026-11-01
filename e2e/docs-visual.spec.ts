@@ -62,7 +62,6 @@ test.describe('docs visual regression', () => {
   for (const doc of CORPUS) {
     test(`${doc.name} renders pixel-identical pages`, async () => {
       const launched = await launchShell({
-        onboardingSeen: true,
         videoDir: `docs-visual-${doc.name}`,
         openFile: resolve(FIXTURES_DIR, doc.file),
       })

@@ -53,7 +53,6 @@ test.describe('docs measurement unit preference', () => {
   test('ruler, margin dialog and indent fields follow the chosen unit', async () => {
     test.setTimeout(150_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-measurement-units',
       openFile: docPath,
     })

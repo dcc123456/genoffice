@@ -19,7 +19,6 @@ test.describe('markdown editor', () => {
     )
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'markdown-initial-scroll',
       openFile: mdPath,
     })
@@ -39,7 +38,7 @@ test.describe('markdown editor', () => {
   })
 
   test('AI Markdown quick card opens a markdown editor tab', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'new-markdown-tab' })
+    const launched = await launchShell({ videoDir: 'new-markdown-tab' })
     const { app, page } = launched
     try {
       const card = page.locator('.quick-card', { hasText: 'AI Markdown' })
@@ -64,7 +63,6 @@ test.describe('markdown editor', () => {
     await writeFile(mdPath, '# Doc\n\n:::callout {type="info"}\nBe careful.\n:::\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'markdown-slash-task',
       openFile: mdPath,
     })
@@ -104,7 +102,6 @@ test.describe('markdown editor', () => {
     await writeFile(mdPath, '---\ntitle: Note\n---\n\n# Hello\n\nSome **bold** text.\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'open-markdown-file',
       openFile: mdPath,
     })
@@ -172,7 +169,6 @@ test.describe('markdown editor', () => {
     await writeFile(mdPath, '# Topic\n\nSome content worth summarizing.\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'markdown-ai-preset',
       openFile: mdPath,
     })
@@ -202,7 +198,6 @@ test.describe('markdown editor', () => {
     await writeFile(mdPath, 'Hello style\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'markdown-bold-qat',
       openFile: mdPath,
     })
@@ -247,7 +242,6 @@ test.describe('markdown editor', () => {
     await writeFile(mdPath, '# Pics\n\n![a pic](assets/pic.png)\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'markdown-image-display',
       openFile: mdPath,
     })
@@ -273,7 +267,6 @@ test.describe('markdown editor', () => {
     await writeFile(mdPath, '# Alpha\n\nalpha beta **alpha**\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'markdown-find-replace',
       openFile: mdPath,
     })

@@ -70,7 +70,7 @@ test.describe.configure({ retries: 1 })
 
 test('context menu offers spelling suggestions and applies one', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'spell-suggestions' })
+  const launched = await launchShell({ videoDir: 'spell-suggestions' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

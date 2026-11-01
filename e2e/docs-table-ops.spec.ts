@@ -68,7 +68,6 @@ test.describe('docs table operations', () => {
   test('split cells, split table, cell alignment, border style and alt text save as OOXML', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-table-ops',
       openFile: docPath,
     })

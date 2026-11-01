@@ -20,7 +20,7 @@ const WEB_TEXT = 'web one strong'
 test.describe('docs paste split button', () => {
   test('menu modes paste the clipboard in the chosen mode', async () => {
     test.setTimeout(120_000)
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-paste-split' })
+    const launched = await launchShell({ videoDir: 'docs-paste-split' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

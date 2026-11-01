@@ -74,7 +74,7 @@ describe('readUiScale', () => {
   })
 
   it('treats a workbook that never set it as no scaling', () => {
-    expect(readUiScale(settingsFile({ onboardingSeen: true }))).toBe(1)
+    expect(readUiScale(settingsFile({ analyticsEnabled: true }))).toBe(1)
   })
 
   it('treats a missing settings file as no scaling', () => {

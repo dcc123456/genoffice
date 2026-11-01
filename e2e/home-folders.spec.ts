@@ -36,7 +36,6 @@ test.describe('home folders panel', () => {
 
   test('shows the tree, opens a folder, then creates / moves / renames / deletes on disk', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { defaultSaveDir: root },
       videoDir: 'home-folders',
     })
@@ -129,7 +128,6 @@ test.describe('home folders panel', () => {
     mkdirSync(join(extra, 'Projects', 'Alpha'), { recursive: true })
     writeFileSync(join(extra, 'Projects', 'plan.md'), '# plan')
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { defaultSaveDir: root, folderRoots: [extra] },
       videoDir: 'home-folders-roots',
     })
@@ -181,7 +179,6 @@ test.describe('home folders panel', () => {
 
   test('a file created from a folder view lands in that folder', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { defaultSaveDir: root },
       videoDir: 'home-folders-new-file',
     })

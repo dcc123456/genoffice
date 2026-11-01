@@ -48,7 +48,6 @@ test.describe('cli control channel', () => {
   test('goto selects a slide element and selection reads it back', async () => {
     test.setTimeout(120_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'cli-control',
       openFile: DECK,
     })
@@ -109,7 +108,6 @@ test.describe('cli control channel', () => {
   test('goto selects a docx block and selection reports the block range', async () => {
     test.setTimeout(120_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'cli-control-docs',
       openFile: DOC,
     })
@@ -142,7 +140,6 @@ test.describe('cli control channel', () => {
   test('goto activates a worksheet range and selection reads it back', async () => {
     test.setTimeout(120_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'cli-control-sheets',
       openFile: BOOK,
     })

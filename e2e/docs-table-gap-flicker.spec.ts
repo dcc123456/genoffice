@@ -19,7 +19,7 @@ interface AidocsWindow {
 
 test.describe('docs table page-gap stability', () => {
   test('colgroup-less table straddling a page boundary keeps pages and column widths stable', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-table-gap-flicker' })
+    const launched = await launchShell({ videoDir: 'docs-table-gap-flicker' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

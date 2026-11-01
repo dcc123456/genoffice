@@ -82,7 +82,6 @@ test('unequal-column sections never collapse and pagination ignores zoom', async
   const docPath = join(artifacts, 'unequal-cols-fixture.docx')
   writeFileSync(docPath, await unequalColsDocx())
   const launched = await launchShell({
-    onboardingSeen: true,
     openFile: docPath,
     videoDir: 'docs-unequal-cols-zoom-sweep',
   })
@@ -201,7 +200,6 @@ test('a corrupt w:cols count flows as one full-width column, not character slive
   zip.file('word/document.xml', corrupt)
   writeFileSync(docPath, await zip.generateAsync({ type: 'nodebuffer' }))
   const launched = await launchShell({
-    onboardingSeen: true,
     openFile: docPath,
     videoDir: 'docs-unequal-cols-zoom-sweep',
   })

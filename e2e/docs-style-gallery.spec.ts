@@ -39,7 +39,7 @@ interface AidocsWindow {
 test.describe('docs quick style gallery', () => {
   test('lists Word’s set in order, applies by id and opens the Styles pane', async () => {
     test.setTimeout(120_000)
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-style-gallery' })
+    const launched = await launchShell({ videoDir: 'docs-style-gallery' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

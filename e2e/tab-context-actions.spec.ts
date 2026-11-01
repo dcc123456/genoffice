@@ -12,7 +12,6 @@ test('tab context menu saves current edits from a background tab and tooltip sho
   const target = join(dir, 'notes-copy.md')
   await writeFile(source, '# Context menu\n\nOriginal paragraph.\n')
   const launched = await launchShell({
-    onboardingSeen: true,
     openFile: source,
     videoDir: 'tab-context-actions',
   })
@@ -98,7 +97,6 @@ test('Present tab has no enabled Save, Save As or Print commands', async () => {
   const source = join(dir, 'preview.html')
   await writeFile(source, '<!doctype html><html><body><h1>Present preview</h1></body></html>')
   const launched = await launchShell({
-    onboardingSeen: true,
     openFile: source,
     videoDir: 'tab-present-menu',
   })

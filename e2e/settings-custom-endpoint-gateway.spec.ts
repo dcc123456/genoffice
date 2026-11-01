@@ -102,7 +102,6 @@ async function drive(
 
 test('the default OpenAI-compatible shape still probes and connects as it always did', async () => {
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { starPrompt: { resolved: true } },
     videoDir: 'settings-endpoint-openai-compat',
   })
@@ -126,7 +125,6 @@ test('the default OpenAI-compatible shape still probes and connects as it always
 
 test('a declared Anthropic gateway is probed and connected on its own route', async () => {
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { starPrompt: { resolved: true } },
     videoDir: 'settings-endpoint-local-gateway',
   })

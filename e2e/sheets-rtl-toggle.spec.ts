@@ -14,7 +14,7 @@ import { launchShell, closeAndSaveVideo, waitForPageWithUrl, screenshotPath } fr
  */
 test('the View tab toggles the sheet grid direction', async () => {
   test.setTimeout(240_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'sheets-rtl-toggle' })
+  const launched = await launchShell({ videoDir: 'sheets-rtl-toggle' })
   try {
     await launched.page.locator('.quick-card').nth(1).click()
     const page = await waitForPageWithUrl(launched.app, '://sheets/')
@@ -54,7 +54,6 @@ test('a save after toggling carries rightToLeft in the file', async () => {
   const workbook = join(scratch, 'rtl-toggle.xlsx')
   await copyFile(FIXTURE, workbook)
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'sheets-rtl-save',
     openFile: workbook,
   })

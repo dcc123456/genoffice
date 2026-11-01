@@ -113,7 +113,7 @@ test.describe('MCP open documents', () => {
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-open-docs-userdata-'))
     await writeFile(
       join(userDataDir, 'app-settings.json'),
-      JSON.stringify({ onboardingSeen: true, mcpEnabled: true, mcpPort: port }),
+      JSON.stringify({ mcpEnabled: true, mcpPort: port }),
     )
     const launched = await launchShell({ videoDir: 'mcp-open-docs', userDataDir })
     const { page } = launched
@@ -229,7 +229,7 @@ test.describe('MCP open documents', () => {
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-open-docs-docx-userdata-'))
     await writeFile(
       join(userDataDir, 'app-settings.json'),
-      JSON.stringify({ onboardingSeen: true, mcpEnabled: true, mcpPort: port }),
+      JSON.stringify({ mcpEnabled: true, mcpPort: port }),
     )
     const launched = await launchShell({ videoDir: 'mcp-open-docs-docx', userDataDir })
     const { page } = launched
@@ -298,7 +298,7 @@ test.describe('MCP open documents', () => {
     const userDataDir = await mkdtemp(join(tmpdir(), 'officecc-open-docs-dirty-userdata-'))
     await writeFile(
       join(userDataDir, 'app-settings.json'),
-      JSON.stringify({ onboardingSeen: true, mcpEnabled: true, mcpPort: port }),
+      JSON.stringify({ mcpEnabled: true, mcpPort: port }),
     )
     const launched = await launchShell({ videoDir: 'mcp-open-docs-dirty', userDataDir })
     const { app, page } = launched

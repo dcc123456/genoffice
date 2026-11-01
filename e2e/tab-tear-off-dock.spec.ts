@@ -29,7 +29,6 @@ test.describe('tab tear-off and dock', () => {
     const mdPath = join(dir, 'notes.md')
     await writeFile(mdPath, '# Tear me off\n\nA paragraph.\n')
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'tab-tear-off-dock',
       openFile: mdPath,
     })

@@ -90,7 +90,7 @@ async function dragFillDown(
 test.describe('sheets: modifier-drag on the fill handle flips copy and series', () => {
   test('a lone number repeats on a plain drag and counts up under the modifier', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-ctrl-fill-'))
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'sheets-ctrl-drag-fill' })
+    const launched = await launchShell({ videoDir: 'sheets-ctrl-drag-fill' })
     try {
       const { app, page } = launched
       await app.evaluate(({ app: electronApp }, dir) => {

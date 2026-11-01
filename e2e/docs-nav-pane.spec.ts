@@ -12,7 +12,7 @@ const POLL = { timeout: 15_000, intervals: [250, 500, 1000] }
 
 test('headings tree, search results, pages and heading edits', async () => {
   test.setTimeout(150_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-nav-pane' })
+  const launched = await launchShell({ videoDir: 'docs-nav-pane' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

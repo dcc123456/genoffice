@@ -40,7 +40,6 @@ test.describe('sheets: paste repeats into an anchor-shaped target', () => {
   test('a copied 1×3 row tiles down a 4×1 selection', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-anchor-tile-'))
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-paste-anchor-tile',
     })
     try {

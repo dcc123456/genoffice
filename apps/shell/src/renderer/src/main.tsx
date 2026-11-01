@@ -20,14 +20,12 @@ if (IS_MAC) document.body.classList.add('vib')
 // non-mac: the tab strip doubles as the title bar (caption buttons overlay it)
 document.body.classList.add(IS_MAC ? 'mac' : 'overlay-title-bar')
 
-// resolve the persisted language, first-run flag, and theme before first paint
-// so the UI never flashes (home showing briefly before the onboarding overlay)
+// resolve the persisted language and theme before first paint so the UI
+// never flashes the wrong language or theme
 void Promise.all([
   window.aiOffice.getLanguage(),
-  // if the flag is unreadable, skip onboarding rather than block the home screen
-  window.aiOffice.onboardingSeen().catch(() => true),
   window.aiOffice.getTheme().catch(() => 'system' as const),
-]).then(([lang, onboardingSeen, theme]) => {
+]).then(([lang, theme]) => {
   document.documentElement.lang = htmlLang(lang)
   document.documentElement.dir = htmlDir(lang)
   // apply theme attribute before first paint to avoid flash
@@ -38,8 +36,8 @@ void Promise.all([
     if (next === 'system') document.documentElement.removeAttribute('data-theme')
     else document.documentElement.setAttribute('data-theme', next)
   })
-  // The manual tab is the same bundle branched on ?mode=help: no onboarding,
-  // no home state, just the searchable topic browser (issue #1520).
+  // The manual tab is the same bundle branched on ?mode=help: no home state,
+  // just the searchable topic browser (issue #1520).
   //
   // Split, though: this entry chunk is parsed on every launch whatever the tab
   // is, and the screen plus its stylesheet are only ever wanted on the other
@@ -57,7 +55,7 @@ void Promise.all([
             <HelpScreen />
           </React.Suspense>
         ) : (
-          <AppFrame initialOnboardingSeen={onboardingSeen} />
+          <AppFrame />
         )}
       </LocaleProvider>
     </React.StrictMode>,

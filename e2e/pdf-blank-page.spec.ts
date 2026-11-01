@@ -14,7 +14,6 @@ test('Insert blank page is a pending, undoable edit that lands in the file on sa
   await writeFile(pdfPath, await doc.save({ useObjectStreams: false }))
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'pdf-blank-page',
     openFile: pdfPath,
   })

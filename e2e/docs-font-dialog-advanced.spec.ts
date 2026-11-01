@@ -54,7 +54,6 @@ test.describe('docs font dialog advanced tab', () => {
   test('character spacing and small caps apply, save and read back', async () => {
     test.setTimeout(150_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-font-dialog-advanced',
       openFile: docPath,
     })

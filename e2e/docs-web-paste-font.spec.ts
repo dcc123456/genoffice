@@ -34,7 +34,7 @@ const INTERNAL_BARE = `<div data-pm-slice="1 1 []"><p>internal bare</p></div>`
 
 test.describe('docs web-HTML paste fonts', () => {
   test('web pastes follow the caret font when generic and keep concrete site fonts', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-web-paste-font' })
+    const launched = await launchShell({ videoDir: 'docs-web-paste-font' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

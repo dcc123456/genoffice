@@ -256,13 +256,6 @@ async function shootInstall(): Promise<void> {
   const home = join(root, 'home')
   const userData = join(root, 'userdata')
   for (const dir of [home, userData]) mkdirSync(dir, { recursive: true })
-  // Onboarding has to be marked seen: its welcome overlay sits over the window
-  // and swallows the click that opens Settings. The app generator seeds the same
-  // flag, and a fresh profile is otherwise in exactly this state.
-  writeFileSync(
-    join(userData, 'app-settings.json'),
-    JSON.stringify({ onboardingSeen: true }, null, 2),
-  )
   let app: ElectronApplication | null = null
   try {
     app = await electron.launch({

@@ -24,7 +24,7 @@ const WEB_TEXT = 'web one strong\n\nweb two'
 test.describe('docs paste options chip', () => {
   test('chip re-applies merge/text/source modes and remembers the default', async () => {
     test.setTimeout(120_000)
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-paste-options' })
+    const launched = await launchShell({ videoDir: 'docs-paste-options' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

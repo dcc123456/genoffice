@@ -11,7 +11,7 @@ import {
 
 /**
  * userData/app-settings.json helpers (src/main/app-settings.ts): a flat JSON
- * object shared by the language preference and the first-run onboarding flag.
+ * object shared by the language, theme and analytics preferences.
  */
 
 let dir: string
@@ -44,8 +44,8 @@ describe('readAppSettings', () => {
   })
 
   it('parses a valid settings object', () => {
-    writeFileSync(settingsPath, JSON.stringify({ language: 'zh', onboardingSeen: true }))
-    expect(readAppSettings(settingsPath)).toEqual({ language: 'zh', onboardingSeen: true })
+    writeFileSync(settingsPath, JSON.stringify({ language: 'zh', analyticsEnabled: true }))
+    expect(readAppSettings(settingsPath)).toEqual({ language: 'zh', analyticsEnabled: true })
   })
 
   it('round-trips the document page theme preference (officecc#1811)', () => {
@@ -58,16 +58,16 @@ describe('readAppSettings', () => {
 
 describe('writeAppSetting', () => {
   it('creates the file with the single key on first write', () => {
-    writeAppSetting(settingsPath, 'onboardingSeen', true)
-    expect(JSON.parse(readFileSync(settingsPath, 'utf8'))).toEqual({ onboardingSeen: true })
+    writeAppSetting(settingsPath, 'analyticsEnabled', true)
+    expect(JSON.parse(readFileSync(settingsPath, 'utf8'))).toEqual({ analyticsEnabled: true })
   })
 
   it('preserves unrelated existing keys', () => {
     writeFileSync(settingsPath, JSON.stringify({ language: 'ja' }))
-    writeAppSetting(settingsPath, 'onboardingSeen', true)
+    writeAppSetting(settingsPath, 'analyticsEnabled', true)
     expect(JSON.parse(readFileSync(settingsPath, 'utf8'))).toEqual({
       language: 'ja',
-      onboardingSeen: true,
+      analyticsEnabled: true,
     })
   })
 
@@ -85,13 +85,13 @@ describe('writeAppSetting', () => {
 })
 
 describe('writeAppSettings', () => {
-  it('persists onboarding completion and analytics choice together', () => {
+  it('persists several preferences in one atomic write', () => {
     writeFileSync(settingsPath, JSON.stringify({ language: 'en' }))
-    writeAppSettings(settingsPath, { onboardingSeen: true, analyticsEnabled: false })
+    writeAppSettings(settingsPath, { analyticsEnabled: false, uiScale: 1.25 })
     expect(JSON.parse(readFileSync(settingsPath, 'utf8'))).toEqual({
       language: 'en',
-      onboardingSeen: true,
       analyticsEnabled: false,
+      uiScale: 1.25,
     })
   })
 })

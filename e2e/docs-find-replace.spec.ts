@@ -10,7 +10,7 @@ const POLL = { timeout: 15_000, intervals: [250, 500, 1000] }
 
 test('find, wildcards, regex replace, go to and the Editing group', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-find-replace' })
+  const launched = await launchShell({ videoDir: 'docs-find-replace' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

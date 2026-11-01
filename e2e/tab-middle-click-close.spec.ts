@@ -3,7 +3,7 @@ import { launchShell, closeAndSaveVideo, waitForPageWithUrl } from './helpers'
 
 test.describe('tab bar', () => {
   test('middle-clicking a tab closes it', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'tab-middle-click-close' })
+    const launched = await launchShell({ videoDir: 'tab-middle-click-close' })
     const { app, page } = launched
     try {
       await page.locator('.quick-card').first().click()

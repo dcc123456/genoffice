@@ -25,7 +25,6 @@ async function openCustomProvider(page: import('@playwright/test').Page) {
 
 test('a custom endpoint carries a full declarative profile through save and relaunch', async () => {
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { starPrompt: { resolved: true } },
     videoDir: 'settings-endpoint-profile',
   })
@@ -110,7 +109,6 @@ test('a custom endpoint carries a full declarative profile through save and rela
   // launch exit immediately (its window closes before firstWindow resolves).
   const again = await launchShell({
     userDataDir,
-    onboardingSeen: true,
     videoDir: 'settings-endpoint-profile-reload',
   })
   try {
@@ -129,7 +127,6 @@ test('a custom endpoint carries a full declarative profile through save and rela
 
 test('a malformed header line is refused and the reason is shown', async () => {
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { starPrompt: { resolved: true } },
     videoDir: 'settings-endpoint-profile-bad',
   })

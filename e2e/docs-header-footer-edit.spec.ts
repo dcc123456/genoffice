@@ -75,7 +75,6 @@ test.describe('docs header/footer rich editing', () => {
   test('bold header text, page field, unlinked section header and header distance save', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-header-footer-edit',
       openFile: docPath,
     })

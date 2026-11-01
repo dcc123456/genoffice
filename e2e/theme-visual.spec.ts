@@ -64,7 +64,6 @@ test.describe('theme visual adoption', () => {
     await writeFile(htmlPath, '<html><body><p>Body.</p></body></html>\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'theme-visual-html',
       openFile: htmlPath,
     })
@@ -96,7 +95,6 @@ test.describe('theme visual adoption', () => {
     await writeFile(mdPath, '# Doc\n\nBody.\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'theme-visual-md',
       openFile: mdPath,
     })
@@ -122,7 +120,7 @@ test.describe('theme visual adoption', () => {
   })
 
   test('docs renders a dark page in dark theme; View ▸ Dark Mode switches back to white paper', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'theme-visual-docs' })
+    const launched = await launchShell({ videoDir: 'theme-visual-docs' })
     try {
       const shellPage = await findShellPage(launched.app)
       await shellPage.locator('.quick-card', { hasText: 'AI Docs' }).click()
@@ -173,7 +171,7 @@ test.describe('theme visual adoption', () => {
   })
 
   test('sheets chrome and Univer grid follow dark theme', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'theme-visual-sheets' })
+    const launched = await launchShell({ videoDir: 'theme-visual-sheets' })
     try {
       const shellPage = await findShellPage(launched.app)
       await shellPage.locator('.quick-card', { hasText: 'AI Sheets' }).click()
@@ -211,7 +209,6 @@ test.describe('theme visual adoption', () => {
   // context-menu label vanished on the light menu surface.
   test('sheets context menu stays readable with a dark app and a light document theme', async () => {
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'theme-visual-sheets-menu',
       settings: { documentTheme: 'light' },
     })
@@ -291,7 +288,6 @@ test.describe('theme visual adoption', () => {
     await writeFile(pdfPath, minimalPdf())
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'theme-visual-pdf',
       openFile: pdfPath,
     })

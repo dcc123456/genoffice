@@ -122,7 +122,6 @@ test.describe('docs mirrored margins', () => {
   test('even pages swap inside/outside on the canvas, ruler, dialog and export', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-mirrored-margins',
       openFile: docPath,
     })

@@ -3,7 +3,7 @@ import { launchShell, closeAndSaveVideo, waitForPageWithUrl, screenshotPath } fr
 
 test.describe('new file from home', () => {
   test('AI Docs quick card opens a docs editor tab', async () => {
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'new-doc-tab' })
+    const launched = await launchShell({ videoDir: 'new-doc-tab' })
     const { app, page } = launched
     try {
       await expect(page.locator('.quick-card').first()).toContainText('AI Docs')

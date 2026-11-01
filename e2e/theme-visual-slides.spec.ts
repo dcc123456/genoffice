@@ -23,7 +23,7 @@ function luminance(rgb: string): number {
 }
 
 test('slides chrome darkens while the slide canvas stays paper-white', async () => {
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'theme-visual-slides' })
+  const launched = await launchShell({ videoDir: 'theme-visual-slides' })
   try {
     const shellPage = await findShellPage(launched.app)
     await shellPage.locator('.quick-card', { hasText: 'AI Slides' }).click()

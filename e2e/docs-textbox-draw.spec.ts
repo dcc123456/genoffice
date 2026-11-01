@@ -12,7 +12,7 @@ const LETTER_REGIONS = new Set('US CA MX PH LR MM PR CL CO VE GT CR PA DO'.split
 
 test('draw text box inserts a box of the dragged size ready to type', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-textbox-draw' })
+  const launched = await launchShell({ videoDir: 'docs-textbox-draw' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

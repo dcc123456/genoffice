@@ -47,7 +47,6 @@ test.describe('sheets: Insert → Equation and Checkbox', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-insert-tier2',
       openFile: workbook,
     })
@@ -89,7 +88,6 @@ test.describe('sheets: Insert → Equation and Checkbox', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-insert-tier2',
       openFile: workbook,
     })
@@ -121,7 +119,6 @@ test.describe('sheets: Insert → Timeline', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-insert-tier2',
       openFile: workbook,
     })

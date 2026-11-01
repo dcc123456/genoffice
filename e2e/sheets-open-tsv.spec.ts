@@ -44,7 +44,6 @@ test.describe('sheets: opening a .tsv', () => {
     await writeFile(source, TSV)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-open-tsv',
       openFile: source,
       env: { OFFICECC_DEBUG_HOOKS: '1' },

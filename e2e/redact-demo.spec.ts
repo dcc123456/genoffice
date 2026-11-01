@@ -66,7 +66,6 @@ test.describe('withholding a span from the model', () => {
     expect(W).toContain('wordprocessingml')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       settings: { lang: 'en' },
       videoDir: 'redact-docs',
       openFile: docxPath,

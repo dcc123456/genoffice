@@ -19,7 +19,6 @@ const COMPACT_KEY = MAC ? 'Alt+Meta+KeyK' : 'Control+Alt+KeyK'
 test('slides: compact ribbon fits every tab without clipping', async () => {
   test.setTimeout(240_000)
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { lang: 'en' },
     videoDir: 'slides-ribbon-compact-clip',
   })

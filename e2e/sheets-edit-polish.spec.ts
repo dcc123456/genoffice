@@ -22,7 +22,6 @@ test.describe('sheets: manual visual inserts are undoable', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-edit-polish',
       openFile: workbook,
     })
@@ -67,7 +66,6 @@ test.describe('sheets: freeze journal follows undo', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-edit-polish',
       openFile: workbook,
     })
@@ -119,7 +117,6 @@ test.describe('sheets: Data → From Text/CSV', () => {
     await writeFile(csvPath, 'City,Population\nTokyo,37\nParis,11\n', 'utf8')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-edit-polish',
       openFile: workbook,
     })
@@ -155,7 +152,6 @@ test.describe('sheets: comment navigation', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-edit-polish',
       openFile: workbook,
     })

@@ -51,7 +51,6 @@ test('column border drag previews the width before mouseup', async () => {
   const docPath = join(dir, 'tables.docx')
   writeFileSync(docPath, await docx())
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'docs-table-resize-live',
     openFile: docPath,
   })

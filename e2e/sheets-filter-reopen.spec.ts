@@ -23,7 +23,6 @@ test.describe('sheets: filter criteria survive save and reopen', () => {
     test.setTimeout(180_000)
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-filter-reopen-'))
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-filter-reopen',
     })
     let savedPath = ''
@@ -102,7 +101,6 @@ test.describe('sheets: filter criteria survive save and reopen', () => {
 
     // reopen the saved file in a fresh app instance
     const relaunched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-filter-reopen-reopened',
       openFile: savedPath,
     })

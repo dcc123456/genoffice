@@ -52,8 +52,5 @@ describe('analytics consent preload API', () => {
 
     await expect(homeApi.setAnalyticsEnabled(false)).resolves.toBe(true)
     expect(electronMocks.invoke).toHaveBeenLastCalledWith(HOME_CHANNELS.setAnalyticsEnabled, false)
-
-    await expect(homeApi.setOnboardingSeen()).resolves.toBe(true)
-    expect(electronMocks.invoke).toHaveBeenLastCalledWith(HOME_CHANNELS.setOnboardingSeen)
   })
 })

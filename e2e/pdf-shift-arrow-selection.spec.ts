@@ -41,7 +41,6 @@ test('Shift+ArrowRight extends the text selection instead of flipping the page',
   await writeFile(pdfPath, twoRunTextPdf())
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'pdf-shift-arrow-selection',
     openFile: pdfPath,
   })

@@ -45,7 +45,7 @@ async function gridState(sheets: Page): Promise<GridState> {
 test.describe('sheets: ctrl+shift+arrow scroll follow', () => {
   test('extending the selection to the sheet edge scrolls the moving edge into view', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-jump-scroll-'))
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'sheets-jump-scroll' })
+    const launched = await launchShell({ videoDir: 'sheets-jump-scroll' })
     try {
       const { app, page } = launched
       await app.evaluate(({ app: electronApp }, dir) => {

@@ -28,7 +28,6 @@ test('pdf: compact ribbon fits every tab without clipping', async () => {
   await writeFile(pdfPath, await blank.save({ useObjectStreams: false }))
 
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { lang: 'en' },
     videoDir: 'pdf-ribbon-compact-clip',
     openFile: pdfPath,

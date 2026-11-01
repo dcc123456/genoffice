@@ -11,7 +11,7 @@ import { launchShell, closeAndSaveVideo, waitForPageWithUrl } from './helpers'
 test.describe('#2029 the comment author follows Settings → General → User name', () => {
   test('a new Slides comment is signed with the configured name', async () => {
     test.setTimeout(300_000)
-    const launched = await launchShell({ onboardingSeen: true, videoDir: 'author-name-2029' })
+    const launched = await launchShell({ videoDir: 'author-name-2029' })
     try {
       const shellPage = launched.page
       await shellPage.getByRole('button', { name: 'Settings', exact: true }).click()

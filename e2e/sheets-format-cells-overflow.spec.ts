@@ -26,7 +26,6 @@ for (const lang of ['fr', 'en']) {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: `sheets-format-cells-overflow-${lang}`,
       openFile: workbook,
       lang,

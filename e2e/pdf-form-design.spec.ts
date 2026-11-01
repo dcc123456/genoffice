@@ -13,7 +13,6 @@ test('Form Design authors text, checkbox and signature fields that Done writes a
   await writeFile(pdfPath, await blank.save({ useObjectStreams: false }))
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'pdf-form-design',
     openFile: pdfPath,
   })

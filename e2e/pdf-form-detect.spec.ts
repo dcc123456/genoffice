@@ -29,7 +29,6 @@ test('Form Design auto-detects blanks, boxes and label gaps as fields', async ()
   await writeFile(pdfPath, await doc.save({ useObjectStreams: false }))
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'pdf-form-detect',
     openFile: pdfPath,
   })

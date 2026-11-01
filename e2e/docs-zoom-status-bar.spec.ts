@@ -11,7 +11,7 @@ const POLL = { timeout: 15_000, intervals: [250, 500, 1000] }
 
 test('zoom 10–500, zoom dialog, page counter, view buttons and track changes', async () => {
   test.setTimeout(120_000)
-  const launched = await launchShell({ onboardingSeen: true, videoDir: 'docs-zoom-status-bar' })
+  const launched = await launchShell({ videoDir: 'docs-zoom-status-bar' })
   const { app, page } = launched
   try {
     await page.locator('.quick-card').first().click()

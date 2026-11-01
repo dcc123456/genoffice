@@ -342,14 +342,6 @@ const homeApi: HomeApi = {
     ipcRenderer.on('update:state-changed', listener)
     return () => ipcRenderer.removeListener('update:state-changed', listener)
   },
-  async onboardingSeen() {
-    const result: unknown = await ipcRenderer.invoke(HOME_CHANNELS.onboardingSeen)
-    return result === true
-  },
-  async setOnboardingSeen() {
-    const result: unknown = await ipcRenderer.invoke(HOME_CHANNELS.setOnboardingSeen)
-    return result === true
-  },
   async getTheme() {
     const result: unknown = await ipcRenderer.invoke(HOME_CHANNELS.getTheme)
     return result === 'dark' || result === 'light' ? result : 'system'
@@ -494,9 +486,6 @@ const homeApi: HomeApi = {
     ipcRenderer.on('app:document-theme-changed', listener)
     return () => ipcRenderer.removeListener('app:document-theme-changed', listener)
   },
-  async openGenTeam() {
-    await ipcRenderer.invoke(HOME_CHANNELS.openGenTeam)
-  },
   async openCreditUsage() {
     await ipcRenderer.invoke(HOME_CHANNELS.openCreditUsage)
   },
@@ -506,19 +495,6 @@ const homeApi: HomeApi = {
   async githubStars() {
     const result: unknown = await ipcRenderer.invoke(HOME_CHANNELS.githubStars)
     return typeof result === 'number' && Number.isFinite(result) ? result : null
-  },
-  async starPromptShouldShow() {
-    const result: unknown = await ipcRenderer.invoke(HOME_CHANNELS.starPromptShouldShow)
-    const raw = (result ?? {}) as { show?: unknown; docOpens?: unknown }
-    return {
-      show: raw.show === true,
-      docOpens:
-        typeof raw.docOpens === 'number' && Number.isFinite(raw.docOpens) ? raw.docOpens : 0,
-    }
-  },
-  async starPromptAction(action) {
-    if (action !== 'starred' && action !== 'later') throw new Error('Invalid star prompt action.')
-    await ipcRenderer.invoke(HOME_CHANNELS.starPromptAction, action)
   },
   async cloudProjectsCached() {
     const result: unknown = await ipcRenderer.invoke(HOME_CHANNELS.cloudProjectsCached)

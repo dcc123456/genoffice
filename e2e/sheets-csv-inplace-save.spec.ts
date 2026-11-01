@@ -33,7 +33,6 @@ test.describe('sheets: a CSV keeps its identity through Save', () => {
     await writeFile(csvSource, '\r\n'.repeat(5_927))
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-empty-csv',
       openFile: csvSource,
     })
@@ -59,7 +58,6 @@ test.describe('sheets: a CSV keeps its identity through Save', () => {
     await writeFile(csvSource, 'name,amount\r\nalpha,10\r\n')
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-csv-inplace-save',
       openFile: csvSource,
     })

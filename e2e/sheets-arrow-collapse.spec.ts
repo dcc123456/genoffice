@@ -47,7 +47,6 @@ test.describe('sheets: arrow collapses a multi-cell selection to the active cell
   test('after selecting two cells and cutting, ArrowRight lands next to the active cell', async () => {
     const scratch = await mkdtemp(join(tmpdir(), 'officecc-arrow-collapse-'))
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-arrow-collapse',
     })
     try {

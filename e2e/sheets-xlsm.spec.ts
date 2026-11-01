@@ -50,7 +50,6 @@ test.describe('sheets: macro-enabled workbook (.xlsm)', () => {
 
     // ── session 1: open, edit A1, save in place (stays .xlsm) ──
     const first = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-xlsm',
       openFile: workbook,
     })
@@ -87,7 +86,6 @@ test.describe('sheets: macro-enabled workbook (.xlsm)', () => {
 
     // ── session 2: the saved .xlsm reopens with the edit in the grid ──
     const second = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-xlsm-reopen',
       openFile: workbook,
     })

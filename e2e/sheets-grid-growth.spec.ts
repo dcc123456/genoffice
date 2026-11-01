@@ -39,7 +39,6 @@ test.describe('sheets: the grid grows ahead of the viewport', () => {
     await copyFile(FIXTURE, workbook)
 
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'sheets-grid-growth',
       openFile: workbook,
     })

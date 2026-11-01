@@ -30,7 +30,6 @@ test('image-sized PDF opens at true fit-to-width, not the old 50% zoom floor', a
   await writeFile(pdfPath, hugePagePdf())
 
   const launched = await launchShell({
-    onboardingSeen: true,
     videoDir: 'pdf-fit-zoom',
     openFile: pdfPath,
   })

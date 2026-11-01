@@ -25,7 +25,6 @@ const COMPACT_KEY = MAC ? 'Alt+Meta+KeyK' : 'Control+Alt+KeyK'
 test('compact ribbon fits every tab without clipping', async () => {
   test.setTimeout(240_000)
   const launched = await launchShell({
-    onboardingSeen: true,
     settings: { lang: 'en' },
     videoDir: 'ribbon-compact-clip',
   })

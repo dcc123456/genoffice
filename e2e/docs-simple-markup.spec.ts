@@ -81,7 +81,6 @@ test.describe('docs Simple Markup view', () => {
   test('opens in Simple Markup with change bars and balloons; a bar click shows All Markup', async () => {
     test.setTimeout(180_000)
     const launched = await launchShell({
-      onboardingSeen: true,
       videoDir: 'docs-simple-markup',
       openFile: docPath,
     })
