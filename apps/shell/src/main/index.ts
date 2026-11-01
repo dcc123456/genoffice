@@ -483,15 +483,29 @@ const SIDECAR_BIN = app.isPackaged
   ? join(process.resourcesPath, 'native', SIDECAR_EXE)
   : join(APPS_ROOT, 'sheets', 'native', 'xlsx-engine', 'target', 'release', SIDECAR_EXE)
 
+/**
+ * Where an editor module's dev server is listening. The root `npm run dev`
+ * pins every *_RENDERER_URL to the default port, so moving only *_DEV_PORT
+ * (the escape hatch when 5173+ are taken by another project) left the shell
+ * loading whatever else answered on 5173 — or nothing at all, which is a blank
+ * tab. Fall back to the port the module's vite server actually bound.
+ */
+function moduleDevUrl(urlVar: string, portVar: string, defaultPort: number): string | undefined {
+  const explicit = process.env[urlVar]
+  if (explicit) return explicit
+  // a packaged app serves the built files; there is no dev server to reach
+  if (app.isPackaged) return undefined
+  return `http://localhost:${process.env[portVar] || defaultPort}`
+}
 
 configureDocsRuntime({
   preloadPath: join(DOCS_OUT, 'preload', 'index.js'),
-  rendererUrl: process.env.DOCS_RENDERER_URL,
+  rendererUrl: moduleDevUrl('DOCS_RENDERER_URL', 'DOCS_DEV_PORT', 5173),
   rendererFile: join(DOCS_OUT, 'renderer', 'index.html'),
 })
 configureSheetsRuntime({
   preloadPath: join(SHEETS_OUT, 'preload', 'index.js'),
-  rendererUrl: process.env.SHEETS_RENDERER_URL,
+  rendererUrl: moduleDevUrl('SHEETS_RENDERER_URL', 'SHEETS_DEV_PORT', 5174),
   rendererFile: join(SHEETS_OUT, 'renderer', 'index.html'),
   sidecarPath: SIDECAR_BIN,
   openGeneratedPath: (path) => openGeneratedDocument(path),
@@ -501,26 +515,26 @@ configureSheetsRuntime({
 })
 configureSlidesRuntime({
   preloadPath: join(SLIDES_OUT, 'preload', 'index.js'),
-  rendererDevUrl: process.env.SLIDES_RENDERER_URL,
+  rendererDevUrl: moduleDevUrl('SLIDES_RENDERER_URL', 'SLIDES_DEV_PORT', 5175),
   rendererFilePath: join(SLIDES_OUT, 'renderer', 'index.html'),
   openGeneratedPath: (path) => openGeneratedDocument(path),
 })
 configurePdfRuntime({
   preloadPath: join(PDF_OUT, 'preload', 'index.js'),
-  rendererUrl: process.env.PDF_RENDERER_URL,
+  rendererUrl: moduleDevUrl('PDF_RENDERER_URL', 'PDF_DEV_PORT', 5176),
   rendererFile: join(PDF_OUT, 'renderer', 'index.html'),
   openGeneratedPath: (path) => openGeneratedDocument(path),
   createDocument: createAiDocument,
 })
 configureMarkdownRuntime({
   preloadPath: join(MARKDOWN_OUT, 'preload', 'index.js'),
-  rendererUrl: process.env.MARKDOWN_RENDERER_URL,
+  rendererUrl: moduleDevUrl('MARKDOWN_RENDERER_URL', 'MARKDOWN_DEV_PORT', 5177),
   rendererFile: join(MARKDOWN_OUT, 'renderer', 'index.html'),
   openGeneratedPath: (path) => openGeneratedDocument(path),
 })
 configureHtmlRuntime({
   preloadPath: join(HTML_OUT, 'preload', 'index.js'),
-  rendererUrl: process.env.HTML_RENDERER_URL,
+  rendererUrl: moduleDevUrl('HTML_RENDERER_URL', 'HTML_DEV_PORT', 5178),
   rendererFile: join(HTML_OUT, 'renderer', 'index.html'),
   openGeneratedPath: (path) => openGeneratedDocument(path),
 })
