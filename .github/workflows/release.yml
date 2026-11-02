@@ -105,6 +105,7 @@ jobs:
           dmg=$(ls apps/shell/release/*.dmg | head -1)
           zip=$(ls apps/shell/release/*-mac.zip | head -1)
           gh release upload "$TAG" "$dmg" "$zip" --clobber
+          gh release view "$TAG" --json assets --jq '.assets[].name'
 
   windows:
     needs: release
@@ -174,13 +175,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.ref_name }}
         run: |
+          Get-ChildItem -Path apps/shell/release -Filter '*.exe' |
+            Select-Object Name, Length | Format-Table | Out-String | Write-Host
           $installer = Get-ChildItem -Path apps/shell/release -Filter '*.exe' |
             Where-Object { $_.Name -like '*Setup*' } |
             Select-Object -First 1
           if (-not $installer) { throw 'no NSIS installer found in apps/shell/release' }
           # electron-builder's default name carries a space ("Office-cc Setup
-          # 0.0.1.exe"); the release names it like the mac assets do.
-          $version = (Get-Content apps/shell/package.json | ConvertFrom-Json).version
+          # 0.0.1.exe"); the release names it like the mac assets do. The tag
+          # carries the version, so nothing has to be parsed out of a file.
+          $version = $TAG -replace '^v', ''
           $name = "Office-cc-$version-x64-Setup.exe"
-          Copy-Item $installer.FullName (Join-Path $installer.DirectoryName $name)
-          gh release upload $TAG (Join-Path $installer.DirectoryName $name) --clobber
+          $asset = Join-Path $installer.DirectoryName $name
+          Copy-Item $installer.FullName $asset
+          gh release upload $TAG $asset --clobber
+          gh release view $TAG --json assets --jq '.assets[].name'
