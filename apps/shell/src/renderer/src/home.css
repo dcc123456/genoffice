@@ -16,7 +16,7 @@
   --shadow-pill: 0 1px 2px rgb(0 0 0 / 8%);
   --shadow-composer: 0 6px 30px rgb(0 0 0 / 8%);
 
-  /* officecc-logo.svg is pure black-and-white; dark themes flip it to 1 */
+  /* officecc-wordmark.svg is pure black-and-white; dark themes flip it to 1 */
   --logo-invert: 0;
   /* lift for the kb-ask composer box */
 }
@@ -118,6 +118,13 @@ body.vib .home {
   gap: 9px;
   padding: 0 8px;
   margin-bottom: 20px;
+}
+
+.logo-mark {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex: none;
 }
 
 .logo-lockup {
