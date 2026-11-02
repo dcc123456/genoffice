@@ -97,6 +97,36 @@ jobs:
       - name: Package the macOS installer
         run: npm run dist:mac
 
+      # The OCR helper is a swiftc output. On a machine whose Swift cannot
+      # compile (a CommandLineTools-only install redefines SwiftBridging) the
+      # packager leaves it out with a warning and still exits 0, so a green
+      # build says nothing about it — the shipped installer has to be opened
+      # and checked. The sidecar is checked for the same reason: it is a
+      # lipo fat binary, and a host-arch one would leave the other arch's
+      # Sheets dead.
+      - name: Verify the installer carries the OCR helper and the fat sidecar
+        run: |
+          set -euo pipefail
+          dmg=$(ls apps/shell/release/*.dmg | head -1)
+          mnt=$(mktemp -d)
+          trap 'hdiutil detach "$mnt" >/dev/null 2>&1 || true' EXIT
+          hdiutil attach -nobrowse -readonly "$dmg" -mountpoint "$mnt" >/dev/null
+          app="$mnt/Office-cc.app"
+          ocr="$app/Contents/Resources/ocr/vision-ocr"
+          sidecar="$app/Contents/Resources/native/xlsx-sidecar"
+          if [ ! -f "$ocr" ]; then
+            echo "the DMG ships without Resources/ocr/vision-ocr" >&2
+            exit 1
+          fi
+          if [ ! -f "$sidecar" ]; then
+            echo "the DMG ships without Resources/native/xlsx-sidecar" >&2
+            exit 1
+          fi
+          echo "ocr helper: $(file -b "$ocr")"
+          echo "ocr arches: $(lipo -archs "$ocr")"
+          echo "sidecar arches: $(lipo -archs "$sidecar")"
+          echo "version: $(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist")"
+
       - name: Keep the installer as a build artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
