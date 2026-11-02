@@ -12,15 +12,16 @@ Generates the Office-cc application icon set:
   apps/shell/build/icon.ico          Windows icon (PNG-compressed entries)
 
 The mark itself is artwork, not geometry: tools/icon-source.png holds it, a
-closed ring with a smaller letter C nested in its counter.  The small C's
-mouth opens to the right in the source drawing; here it is reversed, so the
-letter answers the ring instead of doubling it.  It is kept as a bitmap
-rather than redrawn from constants because its stroke weight, the angle of
-the C's terminals and the way the two forms nest are the whole design, and
-re-deriving them from numbers would drift from the drawing every time the
-numbers were touched.
+closed ring with a smaller letter C nested in its counter, the C's mouth
+opening to the right.  It is kept as a bitmap rather than redrawn from
+constants because its stroke weight, the angle of the C's terminals and the
+way the two forms nest are the whole design, and re-deriving them from
+numbers would drift from the drawing every time the numbers were touched.
+The drawing it comes from is tools/icon-reference.png, and the transparent
+copy is made from it by tools/make-icon-source.py.
 
 Regenerate after changing the source artwork:
+  python3 tools/make-icon-source.py
   python3 tools/gen-app-icon.py
 
 Needs Pillow and numpy (same environment-provided assumption as the other
