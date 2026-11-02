@@ -1,17 +1,20 @@
 name: Release
 
-# Publishes the Windows installer for a version tag.
+# Builds the installers for a version tag and attaches them to the release.
 #
-# The mac installer is built on the maintainer's machine and attached to the
-# same release; the NSIS installer needs the Windows toolchain (it stamps the
-# icon and the version resources into the executable), and cross-compiling it
-# from macOS needs wine - Homebrew disabled every wine cask in September 2026
-# - so the Windows package is built here instead.
+# macOS: the dmg is built on a macOS runner. Xcode is installed there, so the
+# on-device OCR helper compiles — a maintainer machine with only the
+# CommandLineTools cannot build Swift at all (its module map redefines
+# SwiftBridging) and would ship an app whose scanned pages stay bitmaps.
 #
-# The workflow only builds and attaches the installer. The release itself is
-# created by the release manager, which also attaches the mac artifacts and
-# writes the notes; the create-if-missing branch below is the fallback for a
-# tag that was pushed without one.
+# Windows: the NSIS installer needs the Windows toolchain (it stamps the icon
+# and the version resources into the executable), and cross-compiling it from
+# macOS needs wine - Homebrew disabled every wine cask in September 2026 -
+# so the Windows package is built on a Windows runner instead.
+#
+# The release itself is created by the "release" job, which reads the notes
+# from .github/release-notes/<tag>.md, so both installers have a release to
+# attach to and the page carries the right text.
 
 on:
   push:
@@ -21,7 +24,90 @@ permissions:
   contents: write
 
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release $TAG already exists — leaving it untouched"
+            exit 0
+          fi
+          notes=".github/release-notes/${TAG}.md"
+          if [ -f "$notes" ]; then
+            gh release create "$TAG" --title "Office-cc $TAG" --notes-file "$notes"
+          else
+            gh release create "$TAG" --title "Office-cc $TAG" --notes "Office-cc $TAG"
+          fi
+
+  macos:
+    needs: release
+    runs-on: macos-14
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Setup Rust
+        # The release sidecar is a lipo fat binary (both mac arch packages ship
+        # one path), so the Intel target has to be installable here too.
+        uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable branch, 2026-07
+        with:
+          toolchain: stable
+          targets: aarch64-apple-darwin, x86_64-apple-darwin
+
+      - name: Cache cargo (xlsx-sidecar)
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          workspaces: apps/sheets/native/xlsx-engine
+
+      - name: Cache electron binaries
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/electron
+          key: electron-bin-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: electron-bin-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      # notices + build:all + the universal xlsx-sidecar + the shell package
+      - name: Package the macOS installer
+        run: npm run dist:mac
+
+      - name: Keep the installer as a build artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: macos-installer
+          path: apps/shell/release/*.dmg
+          retention-days: 30
+
+      - name: Attach the installer to the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          dmg=$(ls apps/shell/release/*.dmg | head -1)
+          zip=$(ls apps/shell/release/*-mac.zip | head -1)
+          gh release upload "$TAG" "$dmg" "$zip" --clobber
+
   windows:
+    needs: release
     runs-on: windows-latest
     timeout-minutes: 60
     steps:
@@ -51,6 +137,8 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/electron
+          # own prefix: the build workflows' electron-* entries also hold
+          # ~/.cache/electron-builder, and a saved key is never updated
           key: electron-bin-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
           restore-keys: electron-bin-${{ runner.os }}-
 
@@ -90,8 +178,9 @@ jobs:
             Where-Object { $_.Name -like '*Setup*' } |
             Select-Object -First 1
           if (-not $installer) { throw 'no NSIS installer found in apps/shell/release' }
-          gh release view $TAG
-          if ($LASTEXITCODE -ne 0) {
-            gh release create $TAG --title "Office-cc $TAG" --notes "Windows installer for Office-cc $TAG."
-          }
-          gh release upload $TAG $installer.FullName --clobber
+          # electron-builder's default name carries a space ("Office-cc Setup
+          # 0.0.1.exe"); the release names it like the mac assets do.
+          $version = (Get-Content apps/shell/package.json | ConvertFrom-Json).version
+          $name = "Office-cc-$version-x64-Setup.exe"
+          Copy-Item $installer.FullName (Join-Path $installer.DirectoryName $name)
+          gh release upload $TAG (Join-Path $installer.DirectoryName $name) --clobber
