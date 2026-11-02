@@ -12,6 +12,13 @@ name: Release
 # macOS needs wine - Homebrew disabled every wine cask in September 2026 -
 # so the Windows package is built on a Windows runner instead.
 #
+# The two build jobs only produce build artifacts. Attaching them is the
+# publish job's job, and it runs in bash with `set -euo pipefail`: a failed
+# upload has to fail the job, not slip through because the last command of
+# the step happened to succeed (PowerShell decides a step by the exit code of
+# its last native command, so an earlier failure disappears). The publish job
+# also lists the release afterwards, so a missing asset cannot pass unnoticed.
+#
 # The release itself is created by the "release" job, which reads the notes
 # from .github/release-notes/<tag>.md, so both installers have a release to
 # attach to and the page carries the right text.
@@ -36,6 +43,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.ref_name }}
         run: |
+          set -euo pipefail
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "release $TAG already exists — leaving it untouched"
             exit 0
@@ -93,19 +101,10 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: macos-installer
-          path: apps/shell/release/*.dmg
+          path: |
+            apps/shell/release/*.dmg
+            apps/shell/release/*-mac.zip
           retention-days: 30
-
-      - name: Attach the installer to the release
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.ref_name }}
-        run: |
-          dmg=$(ls apps/shell/release/*.dmg | head -1)
-          zip=$(ls apps/shell/release/*-mac.zip | head -1)
-          gh release upload "$TAG" "$dmg" "$zip" --clobber
-          gh release view "$TAG" --json assets --jq '.assets[].name'
 
   windows:
     needs: release
@@ -169,24 +168,53 @@ jobs:
           path: apps/shell/release/*.exe
           retention-days: 30
 
-      - name: Attach the installer to the release
-        shell: pwsh
+  publish:
+    needs: [macos, windows]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download the macOS installer
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: macos-installer
+          path: dist/macos
+
+      - name: Download the Windows installer
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: windows-installer
+          path: dist/windows
+
+      - name: Attach the installers to the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.ref_name }}
         run: |
-          Get-ChildItem -Path apps/shell/release -Filter '*.exe' |
-            Select-Object Name, Length | Format-Table | Out-String | Write-Host
-          $installer = Get-ChildItem -Path apps/shell/release -Filter '*.exe' |
-            Where-Object { $_.Name -like '*Setup*' } |
-            Select-Object -First 1
-          if (-not $installer) { throw 'no NSIS installer found in apps/shell/release' }
-          # electron-builder's default name carries a space ("Office-cc Setup
-          # 0.0.1.exe"); the release names it like the mac assets do. The tag
-          # carries the version, so nothing has to be parsed out of a file.
-          $version = $TAG -replace '^v', ''
-          $name = "Office-cc-$version-x64-Setup.exe"
-          $asset = Join-Path $installer.DirectoryName $name
-          Copy-Item $installer.FullName $asset
-          gh release upload $TAG $asset --clobber
-          gh release view $TAG --json assets --jq '.assets[].name'
+          set -euo pipefail
+          ls -l dist/macos dist/windows
+          # electron-builder's default Windows name carries a space ("Office-cc
+          # Setup 0.0.1.exe"); the release names it like the mac assets do.
+          version="${TAG#v}"
+          mv dist/windows/*.exe "dist/windows/Office-cc-$version-x64-Setup.exe"
+          gh release upload "$TAG" dist/macos/*.dmg dist/macos/*-mac.zip \
+            "dist/windows/Office-cc-$version-x64-Setup.exe" --clobber
+
+      - name: Verify the release carries both installers
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          version="${TAG#v}"
+          expected="Office-cc-$version-arm64.dmg Office-cc-$version-arm64-mac.zip Office-cc-$version-x64-Setup.exe"
+          assets=$(gh release view "$TAG" --json assets --jq '.assets[].name')
+          echo "$assets"
+          for name in $expected; do
+            if ! echo "$assets" | grep -qx "$name"; then
+              echo "release $TAG is missing $name" >&2
+              exit 1
+            fi
+          done
