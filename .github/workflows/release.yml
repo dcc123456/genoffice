@@ -226,7 +226,7 @@ jobs:
           set -euo pipefail
           ls -l dist/macos dist/windows
           # electron-builder's default Windows name carries a space ("Office-cc
-          # Setup 0.0.1.exe"); the release names it like the mac assets do.
+          # Setup <version>.exe"); the release names it like the mac assets do.
           version="${TAG#v}"
           mv dist/windows/*.exe "dist/windows/Office-cc-$version-x64-Setup.exe"
           gh release upload "$TAG" dist/macos/*.dmg dist/macos/*-mac.zip \

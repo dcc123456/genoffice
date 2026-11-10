@@ -461,8 +461,8 @@ the provider configured in Office-cc.
 | **Linux** — other distributions      | x86_64, glibc 2.34+, FUSE 2                           | [Latest `.AppImage`](https://github.com/dcc123456/genoffice/releases/latest)            |
 
 All builds come from `main`. Signed releases carry the company certificate; the
-0.0.1 release is unsigned, so macOS and Windows ask for one extra confirmation
-on first launch.
+release installers are unsigned, so macOS and Windows ask for one extra
+confirmation on first launch.
 Older versions are on the [Releases](https://github.com/dcc123456/genoffice/releases) page.
 
 <details>

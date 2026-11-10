@@ -1,7 +1,7 @@
 {
   "name": "@office-cc/shell",
   "productName": "Office-cc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "Apache-2.0",
   "homepage": "https://github.com/dcc123456/genoffice",
   "private": true,
