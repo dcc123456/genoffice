@@ -10,6 +10,8 @@ export const id = {
   aiStarterFillTemplate: 'Temukan dan isi placeholder di dokumen ini',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Buka asisten AI',
+  aiGenerateBtn: 'Generasi AI',
+  aiGeneratePrompt: 'Buat draf pertama yang terstruktur tentang topik berikut:',
   aiSummarizeBtn: 'Ringkasan AI',
   aiSummarizePrompt: 'Ringkas isi utama dan poin-poin penting dokumen ini',
   aiPolishBtn: 'Poles AI',

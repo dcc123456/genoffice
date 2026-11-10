@@ -10,6 +10,8 @@ export const nl = {
   aiStarterFillTemplate: 'Zoek en vul de tijdelijke aanduidingen in het document in',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'AI-assistent openen',
+  aiGenerateBtn: 'AI-generatie',
+  aiGeneratePrompt: 'Schrijf een goed gestructureerd eerste concept over dit onderwerp:',
   aiSummarizeBtn: 'AI-samenvatting',
   aiSummarizePrompt: 'Vat de hoofdinhoud en kernpunten van dit document samen',
   aiPolishBtn: 'AI-polijsten',

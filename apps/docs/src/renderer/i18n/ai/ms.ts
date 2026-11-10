@@ -10,6 +10,8 @@ export const ms = {
   aiStarterFillTemplate: 'Cari dan isi ruang letak dalam dokumen ini',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Buka pembantu AI',
+  aiGenerateBtn: 'Penjanaan AI',
+  aiGeneratePrompt: 'Tulis draf pertama yang tersusun tentang topik berikut:',
   aiSummarizeBtn: 'Ringkasan AI',
   aiSummarizePrompt: 'Ringkaskan kandungan utama dan perkara penting dokumen ini',
   aiPolishBtn: 'Gilap AI',

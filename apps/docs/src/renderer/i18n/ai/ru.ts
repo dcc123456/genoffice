@@ -10,6 +10,8 @@ export const ru = {
   aiStarterFillTemplate: 'Найди и заполни местозаполнители в документе',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Открыть ИИ-помощника',
+  aiGenerateBtn: 'ИИ-генерация',
+  aiGeneratePrompt: 'Напишите структурированный первый черновик на эту тему:',
   aiSummarizeBtn: 'ИИ-резюме',
   aiSummarizePrompt: 'Кратко изложите основное содержание и ключевые моменты этого документа',
   aiPolishBtn: 'ИИ-редактура',

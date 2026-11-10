@@ -10,6 +10,8 @@ export const pl = {
   aiStarterFillTemplate: 'Znajdź i uzupełnij symbole zastępcze w dokumencie',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Otwórz asystenta AI',
+  aiGenerateBtn: 'Generowanie AI',
+  aiGeneratePrompt: 'Napisz dobrze ustrukturyzowaną pierwszą wersję na ten temat:',
   aiSummarizeBtn: 'Podsumowanie AI',
   aiSummarizePrompt: 'Podsumuj główną treść i kluczowe punkty tego dokumentu',
   aiPolishBtn: 'Szlif AI',

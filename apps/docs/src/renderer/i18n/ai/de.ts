@@ -10,6 +10,8 @@ export const de = {
   aiStarterFillTemplate: 'Platzhalter im Dokument finden und ausfüllen',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'KI-Assistenten öffnen',
+  aiGenerateBtn: 'KI-Generierung',
+  aiGeneratePrompt: 'Erstellen Sie einen gut strukturierten ersten Entwurf zu diesem Thema:',
   aiSummarizeBtn: 'KI-Zusammenfassung',
   aiSummarizePrompt: 'Fasse den Hauptinhalt und die Kernpunkte dieses Dokuments zusammen',
   aiPolishBtn: 'KI-Feinschliff',

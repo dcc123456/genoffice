@@ -10,6 +10,8 @@ export const ko = {
   aiStarterFillTemplate: '문서의 자리 표시자를 찾아 채워 줘',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'AI 도우미 열기',
+  aiGenerateBtn: 'AI 생성',
+  aiGeneratePrompt: '다음 주제에 대해 구조가 탄탄한 초안을 작성해 주세요:',
   aiSummarizeBtn: 'AI 요약',
   aiSummarizePrompt: '이 문서의 주요 내용과 핵심 사항을 요약해 주세요',
   aiPolishBtn: 'AI 다듬기',

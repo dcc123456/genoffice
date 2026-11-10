@@ -10,6 +10,8 @@ export const vi = {
   aiStarterFillTemplate: 'Tìm và điền vào các vị trí giữ chỗ trong tài liệu này',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Mở trợ lý AI',
+  aiGenerateBtn: 'AI Tạo nội dung',
+  aiGeneratePrompt: 'Viết bản nháp đầu tiên có bố cục hoàn chỉnh về chủ đề sau:',
   aiSummarizeBtn: 'AI Tóm tắt',
   aiSummarizePrompt: 'Tóm tắt nội dung chính và các ý quan trọng của tài liệu này',
   aiPolishBtn: 'AI Trau chuốt',

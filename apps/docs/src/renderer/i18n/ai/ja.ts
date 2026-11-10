@@ -10,6 +10,8 @@ export const ja = {
   aiStarterFillTemplate: '文書内のプレースホルダーを見つけて埋めて',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'AI アシスタントを開く',
+  aiGenerateBtn: 'AI 生成',
+  aiGeneratePrompt: '次のテーマについて、構成の整った初稿を作成してください：',
   aiSummarizeBtn: 'AI 要約',
   aiSummarizePrompt: 'この文書の主な内容と要点を要約してください',
   aiPolishBtn: 'AI 推敲',

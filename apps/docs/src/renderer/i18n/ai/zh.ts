@@ -9,6 +9,8 @@ export const zh = {
   aiStarterFillTemplate: '找出并填写文档里的占位符',
   aiPanelTitle: 'AI',
   aiOpenAssistant: '打开 AI 助手',
+  aiGenerateBtn: 'AI 生成',
+  aiGeneratePrompt: '请围绕以下主题撰写一篇结构完整的初稿：',
   aiSummarizeBtn: 'AI 总结',
   aiSummarizePrompt: '总结这篇文档的主要内容和要点',
   aiPolishBtn: 'AI 润色',

@@ -10,6 +10,8 @@ export const ar = {
   aiStarterFillTemplate: 'اعثر على العناصر النائبة في المستند واملأها',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'فتح مساعد الذكاء الاصطناعي',
+  aiGenerateBtn: 'توليد AI',
+  aiGeneratePrompt: 'أنشئ مسودة أولى مكتملة البنية حول هذا الموضوع:',
   aiSummarizeBtn: 'تلخيص AI',
   aiSummarizePrompt: 'لخّص المحتوى الرئيسي والنقاط الأساسية لهذا المستند',
   aiPolishBtn: 'تحسين AI',

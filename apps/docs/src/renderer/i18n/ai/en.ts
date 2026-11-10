@@ -10,6 +10,8 @@ export const en = {
   aiStarterFillTemplate: 'Find and fill in the placeholders in this document',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Open AI assistant',
+  aiGenerateBtn: 'AI Generate',
+  aiGeneratePrompt: 'Write a well-structured first draft on this topic:',
   aiSummarizeBtn: 'AI Summarize',
   aiSummarizePrompt: 'Summarize the main content and key points of this document',
   aiPolishBtn: 'AI Polish',

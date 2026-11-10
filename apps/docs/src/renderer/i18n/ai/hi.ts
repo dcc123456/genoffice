@@ -10,6 +10,8 @@ export const hi = {
   aiStarterFillTemplate: 'दस्तावेज़ के प्लेसहोल्डर ढूँढ़कर भरें',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'AI सहायक खोलें',
+  aiGenerateBtn: 'AI रचना',
+  aiGeneratePrompt: 'इस विषय पर एक सुसंगठित प्रारंभिक मसौदा लिखें:',
   aiSummarizeBtn: 'AI सारांश',
   aiSummarizePrompt: 'इस दस्तावेज़ की मुख्य सामग्री और प्रमुख बिंदुओं का सारांश दें',
   aiPolishBtn: 'AI परिष्करण',

@@ -38,6 +38,7 @@ import {
 } from './tools'
 import type { AiPageSetupAccess } from './page-setup'
 import type { AiNotesAccess } from './note-ops'
+import { AiFeatureIcon, type AiFeatureIconKind } from './AiFeatureIcon'
 import { createDocsSkill } from './docs-skill'
 import { MindMapCard } from './MindMapCard'
 import {
@@ -148,6 +149,42 @@ const EDIT_STARTER_PROMPTS: StringKey[] = [
   'aiStarterContinue',
   'aiStarterFillTemplate',
   'aiStarterMindMap',
+]
+
+/**
+ * The AI feature entries, which live in the expanded panel now that they have
+ * left the Home ribbon: one icon button each, whose ScreenTip names the action
+ * and spells out the request (the prompt doubles as the detail line — it is
+ * already written as one, in all 21 languages). `needsDoc` greys out an action
+ * with no text to work on; `fillsComposer` asks for the user's own topic
+ * instead of sending, because a draft has none without it.
+ */
+const AI_QUICK_ACTIONS: {
+  kind: AiFeatureIconKind
+  label: StringKey
+  prompt: StringKey
+  /** replaces `prompt` while a range of text is selected */
+  rangePrompt?: StringKey
+  needsDoc: boolean
+  fillsComposer?: boolean
+}[] = [
+  { kind: 'summarize', label: 'aiSummarizeBtn', prompt: 'aiSummarizePrompt', needsDoc: true },
+  {
+    kind: 'polish',
+    label: 'aiPolishBtn',
+    prompt: 'aiPolishPrompt',
+    rangePrompt: 'aiPolishSelectionPrompt',
+    needsDoc: true,
+  },
+  { kind: 'tidy', label: 'aiTidyBtn', prompt: 'aiTidyPrompt', needsDoc: true },
+  {
+    kind: 'generate',
+    label: 'aiGenerateBtn',
+    prompt: 'aiGeneratePrompt',
+    needsDoc: false,
+    fillsComposer: true,
+  },
+  { kind: 'mindmap', label: 'aiMindMapBtn', prompt: 'aiMindMapPrompt', needsDoc: true },
 ]
 
 /** resizable panel width: persisted, clamped so neither pane collapses */
@@ -1180,6 +1217,21 @@ export function AiPanel({
 
   const continueRun = () => runWith(DOCS_CONTINUE_INSTRUCTION, t('aiContinue'))
 
+  /** A quick action sends a request the user would otherwise have to type. While a
+   * reply runs it joins the queue exactly like an Enter does — a silent no-op button
+   * would look broken. */
+  const runQuickAction = (action: (typeof AI_QUICK_ACTIONS)[number]) => {
+    const key = action.rangePrompt && hasScopeSelection ? action.rangePrompt : action.prompt
+    const text = t(key)
+    if (action.fillsComposer) {
+      setInput(text)
+      inputRef.current?.focus()
+      return
+    }
+    if (busy) msgQueue.enqueue(text, { attachments: [], scope: selectionScopeQuote() ?? null })
+    else runWith(text)
+  }
+
   /** Enter while a reply runs: the draft joins the queue above the composer */
   const enqueueDraft = () => {
     const text = input.trim()
@@ -1407,6 +1459,28 @@ export function AiPanel({
             </button>
           )}
         </div>
+      </div>
+
+      {/* the AI feature entries left the Home ribbon for here: icon button + ScreenTip */}
+      <div className="ai-quick-actions" role="group" aria-label={t('ribbonAiAssistant')}>
+        {AI_QUICK_ACTIONS.map((action) => (
+          <button
+            key={action.kind}
+            type="button"
+            className="ai-quick-btn"
+            disabled={action.needsDoc && docEmpty}
+            data-tip={t(action.label)}
+            data-tip-detail={t(
+              action.rangePrompt && hasScopeSelection ? action.rangePrompt : action.prompt,
+            )}
+            onClick={() => runQuickAction(action)}
+          >
+            <span className="ai-feature-icon">
+              <AiFeatureIcon kind={action.kind} />
+            </span>
+            <span>{t(action.label)}</span>
+          </button>
+        ))}
       </div>
 
       <div ref={logRef} className="ai-chat" onScroll={onLogScroll}>

@@ -10,6 +10,8 @@ export const es = {
   aiStarterFillTemplate: 'Encuentra y completa los marcadores de posición del documento',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Abrir el asistente de IA',
+  aiGenerateBtn: 'Generación IA',
+  aiGeneratePrompt: 'Redacta un primer borrador bien estructurado sobre este tema:',
   aiSummarizeBtn: 'Resumen IA',
   aiSummarizePrompt: 'Resume el contenido principal y los puntos clave de este documento',
   aiPolishBtn: 'Pulido IA',

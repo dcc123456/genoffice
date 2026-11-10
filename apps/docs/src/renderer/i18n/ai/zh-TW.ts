@@ -10,6 +10,8 @@ export const zhTW = {
   aiStarterFillTemplate: '找出並填寫文件裡的佔位符',
   aiPanelTitle: 'AI',
   aiOpenAssistant: '開啟 AI 助手',
+  aiGenerateBtn: 'AI 產生',
+  aiGeneratePrompt: '請圍繞以下主題撰寫一篇結構完整的初稿：',
   aiSummarizeBtn: 'AI 總結',
   aiSummarizePrompt: '總結這篇文件的主要內容和要點',
   aiPolishBtn: 'AI 潤飾',

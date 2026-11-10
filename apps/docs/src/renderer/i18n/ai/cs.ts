@@ -10,6 +10,8 @@ export const cs = {
   aiStarterFillTemplate: 'Najít a vyplnit zástupné texty v tomto dokumentu',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Otevřít asistenta AI',
+  aiGenerateBtn: 'Generování AI',
+  aiGeneratePrompt: 'Vytvoř strukturovaný první koncept na toto téma:',
   aiSummarizeBtn: 'Shrnutí AI',
   aiSummarizePrompt: 'Shrňte hlavní obsah a klíčové body tohoto dokumentu',
   aiPolishBtn: 'Vylepšení AI',

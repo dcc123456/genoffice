@@ -10,6 +10,8 @@ export const th = {
   aiStarterFillTemplate: 'ค้นหาและกรอกตัวยึดตำแหน่งในเอกสาร',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'เปิดผู้ช่วย AI',
+  aiGenerateBtn: 'สร้างด้วย AI',
+  aiGeneratePrompt: 'เขียนร่างแรกที่มีโครงสร้างสมบูรณ์เกี่ยวกับหัวข้อต่อไปนี้:',
   aiSummarizeBtn: 'สรุปด้วย AI',
   aiSummarizePrompt: 'สรุปเนื้อหาหลักและประเด็นสำคัญของเอกสารนี้',
   aiPolishBtn: 'ขัดเกลาด้วย AI',

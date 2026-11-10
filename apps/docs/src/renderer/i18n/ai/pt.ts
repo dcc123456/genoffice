@@ -10,6 +10,8 @@ export const pt = {
   aiStarterFillTemplate: 'Encontre e preencha os espaços reservados do documento',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'Abrir assistente de IA',
+  aiGenerateBtn: 'Geração IA',
+  aiGeneratePrompt: 'Escreva uma primeira versão bem estruturada sobre este tema:',
   aiSummarizeBtn: 'Resumo IA',
   aiSummarizePrompt: 'Resuma o conteúdo principal e os pontos-chave deste documento',
   aiPolishBtn: 'Aprimorar IA',

@@ -10,6 +10,8 @@ export const he = {
   aiStarterFillTemplate: 'מצא ומלא את מצייני המיקום במסמך',
   aiPanelTitle: 'AI',
   aiOpenAssistant: 'פתיחת עוזר ה-AI',
+  aiGenerateBtn: 'יצירה AI',
+  aiGeneratePrompt: 'צור טיוטה ראשונה שלמה ומובנית בנושא זה:',
   aiSummarizeBtn: 'סיכום AI',
   aiSummarizePrompt: 'סכם את התוכן העיקרי ואת הנקודות המרכזיות של מסמך זה',
   aiPolishBtn: 'ליטוש AI',

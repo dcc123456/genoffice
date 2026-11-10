@@ -10,6 +10,8 @@ export const fr = {
   aiStarterFillTemplate: 'Trouver et remplir les espaces réservés du document',
   aiPanelTitle: 'AI',
   aiOpenAssistant: "Ouvrir l'assistant IA",
+  aiGenerateBtn: 'Génération IA',
+  aiGeneratePrompt: 'Rédigez un premier brouillon bien structuré sur ce sujet :',
   aiSummarizeBtn: 'Résumé IA',
   aiSummarizePrompt: 'Résumez le contenu principal et les points clés de ce document',
   aiPolishBtn: 'Amélioration IA',

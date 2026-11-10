@@ -11,6 +11,8 @@ export const it = {
   aiStarterFillTemplate: 'Trova e compila i segnaposto nel documento',
   aiPanelTitle: 'AI',
   aiOpenAssistant: "Apri l'assistente IA",
+  aiGenerateBtn: 'Generazione IA',
+  aiGeneratePrompt: 'Scrivi una prima bozza ben strutturata su questo argomento:',
   aiSummarizeBtn: 'Riassunto IA',
   aiSummarizePrompt: 'Riassumi il contenuto principale e i punti chiave di questo documento',
   aiPolishBtn: 'Rifinitura IA',
