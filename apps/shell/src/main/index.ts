@@ -11,7 +11,7 @@ import {
   writeFileSync,
 } from 'node:fs'
 import { randomUUID } from 'node:crypto'
-import { basename, dirname, extname, join, resolve } from 'node:path'
+import { basename, dirname, extname, join, resolve, sep } from 'node:path'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import {
@@ -102,22 +102,8 @@ import {
   markAnalyticsFirstLaunchSent,
 } from './analytics'
 import type { Analytics, AnalyticsKeys } from './analytics'
-import {
-  clearCloudProjectsStore,
-  cloudProjectExternalUrl,
-  readCloudProjectsStore,
-  syncCloudProjects,
-} from './cloud-projects'
 import { handleDroppedFiles } from './dropped-files'
-import { collectLaunchPaths } from './launch-paths'
-import {
-  officeccLogout,
-  gskLoginInfo,
-  loadOfficeccAuth,
-  setGskProxyUrl,
-  startOfficeccLogin,
-  watchGskApiKey,
-} from '@office-cc/ai-search'
+import { collectLaunchPaths, isDirectoryPath } from './launch-paths'
 
 import {
   buildDocsMenu,
@@ -258,7 +244,6 @@ import {
   setHtmlProvisionalTitleHook,
 } from '../../../html/src/main/html-main'
 import type {
-  AccountLoginEvent,
   AutoSaveDefault,
   AuthorNameSetting,
   FolderListing,
@@ -549,7 +534,6 @@ const APP_SETTINGS_PATH = () => join(app.getPath('userData'), 'app-settings.json
 const OPEN_DOCUMENTS_PATH = () => join(app.getPath('userData'), OPEN_DOCUMENTS_FILE)
 /** only the instance holding the single-instance lock may write or remove the registry */
 let ownsOpenDocumentsRegistry = false
-let stopAuthWatch: (() => void) | null = null
 const publishOpenDocumentsIfOwner = (paths: readonly string[]) => {
   if (ownsOpenDocumentsRegistry) publishOpenDocuments(OPEN_DOCUMENTS_PATH(), paths)
 }
@@ -721,10 +705,6 @@ function initAnalytics(): void {
     // analytics must never block startup
   }
 }
-
-// Genspark credit-usage page opened from the account menu's credits row.
-// Kept main-side so the renderer never supplies the URL.
-const CREDIT_USAGE_URL = 'https://www.genspark.ai/credit-usage'
 
 // Stargazer count for the settings About pane; fetched main-side (the
 // renderer CSP has no api.github.com) and cached per session — the exact
@@ -3445,6 +3425,27 @@ function folderRootPaths(): string[] {
   return [defaultSaveDir(), ...extraFolderRoots()]
 }
 
+/**
+ * A folder joins the home tree as a workspace root — the same slot the picker
+ * and the drag-and-drop use. Nothing on disk is created, copied or moved.
+ * Returns null when the folder is already a root.
+ */
+function addFolderRootPath(path: string): FolderRoot | null {
+  const extras = withExtraRoot(extraFolderRoots(), defaultSaveDir(), path)
+  if (!extras) return null
+  writeAppSetting(APP_SETTINGS_PATH(), FOLDER_ROOTS_KEY, extras)
+  ensureFolderWatchers()
+  fileIndexer?.refresh()
+  return describeExtraRoot(path)
+}
+
+/** the renderer's tree lists the roots it last read — tell it the list moved */
+function broadcastFolderRootsChanged(): void {
+  for (const wc of webContents.getAllWebContents()) {
+    if (!wc.isDestroyed()) wc.send(HOME_CHANNELS.folderRootsChanged)
+  }
+}
+
 function insideAnyRoot(path: string): boolean {
   return folderRootPaths().some((root) => isInsideRoot(root, path))
 }
@@ -4470,55 +4471,6 @@ function statEntries(paths: string[]): RecentEntry[] {
 }
 
 function registerHomeIpc(): void {
-  // signed-in means Office-cc's own device-code login; the shared gsk CLI key
-  // is only a silent fallback, deliberately not shown here to nudge users onto our key
-  ipcMain.handle(HOME_CHANNELS.accountStatus, async () => {
-    if (!loadOfficeccAuth()) return { loggedIn: false }
-    await proxyBootstrap
-    const info = await gskLoginInfo()
-    if (info) return { loggedIn: true, email: info.email, creditBalance: info.creditBalance }
-    // login-info answering 401 drops an expired key: report signed-out right away
-    return { loggedIn: !!loadOfficeccAuth() }
-  })
-
-  // login progress is streamed to the requesting renderer; the auth URL is
-  // kept main-side so the "open manually" rescue never opens a renderer-supplied URL
-  let pendingLoginUrl = ''
-  ipcMain.handle(HOME_CHANNELS.accountLogin, async (event) => {
-    analytics.track('login_click')
-    const sender = event.sender
-    pendingLoginUrl = ''
-    await proxyBootstrap
-    const send = (payload: AccountLoginEvent) => {
-      if (!sender.isDestroyed()) sender.send(HOME_CHANNELS.accountLoginEvent, payload)
-    }
-    // open the browser on the first url event only; later events refresh the rescue URL
-    let opened = false
-    const launched = startOfficeccLogin((progress) => {
-      if (progress.url) {
-        pendingLoginUrl = progress.url
-        if (!opened) {
-          opened = true
-          void shell.openExternal(progress.url)
-        }
-      }
-      if (progress.phase === 'success') analytics.track('login_success')
-      send(progress)
-    })
-    if (launched) send({ phase: 'launched' })
-    return launched
-  })
-
-  ipcMain.handle(HOME_CHANNELS.accountLoginOpenUrl, () => {
-    if (pendingLoginUrl) void shell.openExternal(pendingLoginUrl)
-  })
-
-  ipcMain.handle(HOME_CHANNELS.accountLogout, async () => {
-    await officeccLogout()
-    // the cloud projects cache belongs to the account that just signed out
-    clearCloudProjectsStore(cloudProjectsStorePath())
-  })
-
   ipcMain.handle(HOME_CHANNELS.getAppVersion, (): string => app.getVersion())
 
   ipcMain.handle(HOME_CHANNELS.recents, (_event, query: unknown): RecentPage =>
@@ -5032,12 +4984,9 @@ function registerHomeIpc(): void {
 
   // an added folder joins the tree where it is: nothing on disk is created, copied or moved
   const addFolderRoot = (path: string): FolderRoot | null => {
-    const extras = withExtraRoot(extraFolderRoots(), defaultSaveDir(), path)
-    if (!extras) return null
-    writeAppSetting(APP_SETTINGS_PATH(), FOLDER_ROOTS_KEY, extras)
-    ensureFolderWatchers()
-    fileIndexer?.refresh()
-    return describeExtraRoot(path)
+    const root = addFolderRootPath(path)
+    if (root) broadcastFolderRootsChanged()
+    return root
   }
 
   ipcMain.handle(HOME_CHANNELS.addFolderRoot, async (): Promise<FolderRoot | null> => {
@@ -5203,12 +5152,6 @@ function registerHomeIpc(): void {
     return picked
   })
 
-  ipcMain.handle(HOME_CHANNELS.openCreditUsage, () => {
-    shell.openExternal(CREDIT_USAGE_URL).catch(() => {
-      // no browser handler available; nothing actionable for the user here
-    })
-  })
-
   ipcMain.handle(HOME_CHANNELS.openGitHubRepo, () => {
     shell.openExternal(GITHUB_REPO_URL).catch(() => {
       // no browser handler available; nothing actionable for the user here
@@ -5216,19 +5159,6 @@ function registerHomeIpc(): void {
   })
 
   ipcMain.handle(HOME_CHANNELS.githubStars, () => fetchGithubStars())
-
-  const cloudProjectsStorePath = () => join(app.getPath('userData'), 'cloud-projects.json')
-
-  ipcMain.handle(HOME_CHANNELS.cloudProjectsCached, () =>
-    readCloudProjectsStore(cloudProjectsStorePath()),
-  )
-
-  ipcMain.handle(HOME_CHANNELS.cloudProjects, () => syncCloudProjects(cloudProjectsStorePath()))
-
-  ipcMain.handle(HOME_CHANNELS.openCloudProject, (_event, projectUrl: unknown) => {
-    const url = cloudProjectExternalUrl(projectUrl)
-    if (url) void shell.openExternal(url)
-  })
 }
 
 function stringPaths(value: unknown): string[] {
@@ -6425,10 +6355,7 @@ function installDockMenu(): void {
 // so direct calls to overseas LLM/image-search APIs time out or get region-blocked (403).
 // Prefer proxy env vars (terminal launch); a packaged app launched from Finder inherits no shell
 // env vars, so fall back to the system HTTP proxy. The renderer uses Chromium's system proxy and
-// is unaffected. Same bootstrap as slides-main startSlidesStandalone.
-// awaited by login IPC so the first status probe / login click cannot race the proxy resolution
-let proxyBootstrap: Promise<void> = Promise.resolve()
-
+// is unaffected.
 async function installMainProcessProxy(): Promise<void> {
   let proxyUrl = [
     process.env.HTTPS_PROXY,
@@ -6440,9 +6367,8 @@ async function installMainProcessProxy(): Promise<void> {
   ].find((v) => v && /^https?:\/\//.test(v))
   if (!proxyUrl) {
     try {
-      // PAC/rule proxies answer per-host: probe the host the login flow, the
-      // Genspark LLM proxy and the gsk CLI actually target
-      const resolved = await session.defaultSession.resolveProxy('https://www.genspark.ai/')
+      // PAC/rule proxies answer per-host: probe the host the BYOK LLM APIs target
+      const resolved = await session.defaultSession.resolveProxy('https://api.openai.com/')
       const m = /PROXY\s+([^;\s]+)/.exec(resolved)
       if (m) proxyUrl = `http://${m[1]}`
     } catch {
@@ -6450,9 +6376,6 @@ async function installMainProcessProxy(): Promise<void> {
     }
   }
   if (!proxyUrl) return
-  // spawned gsk CLI children (login/search/…) do their own fetch and never see
-  // the dispatcher below — forward the proxy to them via env
-  setGskProxyUrl(proxyUrl)
   try {
     const { ProxyAgent, setGlobalDispatcher } = await import('undici')
     setGlobalDispatcher(new ProxyAgent(proxyUrl))
@@ -6465,7 +6388,20 @@ async function installMainProcessProxy(): Promise<void> {
 
 // ---- lifecycle (the shell is the only owner) ----
 
-let pendingLaunchPaths = collectLaunchPaths(process.argv)
+/**
+ * The argv entries the user could have opened. The app's own path rides in
+ * argv (the dev app directory, the packaged bundle) — it is not something the
+ * user opened, and a directory would otherwise join the home tree.
+ */
+function launchArgv(argv: readonly string[]): string[] {
+  const appPath = resolve(app.getAppPath())
+  return argv.filter((arg) => {
+    const path = resolve(arg)
+    return path !== appPath && !path.startsWith(appPath + sep)
+  })
+}
+
+let pendingLaunchPaths = collectLaunchPaths(launchArgv(process.argv))
 let controlServer: ControlServer | null = null
 
 // show() does not un-minimize, and on macOS ⌘W destroys the shell window while the
@@ -6479,7 +6415,20 @@ function revealShellWindow(): void {
 
 function openLaunchPaths(paths: readonly string[]): void {
   let opened = false
-  for (const filePath of paths) opened = openDocumentPath(filePath) || opened
+  for (const filePath of paths) {
+    // a folder the user opened from the OS becomes a workspace in the home
+    // tree — it has no document to open
+    if (isDirectoryPath(filePath)) {
+      if (!describeExtraRoot(filePath).readable) {
+        showErrorDialog(shellWindow, tm('errFolderRootUnusable'), filePath)
+      } else if (addFolderRootPath(filePath)) {
+        broadcastFolderRootsChanged()
+      }
+      continue
+    }
+    opened = openDocumentPath(filePath) || opened
+  }
+  // nothing opened a tab (a folder only): the tree is what the user came for
   if (!opened) tabManager?.openHomeTab()
 }
 
@@ -6498,7 +6447,7 @@ app.on('open-file', (event, filePath) => {
 })
 
 app.on('second-instance', (_event, argv, _cwd, additionalData) => {
-  const paths = collectLaunchPaths(argv, additionalData)
+  const paths = collectLaunchPaths(launchArgv(argv), additionalData)
   revealShellWindow()
   openLaunchPaths(paths)
 })
@@ -6629,14 +6578,6 @@ app.whenReady().then(async () => {
     app.quit()
     return
   }
-  // another Office-cc-family app re-logging in rotates the shared key; the
-  // home page re-reads its account status. A logout that leaves only the
-  // gsk CLI fallback key is not a login
-  stopAuthWatch = watchGskApiKey(() => {
-    if (!loadOfficeccAuth()) return
-    for (const w of BrowserWindow.getAllWindows())
-      w.webContents.send(HOME_CHANNELS.accountLoginEvent, { phase: 'success' })
-  })
   // a registry left by a crashed instance must not block officecc writes
   ownsOpenDocumentsRegistry = true
   publishOpenDocuments(OPEN_DOCUMENTS_PATH(), [])
@@ -6648,9 +6589,8 @@ app.whenReady().then(async () => {
     }
   }
 
-  proxyBootstrap = installMainProcessProxy()
-  app.setAccessibilitySupportEnabled(true)
-  // Settle the shared uiLang from saved settings BEFORE any tab renderer can
+  void installMainProcessProxy()
+  app.setAccessibilitySupportEnabled(true) // Settle the shared uiLang from saved settings BEFORE any tab renderer can
   // ask 'app:get-language': the editor handlers return the i18n module's
   // mutable lang, whose 'zh' default otherwise wins the race for whichever
   // tab loads first (e.g. sheets booting in Chinese while docs shows English).
@@ -6818,7 +6758,6 @@ app.on('before-quit', () => {
 app.on('will-quit', () => {
   fileIndexer?.stop()
   fileIndexStore?.close()
-  stopAuthWatch?.()
   for (const watcher of folderWatchers.values()) watcher.close()
   controlServer?.close()
   // a second instance that lost the lock quits too; it must not delete the running editor's list

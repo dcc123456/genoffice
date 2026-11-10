@@ -4,25 +4,19 @@
  * ## Why a script and not a hand capture
  *
  * The figures were first shot from a developer's own session, which put their
- * account name in the greeting and their e-mail address in Settings → Account.
+ * account name in the greeting and their e-mail address in the settings panel.
  * A committed screenshot is forever, so the fix is not "remember to crop" but a
  * capture that *cannot* pick up the developer's account: a scratch HOME, a
  * scratch userData, and a scratch samples folder, all discarded afterwards.
  *
  * ## Why HOME and not just OFFICECC_USER_DATA
  *
- * The account name is not in userData at all. `gskApiKey()` reads
- * `~/.genspark-tool-cli/config.json` through `homedir()`, and OFFICECC_USER_DATA
- * says nothing about that — so a run that only overrides userData still finds
- * the developer's key and greets them by name (verified: that is what a local
- * e2e run does today). HOME is the one lever that covers both it and the
- * `~/.officecc/bin` shim. `OFFICECC_AUTH_DIR` is not enough on its own: it
- * redirects Office-cc's own key and leaves the shared gsk CLI config in place.
+ * The account name is not in userData at all, and OFFICECC_USER_DATA says
+ * nothing about the `~/.officecc/bin` shim — HOME is the one lever that covers
+ * both it and the shared auth dir. `OFFICECC_AUTH_DIR` redirects Office-cc's
+ * own key but leaves the shared config in place, so HOME is overridden too.
  *
- * With no key, `gskLoginInfo()` returns null, the app reads as signed out, and
- * the greeting, the account row and the Genspark Projects entry all disappear —
- * which is also the state every CI run and every user without a Genspark account
- * is in. Nothing of the developer's own session is read or written.
+ * Nothing of the developer's own session is read or written.
  */
 import {
   _electron as electron,
@@ -290,7 +284,7 @@ async function main(): Promise<void> {
       //    plus the analytics and AutoSave switches — and Account is where the
       //    e-mail used to leak from. Integrations is the pane the MCP topic is
       //    about, so it gets its own figure rather than a stand-in.
-      await page.locator('.account-btn').click()
+      await page.locator('.settings-btn').click()
       const nav = page.locator('.set-nav-item')
       const openPane = async (name: RegExp, shot: string) => {
         const item = nav.filter({ hasText: name })
@@ -324,7 +318,7 @@ async function main(): Promise<void> {
       //    the suite carries (`packages/ui/src/ribbon-collapse.tsx` documents
       //    it), so one selector crops all six editors rather than a per-app
       //    class that only exists in one of them.
-      await page.locator('.account-btn').waitFor({ state: 'visible', timeout: 15_000 })
+      await page.locator('.settings-btn').waitFor({ state: 'visible', timeout: 15_000 })
       const deckRow = page.locator('.recent-row').filter({ hasText: 'deck.pptx' }).first()
       const slidesWindow = app.waitForEvent('window')
       await deckRow.dblclick()

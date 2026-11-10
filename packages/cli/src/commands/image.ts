@@ -39,13 +39,12 @@ export const imageCommand: CommandDef = {
       value: 'ratio',
       description: '1:1 | 4:3 | 16:9 | 9:16 | 3:4 | 2:3 | 3:2 | auto',
     },
-    { name: 'size', value: 'size', description: 'auto | 0.5k | 1k | 2k | 3k | 4k (Genspark only)' },
+    { name: 'size', value: 'size', description: 'auto | 0.5k | 1k | 2k | 3k | 4k' },
     {
       name: 'ref',
       value: 'images',
       description: 'reference or edit-target images (paths or URLs), comma-separated',
     },
-    { name: 'model', value: 'name', description: 'Genspark model override (e.g. fal-bria-rmbg)' },
     { name: 'force', description: 'overwrite an existing output file' },
   ],
   async run(args, ctx) {
@@ -102,7 +101,6 @@ export const imageCommand: CommandDef = {
         prompt,
         aspectRatio: aspect,
         imageSize: size,
-        model: flagString(args, 'model'),
         ...(refs.length ? { referenceImageUrls: refs } : {}),
       },
       { mediaRoots },
@@ -110,7 +108,7 @@ export const imageCommand: CommandDef = {
     if (!r.url)
       throw new CliError(EXIT.app, r.error ?? 'image generation failed', undefined, {
         suggestion:
-          'retry once later; if it persists, check the Genspark login in the Office-cc app, configure a BYOK image provider under Settings (AI Media), or continue without generated images',
+          'retry once later; if it persists, configure an image provider under Settings (AI Media) in the Office-cc app, or continue without generated images',
       })
     const image = await loadImage(r.url)
     const ext = EXTS_BY_MIME[image.mime]?.[0] ?? 'png'
@@ -154,7 +152,7 @@ export function siblingExtensions(outExt: string): string[] {
     .map(([, exts]) => exts[0]!)
 }
 
-/** Genspark returns an https URL, BYOK providers a file:// in the app's generated-image store; fetchRemoteImage serves both. */
+/** BYOK providers answer with a file:// in the app's generated-image store; fetchRemoteImage serves it. */
 async function loadImage(url: string): Promise<{ bytes: Uint8Array; mime: string }> {
   const response = await fetchRemoteImage(url)
   if (!response?.ok) throw new CliError(EXIT.app, `could not download the generated image: ${url}`)

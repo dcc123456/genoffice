@@ -1,6 +1,6 @@
-// A failed run marks the error bubble with a "Sign in to Genspark" button only
-// when Genspark is the active provider — a BYOK user's failure (their own
-// provider's rate limit, say) must not advertise a Genspark sign-in (officecc#1948).
+// A failed run shows the error bubble — and never a sign-in button: the app is
+// a standalone BYOK app, so a provider failure is a configuration problem the
+// user fixes in Settings, not an account to sign in to.
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { act, createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
@@ -92,14 +92,13 @@ beforeAll(() => {
   Element.prototype.scrollTo ??= () => {}
 })
 
-describe('AI error bubble sign-in button', () => {
-  it('shows no sign-in button for a BYOK provider failure', async () => {
+describe('AI error bubble', () => {
+  it('shows the error and no sign-in button when the provider call fails', async () => {
     const editor = createEditor()
     try {
       // rebuild inline so the harness stays alive until the assertions ran
       let listener: ChunkListener | null = null
       ;(window as unknown as Record<string, unknown>).desktop = {
-        aiGskStatus: vi.fn(async () => ({ loggedIn: false })),
         onAiStream: (l: ChunkListener) => {
           listener = l
           return () => {
@@ -134,53 +133,6 @@ describe('AI error bubble sign-in button', () => {
       })
       expect(container.querySelector('.ai-msg-error')).not.toBeNull()
       expect(container.querySelector('.ai-login-btn')).toBeNull()
-      act(() => mounted.root.unmount())
-    } finally {
-      editor.destroy()
-      delete (window as unknown as Record<string, unknown>).desktop
-    }
-  })
-
-  it('offers the sign-in button when Genspark is the provider', async () => {
-    const editor = createEditor()
-    try {
-      let listener: ChunkListener | null = null
-      ;(window as unknown as Record<string, unknown>).desktop = {
-        aiGskStatus: vi.fn(async () => ({ loggedIn: false })),
-        onAiStream: (l: ChunkListener) => {
-          listener = l
-          return () => {
-            listener = null
-          }
-        },
-        aiStream: vi.fn(async (request: { requestId: string }) => {
-          listener?.({ requestId: request.requestId, type: 'error', error: 'HTTP 429: rate limit' })
-        }),
-        aiStreamCancel: vi.fn(async () => {}),
-      }
-      const mounted = mount(
-        createElement(AiPanel, {
-          editor,
-          blocks: [],
-          settings: settingsWith('genspark'),
-          open: true,
-          onExpand: () => {},
-          onCollapse: () => {},
-        }),
-      )
-      const container = mounted.container
-      const textarea = container.querySelector<HTMLTextAreaElement>('.ai-input-box textarea')!
-      typeInto(textarea, 'summarize this')
-      const send = container.querySelector<HTMLButtonElement>('.ai-send-btn')!
-      await act(async () => {
-        send.click()
-        await flush()
-        await flush()
-        await flush()
-        await flush()
-      })
-      expect(container.querySelector('.ai-msg-error')).not.toBeNull()
-      expect(container.querySelector('.ai-login-btn')).not.toBeNull()
       act(() => mounted.root.unmount())
     } finally {
       editor.destroy()

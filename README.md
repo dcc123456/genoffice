@@ -55,7 +55,7 @@ file, makes the change, and shows you exactly what it touched.
 - **Ask your files, with sources.** Star a set of documents and **Ask AI** on
   the home screen answers questions across them, citing the file behind every
   claim so you can open it and check.
-- **Your keys or none.** Sign in with Genspark and skip keys, or bring your own
+- **Your own keys.** Bring your own
   key for Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax,
   Grok, Mistral, OpenRouter, Requesty, Opper, Cheaper Inference, Atlas Cloud, or any OpenAI-compatible endpoint, local
   servers included.
@@ -262,7 +262,7 @@ document in a visible editor tab while you watch.
 - **An AI that edits the document itself.** Tracked changes in Docs, live
   formulas and charts in Sheets, slides drawn onto the canvas, every AI turn a
   snapshot you can roll back.
-- **Your model, your key.** Sign in with Genspark, or bring a key for Claude,
+- **Your model, your key.** Bring a key for Claude,
   OpenAI, Gemini, DeepSeek and more, local servers and any OpenAI-compatible
   endpoint included.
 - **PDF done properly.** Edit text inside the page, and convert PDF to Word,
@@ -280,11 +280,7 @@ document in a visible editor tab while you watch.
 
 ## AI backends
 
-**Sign in with Genspark** and there is nothing to configure: model calls route
-through the Genspark proxy (Claude, GPT and Gemini families) and the agents get
-web and image search, image generation, and image/audio/video analysis.
-
-**Or bring your own key.** Settings → AI lists Claude, OpenAI, Gemini,
+**Bring your own key.** Settings → AI lists Claude, OpenAI, Gemini,
 DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty, Opper,
 Cheaper Inference, Atlas Cloud and OpenCode Zen/Go, plus a custom slot for any OpenAI-compatible endpoint (base
 URL + key), including local model servers. Search and media have their own
@@ -301,7 +297,7 @@ default; when on, the excerpts of the top 20 local hits are sent for judgment
 and nothing else leaves the machine.
 
 **Parallel** works without an account: its free Search MCP (rate-limited) is the
-default web search whenever no Genspark login or search key is configured, and
+default web search whenever no search key is configured, and
 it runs ahead of the DuckDuckGo scrape. Select Parallel under Web search and
 enter a [Parallel](https://platform.parallel.ai/) key to use the Search API
 instead.
@@ -573,7 +569,7 @@ back byte-for-byte, so documents keep working in Microsoft Office.
 
 Document editing is fully local — files never leave your machine to be
 opened, edited, saved or converted. The AI features (agents, search, image
-tools) need a network connection, with either a Genspark sign-in or your own
+tools) need a network connection, with your own
 model API key.
 
 </details>
@@ -599,7 +595,7 @@ convert to editable text rather than a page image.
 <details>
 <summary><b>Can I use my own AI model or API key?</b></summary>
 
-Yes. Besides the keyless Genspark sign-in, Office-cc supports bring your own
+Yes. Office-cc supports bring your own
 key for Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax,
 Grok, Mistral, OpenRouter, Requesty, Opper, Cheaper Inference, Atlas Cloud and OpenCode Zen/Go, plus any OpenAI-compatible
 endpoint — including local model servers. Search, image generation and
@@ -696,6 +692,6 @@ Office-cc is licensed under the [Apache License 2.0](LICENSE), with one
 exception: the `ee/` directory is reserved for future enterprise modules and
 is covered by the [Office-cc Enterprise License](ee/LICENSE).
 
-The Office-cc and Genspark names and logos are trademarks of Mainfunc, Inc.
+The Office-cc name and logo are trademarks of Mainfunc, Inc.
 The Apache-2.0 license does not grant permission to use them (see section 6);
 forks should use their own branding.

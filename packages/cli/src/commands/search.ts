@@ -7,7 +7,7 @@ import { CliError, EXIT } from '../result'
 export const searchCommand: CommandDef = {
   name: 'search',
   summary:
-    'Web or image search through the provider configured in Office-cc (Genspark, Serper, Serply, Tavily, Parallel).',
+    'Web or image search through the provider configured in Office-cc (Parallel, Serper, Serply, Tavily, Exa, Firecrawl).',
   usage: 'search <query> [--images] [--max <n>]',
   options: [
     { name: 'images', description: 'search images instead of web pages' },

@@ -1,110 +1,113 @@
+import { mkdtempSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-vi.mock('../src/gsk', () => ({
-  gskGenerateImage: vi.fn(),
-  gskAnalyzeMedia: vi.fn(),
-  hasGskAuth: vi.fn(() => true),
-}))
+vi.mock('@office-cc/ai-provider', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@office-cc/ai-provider')>()
+  return {
+    ...actual,
+    generateImageWithProvider: vi.fn(),
+    analyzeMediaWithProvider: vi.fn(),
+  }
+})
 
-import { generateImageTool, analyzeMediaTool, GSK_RMBG_MODEL } from '../src/media-tools'
-import { gskGenerateImage, gskAnalyzeMedia } from '../src/gsk'
+import { analyzeMediaWithProvider, generateImageWithProvider } from '@office-cc/ai-provider'
+import { NO_MEDIA_PROVIDER_ERROR, analyzeMediaTool, generateImageTool } from '../src/media-tools'
 
-const gskGen = vi.mocked(gskGenerateImage)
-const gskAnalyze = vi.mocked(gskAnalyzeMedia)
-// nonexistent settings file → defaults: no BYOK media provider, cloud tools on → Genspark route
-const SETTINGS = '/nonexistent/ai-settings.json'
+const gen = vi.mocked(generateImageWithProvider)
+const analyze = vi.mocked(analyzeMediaWithProvider)
+
+/** nonexistent settings file → defaults: no media provider is configured */
+const NO_PROVIDER_SETTINGS = '/nonexistent/ai-settings.json'
+
+function writeSettings(mediaProvider: string): string {
+  const dir = mkdtempSync(join(tmpdir(), 'officecc-media-tools-'))
+  const path = join(dir, 'ai-settings.json')
+  writeFileSync(
+    path,
+    JSON.stringify({
+      provider: 'custom',
+      providers: { custom: { apiKey: 'k', model: 'm', baseUrl: 'https://example.test/v1' } },
+      media: {
+        provider: mediaProvider,
+        providers: {
+          [mediaProvider]: {
+            apiKey: 'k',
+            analysisModel: 'test-model',
+            imageModel: 'test-image-model',
+          },
+        },
+      },
+    }),
+  )
+  return path
+}
 
 beforeEach(() => {
-  gskGen.mockReset()
-  gskAnalyze.mockReset()
+  gen.mockReset()
+  analyze.mockReset()
 })
 
-describe('generateImageTool transparentBackground (Genspark route)', () => {
-  it('chains a fal-bria-rmbg pass over the generated image and returns the stripped URL', async () => {
-    gskGen
-      .mockResolvedValueOnce({ url: 'https://cdn/x/opaque.png', taskId: '1' })
-      .mockResolvedValueOnce({ url: 'https://cdn/x/cutout.png', taskId: '2' })
-    const r = await generateImageTool(SETTINGS, {
+describe('generateImageTool', () => {
+  it('refuses to run without a configured media provider', async () => {
+    const r = await generateImageTool(NO_PROVIDER_SETTINGS, { prompt: 'red podcast icon' })
+    expect(r).toEqual({ error: NO_MEDIA_PROVIDER_ERROR })
+    expect(gen).not.toHaveBeenCalled()
+  })
+
+  it('sends the prompt and the transparent flag to the configured provider', async () => {
+    gen.mockResolvedValueOnce({ bytes: new Uint8Array([1, 2, 3]), mime: 'image/png' })
+    const r = await generateImageTool(writeSettings('gemini'), {
       prompt: 'red podcast icon',
       transparentBackground: true,
     })
-    expect(r).toEqual({ url: 'https://cdn/x/cutout.png' })
-    expect(gskGen).toHaveBeenCalledTimes(2)
-    expect(gskGen.mock.calls[1]![0]).toMatchObject({
-      model: GSK_RMBG_MODEL,
-      referenceImageUrls: ['https://cdn/x/opaque.png'],
-    })
-  })
-
-  it('without the flag generation stays a single pass', async () => {
-    gskGen.mockResolvedValueOnce({ url: 'https://cdn/x/opaque.png', taskId: '1' })
-    const r = await generateImageTool(SETTINGS, { prompt: 'red podcast icon' })
-    expect(r).toEqual({ url: 'https://cdn/x/opaque.png' })
-    expect(gskGen).toHaveBeenCalledTimes(1)
-  })
-
-  it('does not chain when the caller already runs the background-removal model', async () => {
-    gskGen.mockResolvedValueOnce({ url: 'https://cdn/x/cutout.png', taskId: '1' })
-    const r = await generateImageTool(SETTINGS, {
-      prompt: 'remove background',
-      model: GSK_RMBG_MODEL,
-      referenceImageUrls: ['https://cdn/x/src.png'],
-      transparentBackground: true,
-    })
-    expect(r).toEqual({ url: 'https://cdn/x/cutout.png' })
-    expect(gskGen).toHaveBeenCalledTimes(1)
-  })
-
-  it('falls back to the opaque image when the strip pass fails', async () => {
-    gskGen
-      .mockResolvedValueOnce({ url: 'https://cdn/x/opaque.png', taskId: '1' })
-      .mockRejectedValueOnce(new Error('rmbg down'))
-    const r = await generateImageTool(SETTINGS, {
+    expect(gen).toHaveBeenCalledTimes(1)
+    expect(gen.mock.calls[0]![2]).toMatchObject({
       prompt: 'red podcast icon',
-      transparentBackground: true,
+      transparent: true,
     })
-    expect(r).toEqual({ url: 'https://cdn/x/opaque.png' })
+    expect(r.url?.startsWith('file://')).toBe(true)
   })
 
-  it('a generation failure still surfaces as an error (no half-run chain)', async () => {
-    gskGen.mockRejectedValueOnce(new Error('quota exceeded'))
-    const r = await generateImageTool(SETTINGS, {
-      prompt: 'red podcast icon',
-      transparentBackground: true,
-    })
+  it('surfaces a provider failure as an error', async () => {
+    gen.mockRejectedValueOnce(new Error('quota exceeded'))
+    const r = await generateImageTool(writeSettings('gemini'), { prompt: 'red podcast icon' })
     expect(r).toEqual({ error: 'quota exceeded' })
-    expect(gskGen).toHaveBeenCalledTimes(1)
   })
-})
 
-describe('generateImageTool reference budget (Genspark route)', () => {
-  it('rejects too many reference images with the BYOK wording, before calling the CLI', async () => {
-    gskGen.mockResolvedValue({ url: 'https://cdn/x/out.png', taskId: '1' })
+  it('rejects too many reference images with the BYOK wording', async () => {
     const referenceImageUrls = Array.from({ length: 13 }, (_, i) => `https://cdn/x/${i}.png`)
-    const r = await generateImageTool(SETTINGS, { prompt: 'red podcast icon', referenceImageUrls })
+    const r = await generateImageTool(writeSettings('gemini'), {
+      prompt: 'red podcast icon',
+      referenceImageUrls,
+    })
     expect(r).toEqual({
       error: 'Too many media items in one request (13, limit 12); analyze them in smaller batches',
     })
-    expect(gskGen).not.toHaveBeenCalled()
-  })
-
-  it('still passes a reference count within the budget to the CLI', async () => {
-    gskGen.mockResolvedValueOnce({ url: 'https://cdn/x/out.png', taskId: '1' })
-    const referenceImageUrls = Array.from({ length: 12 }, (_, i) => `https://cdn/x/${i}.png`)
-    const r = await generateImageTool(SETTINGS, { prompt: 'red podcast icon', referenceImageUrls })
-    expect(r).toEqual({ url: 'https://cdn/x/out.png' })
-    expect(gskGen).toHaveBeenCalledTimes(1)
+    expect(gen).not.toHaveBeenCalled()
   })
 })
 
-describe('analyzeMediaTool media budget (Genspark route)', () => {
-  it('rejects too many media URLs with the BYOK wording, before calling the CLI', async () => {
-    gskAnalyze.mockResolvedValueOnce('done')
+describe('analyzeMediaTool', () => {
+  it('refuses to run without a configured media provider', async () => {
+    const r = await analyzeMediaTool(NO_PROVIDER_SETTINGS, {
+      mediaUrls: ['https://cdn/x/1.png'],
+      requirements: 'describe these',
+    })
+    expect(r).toEqual({ error: NO_MEDIA_PROVIDER_ERROR })
+    expect(analyze).not.toHaveBeenCalled()
+  })
+
+  it('rejects too many media URLs with the BYOK wording', async () => {
     const mediaUrls = Array.from({ length: 13 }, (_, i) => `https://cdn/x/${i}.png`)
-    const r = await analyzeMediaTool(SETTINGS, { mediaUrls, requirements: 'describe these' })
+    const r = await analyzeMediaTool(writeSettings('gemini'), {
+      mediaUrls,
+      requirements: 'describe',
+    })
     expect(r).toEqual({
       error: 'Too many media items in one request (13, limit 12); analyze them in smaller batches',
     })
-    expect(gskAnalyze).not.toHaveBeenCalled()
+    expect(analyze).not.toHaveBeenCalled()
   })
 })

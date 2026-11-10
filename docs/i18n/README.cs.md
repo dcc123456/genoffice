@@ -47,8 +47,8 @@ provede požadovanou úpravu a přesně vám ukáže, čeho se dotkl.
   i převádějí přímo na vašem počítači. PDF → Word / Excel / PowerPoint
   a Markdown → Word i HTML → Word běží celé na zařízení. Zařízení opouštějí
   jen volání AI, a to k poskytovateli, kterého si sami vyberete.
-- **Vaše klíče, nebo žádné.** Přihlaste se přes Genspark a klíče nepotřebujete,
-  nebo použijte vlastní klíč pro Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM,
+- **Vaše klíče.** Použijte vlastní klíč pro
+  Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM,
   Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty nebo jakýkoli OpenAI
   kompatibilní endpoint, včetně lokálních serverů.
 - **Skriptovatelný a připravený pro agenty.** Aplikace obsahuje příkazový
@@ -218,7 +218,7 @@ ve viditelné záložce editoru, zatímco se díváte.
 - **AI, která upravuje dokument přímo.** Sledované změny v Docs, živé vzorce
   a grafy v Sheets, prezentace kreslené přímo na plochu, každý krok AI je
   snapshot, ke kterému se lze vrátit.
-- **Vlastní model, vlastní klíč.** Přihlaste se přes Genspark, nebo použijte
+- **Vlastní model, vlastní klíč.** Použijte
   klíč pro Claude, OpenAI, Gemini, DeepSeek a další, včetně lokálních serverů
   a jakéhokoli OpenAI kompatibilního endpointu.
 - **PDF udělané správně.** Upravujte text přímo na stránce a převádějte PDF
@@ -231,12 +231,7 @@ ve viditelné záložce editoru, zatímco se díváte.
 
 ## AI backendy
 
-**Přihlaste se přes Genspark** a nemusíte nic nastavovat: volání modelů
-prochází přes proxy Genspark (rodiny Claude, GPT a Gemini) a agenti získávají
-webové a obrázkové vyhledávání, generování obrázků a analýzu
-obrázků/zvuku/videa.
-
-**Nebo použijte vlastní klíč.** Nastavení → AI nabízí Claude, OpenAI, Gemini,
+**Použijte vlastní klíč.** Nastavení → AI nabízí Claude, OpenAI, Gemini,
 DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty
 a OpenCode Zen/Go, plus vlastní slot pro jakýkoli OpenAI kompatibilní
 endpoint (base URL + klíč), včetně lokálních serverů s modely. Vyhledávání
@@ -268,11 +263,11 @@ MCP klientem.
 
 ### Instalace skillu
 
-| Jak                                    | Co se stane                                                                                                                                                                                |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Nastavení → Integrace** v aplikaci   | Vypíše agenty nalezené na tomto počítači; jedním kliknutím zapíše skill do každého, který vyberete. Když nové vydání Office-cc přinese novější skill, objeví se tlačítko **Aktualizovat**. |
-| **Stáhnout jako zip** na téže stránce  | Rozložení, které claude.ai, desktopové aplikace Claude a další asistenti přijímají jako nahraný skill.                                                                                     |
-| `npx skills add dcc123456/genoffice` | Nainstaluje z tohoto repozitáře do jakéhokoli agenta podporujícího skilly.                                                                                                                 |
+| Jak                                   | Co se stane                                                                                                                                                                                |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Nastavení → Integrace** v aplikaci  | Vypíše agenty nalezené na tomto počítači; jedním kliknutím zapíše skill do každého, který vyberete. Když nové vydání Office-cc přinese novější skill, objeví se tlačítko **Aktualizovat**. |
+| **Stáhnout jako zip** na téže stránce | Rozložení, které claude.ai, desktopové aplikace Claude a další asistenti přijímají jako nahraný skill.                                                                                     |
+| `npx skills add dcc123456/genoffice`  | Nainstaluje z tohoto repozitáře do jakéhokoli agenta podporujícího skilly.                                                                                                                 |
 
 Pak začněte nový chat a požádejte o dokument. Skill agenta naučí, kdy sáhnout
 po `officecc`, jak si soubor přečíst před úpravou a jak zkontrolovat vlastní
@@ -329,10 +324,10 @@ pro asistenty, kteří neumí spustit terminál nebo kterým byste ho raději
 nedávali. Vedou k tomu dvě cesty, obě ukázané s připravenými fragmenty ke
 zkopírování v **Nastavení → Integrace → MCP**:
 
-| Cesta                                | Co to je                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Cesta                               | Co to je                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **A · `officecc mcp`** (doporučeno) | stdio server, který si asistent spustí sám; Office-cc nemusí být otevřené. Jeden nástroj na příkaz (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) plus fázovaný postup sestavování prezentace `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Operace, specifikace a Markdown se předávají přímo v argumentech, takže funguje i klient bez souborového systému. |
-| **B · Lokální HTTP server**          | Běží uvnitř aplikace Office-cc na `http://127.0.0.1:3093/mcp` (Streamable HTTP, se starším SSE). Jeho nástroje ovládají viditelnou záložku editoru Word: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session` — a vy sledujete, jak dokument vzniká. Ve výchozím stavu vypnutý; zapíná se ve stejném panelu nastavení.                                                                                                                                                                 |
+| **B · Lokální HTTP server**         | Běží uvnitř aplikace Office-cc na `http://127.0.0.1:3093/mcp` (Streamable HTTP, se starším SSE). Jeho nástroje ovládají viditelnou záložku editoru Word: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session` — a vy sledujete, jak dokument vzniká. Ve výchozím stavu vypnutý; zapíná se ve stejném panelu nastavení.                                                                                                                                                                 |
 
 ```bash
 # Claude Code
@@ -382,8 +377,8 @@ poskytovateli nastavenému v Office-cc.
 
 ## Stažení
 
-| Platforma                            | Požadavky                                             | Stažení                                                                                        |
-| ------------------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Platforma                            | Požadavky                                             | Stažení                                                                                      |
+| ------------------------------------ | ----------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [Nejnovější `.dmg` (arm64)](https://github.com/dcc123456/genoffice/releases/latest)          |
 | **macOS** — Intel (x64)              | macOS 11+                                             | [Nejnovější `.dmg` (x64)](https://github.com/dcc123456/genoffice/releases/latest)            |
 | **Windows** (x64, většina PC)        | Windows 10+, Intel/AMD                                | [Nejnovější instalátor `-x64.exe`](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -498,8 +493,8 @@ zpět beze změny, takže dokumenty dál fungují v Microsoft Office.
 
 Úprava dokumentů je zcela lokální — soubory neopustí váš počítač při
 otevírání, úpravách, ukládání ani konverzi. AI funkce (agenti, vyhledávání,
-nástroje pro obrázky) potřebují síťové připojení, buď s přihlášením přes
-Genspark, nebo s vlastním API klíčem k modelu.
+nástroje pro obrázky) potřebují síťové připojení,
+vlastním API klíčem k modelu.
 
 </details>
 
@@ -524,7 +519,7 @@ OCR, takže se převedou na editovatelný text, ne na obrázek stránky.
 <details>
 <summary><b>Můžu použít vlastní AI model nebo API klíč?</b></summary>
 
-Ano. Kromě bezklíčového přihlášení Genspark Office-cc podporuje vlastní klíč
+Ano. Office-cc podporuje vlastní klíč
 pro Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok,
 Mistral, OpenRouter, Requesty a OpenCode Zen/Go, plus jakýkoli OpenAI kompatibilní
 endpoint — včetně lokálních serverů s modely. Vyhledávání, generování obrázků
@@ -625,6 +620,6 @@ Office-cc je licencován pod [Apache License 2.0](../../LICENSE), s jednou
 výjimkou: adresář `ee/` je vyhrazen pro budoucí podnikové moduly a je kryt
 [Office-cc Enterprise License](../../ee/LICENSE).
 
-Názvy a loga Office-cc a Genspark jsou ochranné známky společnosti Mainfunc,
+Názvy a loga Office-cc jsou ochranné známky společnosti Mainfunc,
 Inc. Licence Apache-2.0 neuděluje oprávnění je používat (viz oddíl 6); forky
 by měly používat vlastní branding.

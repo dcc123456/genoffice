@@ -2,7 +2,7 @@
 
 ## Instellingen openen
 
-De accountregel linksonder op Start opent het instellingenpaneel (als je niet bent aangemeld staat er Inloggen). Het paneel heeft zes secties: Account, AI-model, AI-media en zoeken, Algemeen, Integraties en Over.
+De instellingen-vermelding linksonder op Start opent het instellingenpaneel. Het paneel heeft vijf secties: AI-model, AI-media en zoeken, Algemeen, Integraties en Over.
 
 ![Instellingen ▸ Algemeen, waar taal, thema, automatisch opslaan en de schakelaar voor gebruiksstatistieken staan](img/settings-general.png)
 
@@ -46,12 +46,6 @@ Met de instellingen kun je Office-cc registreren als verwerker van .docx / .xlsx
 - Help ▸ Kennisgevingen over software van derden: het volledige overzicht van opensourcelicenties dat met de app is meegeleverd.
 - Help ▸ Controleren op updates…: start een handmatige controle; bij een nieuwere versie wordt je gevraagd die te installeren.
 
-## Aanmelden bij Genspark
-
-- Het aanmeldpunt (in de instellingen of in de lijst met cloudprojecten) gebruikt een flow met **apparaatcode**: Office-cc toont een code en opent de aanmeldpagina in de browser; daarna gaat het automatisch verder.
-- Aanmelden wordt alleen gebruikt voor: de lijst met cloudprojecten en de modellen die Genspark host. Zonder aanmelden blijven alle lokale functies en eigen modellen werken.
-- Uitloggen is in de instellingen met één klik te doen.
-
 ## MCP-integratie (voor gevorderde gebruikers / AI-clients)
 
 **Integraties** is het paneel dat Office-cc met een coding agent verbindt, en daarvoor is er een eigen artikel: Verbinden met een coding agent. De korte versie — kies een route (de opdrachtregel, of MCP), volg dat onderdeel en start daarna een nieuw gesprek en stel je vraag.
@@ -62,8 +56,8 @@ Onder **Lokale HTTP-server** kan de app de server ook zelf draaien — een insch
 
 ## Commandoregel in één oogopslag
 
-| Opdracht              | Wat het doet               |
-| --------------------- | -------------------------- |
+| Opdracht             | Wat het doet               |
+| -------------------- | -------------------------- |
 | `officecc <bestand>` | opent een bestand          |
 | `officecc mcp`       | start de lokale MCP-server |
 | `officecc --help`    | alle opdrachten en opties  |

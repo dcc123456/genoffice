@@ -50,8 +50,8 @@ modification, et vous montre exactement ce qu'il a touché.
   PDF → Word / Excel / PowerPoint, Markdown → Word et HTML → Word s'exécutent
   toutes en local. Seuls les appels à l'IA quittent la machine, vers le
   fournisseur de votre choix.
-- **Vos clés ou aucune.** Connectez-vous avec Genspark pour vous dispenser de
-  clé, ou utilisez votre propre clé pour Claude, OpenAI, Gemini, DeepSeek,
+- **Vos propres clés.** Utilisez votre propre clé pour
+  Claude, OpenAI, Gemini, DeepSeek,
   Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty, ou tout point
   de terminaison compatible OpenAI, y compris les serveurs locaux.
 - **Scriptable et prêt pour les agents.** L'application embarque une ligne de
@@ -224,7 +224,7 @@ document Word dans un onglet d'éditeur visible pendant que vous regardez.
   Docs, formules et graphiques vivants dans Sheets, diapositives dessinées
   directement sur le canevas, chaque étape de l'IA laissant un instantané que
   vous pouvez restaurer.
-- **Votre modèle, votre clé.** Connectez-vous avec Genspark, ou apportez une
+- **Votre modèle, votre clé.** Apportez une
   clé pour Claude, OpenAI, Gemini, DeepSeek et d'autres, serveurs locaux et
   tout point de terminaison compatible OpenAI inclus.
 - **Le PDF fait sérieusement.** Modifiez le texte directement dans la page,
@@ -239,12 +239,7 @@ document Word dans un onglet d'éditeur visible pendant que vous regardez.
 
 ## Moteurs IA
 
-**Connectez-vous avec Genspark** et il n'y a rien à configurer : les appels
-aux modèles passent par le proxy Genspark (familles Claude, GPT et Gemini) et
-les agents ont accès à la recherche web et d'images, à la génération
-d'images, et à l'analyse d'images, d'audio et de vidéo.
-
-**Ou utilisez votre propre clé.** Paramètres → IA propose Claude, OpenAI,
+**Utilisez votre propre clé.** Paramètres → IA propose Claude, OpenAI,
 Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty
 et OpenCode Zen/Go, ainsi qu'un emplacement personnalisé pour tout point de
 terminaison compatible OpenAI (URL de base + clé), y compris les serveurs de
@@ -283,7 +278,7 @@ MCP.
 | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Réglages → Intégrations** dans l'application | Liste les agents trouvés sur cet ordinateur ; un clic écrit le skill dans chacun de ceux que vous choisissez. Un bouton **Mettre à jour** apparaît lorsqu'une version de Office-cc embarque un skill plus récent. |
 | **Télécharger en zip** sur la même page        | Le format que claude.ai, les applications de bureau Claude et d'autres assistants acceptent comme skill téléversé.                                                                                                |
-| `npx skills add dcc123456/genoffice`         | Installe depuis ce dépôt dans tout agent compatible avec les skills.                                                                                                                                              |
+| `npx skills add dcc123456/genoffice`           | Installe depuis ce dépôt dans tout agent compatible avec les skills.                                                                                                                                              |
 
 Ouvrez ensuite une nouvelle conversation et demandez un document. Le skill
 apprend à l'agent quand recourir à `officecc`, comment lire un fichier avant
@@ -344,10 +339,10 @@ préférez ne pas en donner un. Il existe deux façons de vous connecter,
 toutes deux présentées avec des extraits prêts à copier dans
 **Réglages → Intégrations → MCP** :
 
-| Voie                                 | Ce que c'est                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Voie                                | Ce que c'est                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **A · `officecc mcp`** (recommandé) | Un serveur stdio que l'assistant démarre lui-même ; Office-cc n'a pas besoin d'être ouvert. Un outil par commande (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) plus le flux de deck par étapes `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Les opérations, les spécifications et le Markdown sont passés en ligne, donc un client sans système de fichiers fonctionne quand même. |
-| **B · Serveur HTTP local**           | Tourne dans l'application Office-cc sur `http://127.0.0.1:3093/mcp` (Streamable HTTP, avec SSE hérité). Ses outils pilotent un onglet d'éditeur Word visible : `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, et vous regardez le document prendre forme. Désactivé par défaut ; activez-le dans le même panneau de réglages.                                                                                                                                                                           |
+| **B · Serveur HTTP local**          | Tourne dans l'application Office-cc sur `http://127.0.0.1:3093/mcp` (Streamable HTTP, avec SSE hérité). Ses outils pilotent un onglet d'éditeur Word visible : `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, et vous regardez le document prendre forme. Désactivé par défaut ; activez-le dans le même panneau de réglages.                                                                                                                                                                           |
 
 ```bash
 # Claude Code
@@ -399,8 +394,8 @@ dans Office-cc.
 
 ## Télécharger
 
-| Plateforme                           | Prérequis                                             | Téléchargement                                                                                |
-| ------------------------------------ | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Plateforme                           | Prérequis                                             | Téléchargement                                                                              |
+| ------------------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [Dernier `.dmg` (arm64)](https://github.com/dcc123456/genoffice/releases/latest)            |
 | **macOS** — Intel (x64)              | macOS 11+                                             | [Dernier `.dmg` (x64)](https://github.com/dcc123456/genoffice/releases/latest)              |
 | **Windows** (x64, la plupart des PC) | Windows 10+, Intel/AMD                                | [Dernier installateur `-x64.exe`](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -522,7 +517,7 @@ documents continuent de fonctionner dans Microsoft Office.
 L'édition de documents est entièrement locale — les fichiers ne quittent
 jamais votre machine pour être ouverts, modifiés, enregistrés ou convertis.
 Les fonctionnalités IA (agents, recherche, outils d'image) nécessitent une
-connexion réseau, avec soit une connexion Genspark, soit votre propre clé
+connexion réseau, avec votre propre clé
 d'API de modèle.
 
 </details>
@@ -550,7 +545,7 @@ en texte modifiable plutôt qu'en image de page.
 <details>
 <summary><b>Puis-je utiliser mon propre modèle IA ou ma propre clé d'API ?</b></summary>
 
-Oui. Outre la connexion Genspark sans clé, Office-cc prend en charge
+Oui. Office-cc prend en charge
 l'utilisation de votre propre clé pour Claude, OpenAI, Gemini, DeepSeek,
 Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty et OpenCode
 Zen/Go, ainsi que tout point de terminaison compatible OpenAI — y compris les
@@ -660,7 +655,7 @@ Office-cc est distribué sous [licence Apache 2.0](../../LICENSE), avec une
 exception : le répertoire `ee/` est réservé aux futurs modules d'entreprise
 et est couvert par la [Office-cc Enterprise License](../../ee/LICENSE).
 
-Les noms et logos Office-cc et Genspark sont des marques déposées de
+Les noms et logos Office-cc sont des marques déposées de
 Mainfunc, Inc. La licence Apache-2.0 n'accorde pas la permission de les
 utiliser (voir la section 6) ; les forks doivent utiliser leur propre
 identité visuelle.

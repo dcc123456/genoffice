@@ -2,7 +2,7 @@
 
 ## Opening settings
 
-The account row at the bottom left of Home opens the settings panel (it reads Sign in when you are logged out). It has six sections: Account, AI Model, AI Media & Search, General, Integrations and About.
+The settings entry at the bottom left of Home opens the settings panel. It has five sections: AI Model, AI Media & Search, General, Integrations and About.
 
 ![Settings ▸ General, where language, theme, AutoSave and the usage-statistics switch live](img/settings-general.png)
 
@@ -46,12 +46,6 @@ Settings can register Office-cc as the handler for .docx / .xlsx / .pptx / .pdf 
 - Help ▸ Third-party notices: the full OSS license inventory shipped with the app.
 - Help ▸ Check for updates: triggers a manual check; a newer version prompts to install.
 
-## Genspark sign-in
-
-- The sign-in entry (settings or the cloud project list) uses a **device-code** flow: Office-cc shows a code and opens the browser login; it continues automatically once done.
-- Sign-in is used only for: the cloud project list and Genspark's hosted models. Without it, every local feature and custom models keep working.
-- Sign out is one click in settings.
-
 ## MCP integration (for advanced users / AI clients)
 
 **Integrations** is the pane that connects Office-cc to a coding agent, and it has its own article: Connecting a coding agent. The short version — pick a route (the command line, or MCP), follow that section, then start a new chat and ask.
@@ -62,8 +56,8 @@ Under **Local HTTP server** the app can run the server itself — an enable swit
 
 ## Command-line cheat sheet
 
-| Command            | What it does               |
-| ------------------ | -------------------------- |
+| Command           | What it does               |
+| ----------------- | -------------------------- |
 | `officecc <file>` | open a file                |
 | `officecc mcp`    | start the local MCP server |
 | `officecc --help` | every command and flag     |

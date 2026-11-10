@@ -9,19 +9,14 @@ import {
 const anthropicModels = AI_PROVIDERS.find((m) => m.id === 'anthropic')!.models
 
 describe('aiModelPickerGroups', () => {
-  it('lists nothing while signed out with no keys', () => {
-    expect(aiModelPickerGroups(defaultAiSettings(), false)).toEqual([])
-  })
-
-  it('lists Genspark only when signed in', () => {
-    const ids = aiModelPickerGroups(defaultAiSettings(), true).map((g) => g.id)
-    expect(ids).toEqual(['genspark'])
+  it('lists nothing with no keys configured', () => {
+    expect(aiModelPickerGroups(defaultAiSettings())).toEqual([])
   })
 
   it('adds a vendor once its key is set and puts an off-catalog model first', () => {
     const settings = defaultAiSettings()
     settings.providers.anthropic = { apiKey: 'k', model: 'claude-next' }
-    const groups = aiModelPickerGroups(settings, false)
+    const groups = aiModelPickerGroups(settings)
     expect(groups.map((g) => g.id)).toEqual(['anthropic'])
     expect(groups[0]!.models).toEqual(['claude-next', ...anthropicModels])
   })
@@ -29,9 +24,9 @@ describe('aiModelPickerGroups', () => {
   it('needs a base URL for custom endpoints', () => {
     const settings = defaultAiSettings()
     settings.providers.custom = { apiKey: '', model: 'llama', baseUrl: '' }
-    expect(aiModelPickerGroups(settings, false)).toEqual([])
+    expect(aiModelPickerGroups(settings)).toEqual([])
     settings.providers.custom = { apiKey: '', model: 'llama', baseUrl: 'http://localhost:11434/v1' }
-    expect(aiModelPickerGroups(settings, false).map((g) => g.id)).toEqual(['custom'])
+    expect(aiModelPickerGroups(settings).map((g) => g.id)).toEqual(['custom'])
   })
 })
 
@@ -52,21 +47,19 @@ describe('selection round trip', () => {
     expect(settings.providers.anthropic.model).toBe(anthropicModels[0])
   })
 
-  it('falls back to Genspark when the stored provider is unusable', () => {
+  it('falls back to the custom slot when the stored provider is unusable', () => {
     const settings = defaultAiSettings()
     settings.provider = 'anthropic'
-    expect(aiModelPickerSelection(settings).provider).toBe('genspark')
+    expect(aiModelPickerSelection(settings).provider).toBe('custom')
   })
 })
 
 describe('CLI vendors', () => {
   it('lists Codex only after the settings page stored a path or model', () => {
     const settings = defaultAiSettings()
-    expect(aiModelPickerGroups(settings, false)).toEqual([])
+    expect(aiModelPickerGroups(settings)).toEqual([])
     settings.providers.codex = { apiKey: '', model: '', cliPath: '/usr/local/bin/codex' }
-    expect(aiModelPickerGroups(settings, false)).toEqual([
-      { id: 'codex', label: 'Codex CLI', models: [] },
-    ])
+    expect(aiModelPickerGroups(settings)).toEqual([{ id: 'codex', label: 'Codex CLI', models: [] }])
   })
 })
 
@@ -95,7 +88,7 @@ describe('custom endpoints', () => {
   })
 
   it('lists one group per configured endpoint with its cached models', () => {
-    const groups = aiModelPickerGroups(settings(), false)
+    const groups = aiModelPickerGroups(settings())
     expect(groups).toEqual([
       { id: 'custom', endpoint: 'a', label: 'Ollama', models: ['llama3'] },
       { id: 'custom', endpoint: 'b', label: 'gw.example.com', models: ['gpt-x', 'gpt-y'] },

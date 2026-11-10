@@ -80,4 +80,41 @@ describe('collectLaunchPaths', () => {
       ),
     ).toEqual(['legacy.rtf'])
   })
+
+  /**
+   * A folder opened from the OS ("Open With" on a folder) carries no
+   * extension to match, so it is recognised by being a directory.
+   */
+  it('collects a folder the user opened from the OS', () => {
+    expect(
+      collectLaunchPaths(
+        ['Office-cc.app', '/data/project'],
+        undefined,
+        () => true,
+        (path) => path === '/data/project',
+      ),
+    ).toEqual(['/data/project'])
+  })
+
+  it('a folder does not silence the unsupported-file fallback', () => {
+    expect(
+      collectLaunchPaths(
+        ['Office-cc.app', '/data/project', 'legacy.rtf'],
+        undefined,
+        (path) => path !== 'missing.doc',
+        (path) => path === '/data/project',
+      ),
+    ).toEqual(['/data/project', 'legacy.rtf'])
+  })
+
+  it('collects a folder from the second-instance payload', () => {
+    expect(
+      collectLaunchPaths(
+        ['Office-cc.exe'],
+        { launchPaths: ['/data/project'] },
+        () => true,
+        (path) => path === '/data/project',
+      ),
+    ).toEqual(['/data/project'])
+  })
 })

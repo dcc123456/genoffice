@@ -47,10 +47,7 @@ function normalizeHttpsBaseUrl(name, value) {
 const updateUrl = process.env.OFFICECC_UPDATE_URL
 const ga4MeasurementId = process.env.OFFICECC_GA4_MEASUREMENT_ID
 const ga4ApiSecret = process.env.OFFICECC_GA4_API_SECRET
-const fontCdnUrl = normalizeHttpsBaseUrl(
-  'OFFICECC_FONT_CDN_URL',
-  process.env.OFFICECC_FONT_CDN_URL,
-)
+const fontCdnUrl = normalizeHttpsBaseUrl('OFFICECC_FONT_CDN_URL', process.env.OFFICECC_FONT_CDN_URL)
 
 // OFFICECC_MAC_X64=1 — opt into packaging the Intel (x64) dmg/zip alongside
 // arm64. Off by default: Intel packages must only ever ship signed with the
@@ -80,9 +77,6 @@ const WIN_SIDECAR = `../sheets/native/xlsx-engine/target/${winSidecarTarget}/rel
 
 function assertExtraResourceSources() {
   for (const rel of [
-    '../../node_modules/@genspark/cli',
-    '../../node_modules/@genspark/cli/node_modules/commander',
-    '../../node_modules/ws',
     '../../node_modules/electron/dist/LICENSES.chromium.html',
     '../../node_modules/@embedpdf/pdfium/dist/pdfium.wasm',
     '../pdf/node_modules/harfbuzzjs/hb-subset.wasm',
@@ -550,12 +544,8 @@ const config = {
       from: '../../packages/pdf2docx/ocr-helper/win-ocr.exe',
       to: 'ocr/win-ocr.exe',
     },
-    {
-      from: '../../node_modules/@genspark/cli',
-      to: 'gsk/node_modules/@genspark/cli',
-    },
-    // officecc command line: runs on the app binary with ELECTRON_RUN_AS_NODE (as
-    // the gsk CLI above already does), so the RunAsNode fuse must stay enabled.
+    // officecc command line: runs on the app binary with ELECTRON_RUN_AS_NODE, so
+    // the RunAsNode fuse must stay enabled.
     // Layout (Resources/cli next to wasm/, native/, ocr/) is what
     // packages/cli/src/resources.ts expects.
     {
@@ -585,14 +575,6 @@ const config = {
     {
       from: '../../packages/cli/dist/node_modules',
       to: 'cli/node_modules',
-    },
-    {
-      from: '../../node_modules/@genspark/cli/node_modules/commander',
-      to: 'gsk/node_modules/commander',
-    },
-    {
-      from: '../../node_modules/ws',
-      to: 'gsk/node_modules/ws',
     },
   ],
   // `mimeType` is read only by the Linux target, where it becomes the
@@ -626,6 +608,23 @@ const config = {
     entitlements: 'build/entitlements.mac.plist',
     entitlementsInherit: 'build/entitlements.mac.plist',
     notarize: true,
+    // "Open With" on a folder: Launch Services only offers the apps that
+    // declare the public.folder content type, so without this entry Office-cc
+    // never appears in a folder's context menu. electron-builder merges
+    // extendInfo.CFBundleDocumentTypes with the entries it generates from
+    // fileAssociations (deepAssign concatenates the arrays), so the
+    // extension types survive. Rank "Alternate" keeps Finder the default
+    // opener — the app shows up in the menu without stealing the double-click.
+    extendInfo: {
+      CFBundleDocumentTypes: [
+        {
+          CFBundleTypeName: 'Folder',
+          CFBundleTypeRole: 'Viewer',
+          LSHandlerRank: 'Alternate',
+          LSItemContentTypes: ['public.folder'],
+        },
+      ],
+    },
     extraResources: [
       {
         from: '../sheets/native/xlsx-engine/target/release/xlsx-sidecar',
@@ -698,6 +697,9 @@ const config = {
     // match the "officecc" WM_CLASS the window actually reports — and X11
     // compares case-sensitively, so the taskbar shows an unlinked window.
     syncDesktopName: true,
+    // the folder mime type puts the app in a file manager's "Open With" list
+    // for folders (the desktop entry keeps every extension mime type as well)
+    mimeTypes: ['inode/directory'],
     extraResources: [
       {
         from: '../sheets/native/xlsx-engine/target/release/xlsx-sidecar',

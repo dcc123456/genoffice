@@ -4,9 +4,7 @@ import { searchOptionsFromSettings, testSearchProvider } from '../src/search-too
 import { defaultAiSettings } from '@office-cc/ai-provider'
 
 // These cases only test the Serper/DuckDuckGo paths; a local gsk login would take priority, so disable it explicitly
-beforeAll(() => {
-  process.env.AI_SEARCH_DISABLE_GSK = '1'
-})
+beforeAll(() => {})
 
 const realFetch = globalThis.fetch
 afterEach(() => {
@@ -84,10 +82,10 @@ describe('webSearch (Serper)', () => {
         },
       }
     })
-    const serper = await webSearch('q', 5, { useGsk: false, prefer: 'serper' })
+    const serper = await webSearch('q', 5, { prefer: 'serper' })
     expect(serper.method).toBe('serper')
     expect(serper.results.map((r) => r.title)).toEqual(['ok'])
-    const tavily = await webSearch('q', 5, { useGsk: false, prefer: 'tavily' })
+    const tavily = await webSearch('q', 5, { prefer: 'tavily' })
     expect(tavily.method).toBe('tavily')
     expect(tavily.results.map((r) => r.title)).toEqual(['ok'])
   })
@@ -104,7 +102,7 @@ describe('webSearch (Serper)', () => {
       return { ok: false, status: 500, json: {} }
     })
 
-    const r = await webSearch('q', 5, { useGsk: false, prefer: 'bogus' as never })
+    const r = await webSearch('q', 5, { prefer: 'bogus' as never })
     expect(r.method).toBe('serper')
   })
 
@@ -241,7 +239,7 @@ describe('DuckDuckGo fallback error surfacing', () => {
       } as any
     }) as any
 
-    const pending = webSearch('q', 3, { useGsk: false, serperKey: 'test-key' })
+    const pending = webSearch('q', 3, { serperKey: 'test-key' })
     await bodyStarted
     expect(serperSignal).toBeInstanceOf(AbortSignal)
     await vi.advanceTimersByTimeAsync(15000)
@@ -368,7 +366,7 @@ describe('webSearch (SearchOptions)', () => {
       seen.push(String((init?.headers as Record<string, string>)['X-API-KEY']))
       return { ok: true, json: { organic: [{ title: 'A', link: 'https://a.com', snippet: 's' }] } }
     })
-    const r = await webSearch('q', 3, { useGsk: false, serperKey: 'user-key' })
+    const r = await webSearch('q', 3, { serperKey: 'user-key' })
     expect(r.method).toBe('serper')
     expect(seen).toEqual(['user-key'])
   })
@@ -380,7 +378,6 @@ describe('webSearch (SearchOptions)', () => {
       return { ok: true, json: { results: [{ title: 'T', url: 'https://t.com', content: 'c' }] } }
     })
     const r = await webSearch('q', 3, {
-      useGsk: false,
       tavilyKey: 'tv',
       serperKey: 'sp',
       prefer: 'tavily',
@@ -409,7 +406,7 @@ describe('webSearch (Exa)', () => {
         },
       }
     })
-    const r = await webSearch('q', 5, { useGsk: false, exaKey: 'exa-key', prefer: 'exa' })
+    const r = await webSearch('q', 5, { exaKey: 'exa-key', prefer: 'exa' })
     expect(urls).toEqual(['https://api.exa.ai/search'])
     expect(body).toEqual({ query: 'q', numResults: 5, contents: { text: { maxCharacters: 500 } } })
     expect(r.method).toBe('exa')
@@ -422,7 +419,7 @@ describe('webSearch (Exa)', () => {
   it('an exa failure falls through to the next backend', async () => {
     process.env.EXA_API_KEY = 'exa-key'
     mockFetch((url) => (url.includes('exa.ai') ? { ok: false } : { ok: false }))
-    const r = await webSearch('q', 2, { useGsk: false, exaKey: 'k', prefer: 'exa' })
+    const r = await webSearch('q', 2, { exaKey: 'k', prefer: 'exa' })
     // every keyed backend refused → the free DuckDuckGo scrape answers (or errors)
     expect(r.method).not.toBe('exa')
   })
@@ -448,7 +445,7 @@ describe('webSearch (Firecrawl)', () => {
         },
       }
     })
-    const r = await webSearch('q', 3, { useGsk: false, firecrawlKey: 'fc-k', prefer: 'firecrawl' })
+    const r = await webSearch('q', 3, { firecrawlKey: 'fc-k', prefer: 'firecrawl' })
     expect(body).toEqual({ query: 'q', limit: 3 })
     expect(r.method).toBe('firecrawl')
     expect(r.results).toEqual([
@@ -471,7 +468,7 @@ describe('webSearch (Firecrawl)', () => {
         },
       },
     }))
-    const r = await webSearch('q', 2, { useGsk: false, firecrawlKey: 'fc-k', prefer: 'firecrawl' })
+    const r = await webSearch('q', 2, { firecrawlKey: 'fc-k', prefer: 'firecrawl' })
     expect(r.method).toBe('firecrawl')
     expect(r.results).toHaveLength(2)
     expect(r.results[0]).toEqual({ title: 'A', url: 'https://a.com', snippet: 'da' })
@@ -481,10 +478,7 @@ describe('webSearch (Firecrawl)', () => {
 describe('search-tools', () => {
   it('maps the settings block onto SearchOptions', () => {
     const base = defaultAiSettings()
-    expect(searchOptionsFromSettings(base)).toEqual({ useGsk: true })
-    expect(searchOptionsFromSettings({ ...base, gskToolsEnabled: false })).toEqual({
-      useGsk: false,
-    })
+    expect(searchOptionsFromSettings(base)).toEqual({ parallelKey: '', prefer: 'parallel' })
     const serper = {
       ...base,
       search: {
@@ -499,7 +493,7 @@ describe('search-tools', () => {
         },
       },
     }
-    expect(searchOptionsFromSettings(serper)).toEqual({ useGsk: false, serperKey: 'k' })
+    expect(searchOptionsFromSettings(serper)).toEqual({ serperKey: 'k' })
     const tavily = {
       ...base,
       search: {
@@ -515,7 +509,6 @@ describe('search-tools', () => {
       },
     }
     expect(searchOptionsFromSettings(tavily)).toEqual({
-      useGsk: false,
       tavilyKey: 't',
       prefer: 'tavily',
     })
@@ -533,7 +526,7 @@ describe('search-tools', () => {
         },
       },
     }
-    expect(searchOptionsFromSettings(exa)).toEqual({ useGsk: false, exaKey: 'e', prefer: 'exa' })
+    expect(searchOptionsFromSettings(exa)).toEqual({ exaKey: 'e', prefer: 'exa' })
     const firecrawl = {
       ...base,
       search: {
@@ -549,11 +542,10 @@ describe('search-tools', () => {
       },
     }
     expect(searchOptionsFromSettings(firecrawl)).toEqual({
-      useGsk: false,
       firecrawlKey: 'fc-1',
       prefer: 'firecrawl',
     })
-    // no key → genspark chain
+    // a keyed provider without a key falls back to the keyless Parallel backend
     const empty = {
       ...base,
       search: {
@@ -568,7 +560,7 @@ describe('search-tools', () => {
         },
       },
     }
-    expect(searchOptionsFromSettings(empty)).toEqual({ useGsk: true })
+    expect(searchOptionsFromSettings(empty)).toEqual({ parallelKey: '', prefer: 'parallel' })
   })
 
   it('reports a rejected key as a failure instead of the silent free fallback', async () => {

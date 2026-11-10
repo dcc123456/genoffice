@@ -14,6 +14,7 @@ import {
 } from '@office-cc/ui'
 
 import {
+  AiSparkIcon,
   BorderAllIcon,
   BorderBottomIcon,
   BorderLeftIcon,
@@ -23,7 +24,6 @@ import {
   BorderThickOuterIcon,
   BorderTopIcon,
   CaretIcon,
-  GensparkMark,
   RIBBON_GLYPH_ICONS,
   RedoIcon,
   SaveAsIcon,
@@ -3354,10 +3354,10 @@ function Ribbon({
           onClick={onAiToggle}
         >
           <span className="tool-icon-row">
-            <GensparkMark size={26} />
+            <AiSparkIcon size={26} />
           </span>
           <span>
-            <strong>Genspark AI</strong>
+            <strong>{t('aiPanelTitle')}</strong>
           </span>
         </button>
         <button

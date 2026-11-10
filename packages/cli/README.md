@@ -221,9 +221,8 @@ Independently of the PATH, every launch of the packaged app writes the launcher 
 ## Cloud commands
 
 `search`, `image` and `media` reuse the editors' provider routing. Search uses
-the selected Serper / Serply / Tavily / Parallel provider when its key is configured;
-otherwise Genspark is the default when signed in (`~/.officecc/auth.json`)
-and cloud tools are on, then Parallel's free, rate-limited Search MCP, then
+the selected Serper / Serply / Tavily / Parallel / Exa / Firecrawl provider when
+its key is configured; otherwise Parallel's free, rate-limited Search MCP, then
 DuckDuckGo. Parallel
 and Tavily provide web search only. Image generation and media analysis use
 the corresponding provider chosen in the app's AI settings

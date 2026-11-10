@@ -2,7 +2,7 @@
 
 ## Ouvrir les paramètres
 
-La ligne de compte en bas à gauche de l’accueil ouvre le panneau des paramètres (elle affiche Se connecter lorsque vous êtes déconnecté). Il comporte six sections : Compte, Modèle IA, Médias IA et recherche, Général, Intégrations et À propos.
+L’entrée des paramètres en bas à gauche de l’accueil ouvre le panneau des paramètres. Il comporte cinq sections : Modèle IA, Médias IA et recherche, Général, Intégrations et À propos.
 
 ![Paramètres ▸ Général, où se trouvent la langue, le thème, l’enregistrement automatique et l’interrupteur des statistiques d’utilisation](img/settings-general.png)
 
@@ -46,12 +46,6 @@ Les paramètres peuvent enregistrer Office-cc comme gestionnaire de .docx / .xls
 - Aide ▸ Mentions relatives aux logiciels tiers : l’inventaire complet des licences open source livré avec l’application.
 - Aide ▸ Vérifier les mises à jour : déclenche une vérification manuelle ; une version plus récente propose l’installation.
 
-## Connexion à Genspark
-
-- Le point de connexion (paramètres ou liste des projets cloud) utilise un flux par **code d’appareil** : Office-cc affiche un code et ouvre la connexion dans le navigateur ; la suite est automatique une fois terminée.
-- La connexion sert uniquement à : la liste des projets cloud et aux modèles hébergés de Genspark. Sans elle, toutes les fonctions locales et les modèles personnalisés continuent de fonctionner.
-- La déconnexion se fait en un clic dans les paramètres.
-
 ## Intégration MCP (pour les utilisateurs avancés / clients IA)
 
 **Intégrations** est le panneau qui relie Office-cc à un agent de codage, et il a son propre article : Connecter un agent de codage. La version courte — choisissez une voie (la ligne de commande, ou MCP), suivez la section correspondante, puis ouvrez une nouvelle conversation et posez votre question.
@@ -62,8 +56,8 @@ Sous **Serveur HTTP local**, l’application peut aussi lancer le serveur elle-m
 
 ## Aide-mémoire de la ligne de commande
 
-| Commande           | Ce qu’elle fait                 |
-| ------------------ | ------------------------------- |
+| Commande          | Ce qu’elle fait                 |
+| ----------------- | ------------------------------- |
 | `officecc <file>` | ouvrir un fichier               |
 | `officecc mcp`    | démarrer le serveur MCP local   |
 | `officecc --help` | toutes les commandes et options |

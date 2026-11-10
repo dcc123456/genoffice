@@ -48,8 +48,7 @@ perubahan, dan menunjukkan dengan tepat bagian mana yang diubah.
   perangkat Anda sendiri. Konversi PDF → Word / Excel / PowerPoint, Markdown →
   Word, dan HTML → Word semuanya berjalan on-device. Hanya panggilan AI yang
   meninggalkan perangkat, menuju penyedia yang Anda pilih.
-- **Kunci API Anda sendiri, atau tanpa kunci sama sekali.** Masuk dengan
-  Genspark dan lewati urusan kunci API, atau gunakan kunci Anda sendiri untuk
+- **Kunci API Anda sendiri.** Gunakan kunci Anda sendiri untuk
   Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok,
   Mistral, OpenRouter, Requesty, atau endpoint apa pun yang kompatibel dengan OpenAI,
   termasuk server lokal.
@@ -219,7 +218,7 @@ terlihat sambil Anda menyaksikannya.
 - **AI yang mengedit dokumen itu sendiri.** Tracked changes di Docs, rumus dan
   grafik langsung di Sheets, slide yang digambar langsung di kanvas, setiap
   giliran AI adalah snapshot yang bisa Anda kembalikan.
-- **Model Anda, kunci Anda.** Masuk dengan Genspark, atau bawa kunci untuk
+- **Model Anda, kunci Anda.** Bawa kunci untuk
   Claude, OpenAI, Gemini, DeepSeek dan lainnya, termasuk server lokal dan
   endpoint apa pun yang kompatibel dengan OpenAI.
 - **PDF yang ditangani dengan benar.** Edit teks langsung di halaman, dan
@@ -234,12 +233,7 @@ terlihat sambil Anda menyaksikannya.
 
 ## Backend AI
 
-**Masuk dengan Genspark** dan tidak ada yang perlu dikonfigurasi: panggilan
-model diarahkan lewat proxy Genspark (keluarga Claude, GPT, dan Gemini) dan
-agen mendapatkan akses pencarian web dan gambar, generasi gambar, serta
-analisis gambar/audio/video.
-
-**Atau bawa kunci Anda sendiri.** Settings → AI menampilkan Claude, OpenAI,
+**Bawa kunci Anda sendiri.** Settings → AI menampilkan Claude, OpenAI,
 Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty,
 dan OpenCode Zen/Go, plus slot khusus untuk endpoint apa pun yang kompatibel
 dengan OpenAI (base URL + kunci), termasuk server model lokal. Pencarian dan
@@ -276,7 +270,7 @@ semua MCP client.
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Pengaturan → Integrasi** di aplikasi     | Menampilkan agen yang ditemukan di komputer ini; satu klik menulis skill ke setiap agen yang Anda pilih. Tombol **Update** muncul saat rilis Office-cc membawa skill yang lebih baru. |
 | **Unduh sebagai zip** di halaman yang sama | Tata letak yang diterima claude.ai, aplikasi desktop Claude, dan asisten lain sebagai skill yang diunggah.                                                                            |
-| `npx skills add dcc123456/genoffice`     | Memasang dari repositori ini ke agen mana pun yang kompatibel dengan skill.                                                                                                           |
+| `npx skills add dcc123456/genoffice`       | Memasang dari repositori ini ke agen mana pun yang kompatibel dengan skill.                                                                                                           |
 
 Lalu mulai chat baru dan minta sebuah dokumen. Skill ini mengajari agen kapan
 harus menggunakan `officecc`, bagaimana membaca file sebelum mengeditnya,
@@ -334,10 +328,10 @@ untuk asisten yang tidak bisa menjalankan terminal, atau yang tidak ingin
 Anda beri akses terminal. Ada dua cara masuk, keduanya ditampilkan dengan
 cuplikan siap salin di **Pengaturan → Integrasi → MCP**:
 
-| Cara                                 | Apa itu                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cara                                | Apa itu                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **A · `officecc mcp`** (disarankan) | Server stdio yang dijalankan sendiri oleh asisten; Office-cc tidak perlu terbuka. Satu alat per perintah (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) plus alur deck bertahap `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Ops, spesifikasi, dan Markdown dikirim inline, jadi client tanpa sistem file pun tetap bisa jalan. |
-| **B · Server HTTP lokal**            | Berjalan di dalam aplikasi Office-cc pada `http://127.0.0.1:3093/mcp` (Streamable HTTP, dengan SSE lama). Alatnya menjalankan tab editor Word yang terlihat: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, dan Anda menyaksikan dokumen terbentuk. Mati secara default; nyalakan di panel pengaturan yang sama.                                                                                                                                   |
+| **B · Server HTTP lokal**           | Berjalan di dalam aplikasi Office-cc pada `http://127.0.0.1:3093/mcp` (Streamable HTTP, dengan SSE lama). Alatnya menjalankan tab editor Word yang terlihat: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, dan Anda menyaksikan dokumen terbentuk. Mati secara default; nyalakan di panel pengaturan yang sama.                                                                                                                                   |
 
 ```bash
 # Claude Code
@@ -387,8 +381,8 @@ yang keluar dari mesin, ke penyedia yang dikonfigurasi di Office-cc.
 
 ## Download
 
-| Platform                             | Persyaratan                                           | Unduh                                                                                      |
-| ------------------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Platform                             | Persyaratan                                           | Unduh                                                                                    |
+| ------------------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [`.dmg` terbaru (arm64)](https://github.com/dcc123456/genoffice/releases/latest)         |
 | **macOS** — Intel (x64)              | macOS 11+                                             | [`.dmg` terbaru (x64)](https://github.com/dcc123456/genoffice/releases/latest)           |
 | **Windows** (x64, kebanyakan PC)     | Windows 10+, Intel/AMD                                | [Installer `-x64.exe` terbaru](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -507,8 +501,8 @@ Microsoft Office.
 
 Pengeditan dokumen sepenuhnya lokal — file tidak pernah meninggalkan
 perangkat Anda untuk dibuka, diedit, disimpan, atau dikonversi. Fitur AI
-(agen, pencarian, alat gambar) membutuhkan koneksi jaringan, baik dengan
-masuk lewat Genspark atau dengan kunci API model Anda sendiri.
+(agen, pencarian, alat gambar) membutuhkan koneksi jaringan,
+dengan kunci API model Anda sendiri.
 
 </details>
 
@@ -535,7 +529,7 @@ gambar halaman.
 <details>
 <summary><b>Bisakah saya menggunakan model AI atau kunci API saya sendiri?</b></summary>
 
-Ya. Selain masuk lewat Genspark tanpa kunci API, Office-cc mendukung
+Ya. Office-cc mendukung
 penggunaan kunci Anda sendiri untuk Claude, OpenAI, Gemini, DeepSeek, Kimi,
 GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty, dan OpenCode Zen/Go,
 plus endpoint apa pun yang kompatibel dengan OpenAI — termasuk server model
@@ -640,6 +634,6 @@ Office-cc dilisensikan di bawah [Apache License 2.0](../../LICENSE), dengan
 satu pengecualian: direktori `ee/` dicadangkan untuk modul enterprise di masa
 depan dan tercakup oleh [Office-cc Enterprise License](../../ee/LICENSE).
 
-Nama dan logo Office-cc serta Genspark adalah merek dagang milik Mainfunc,
+Nama dan logo Office-cc adalah merek dagang milik Mainfunc,
 Inc. Lisensi Apache-2.0 tidak memberikan izin untuk menggunakannya (lihat
 bagian 6); fork sebaiknya menggunakan branding sendiri.

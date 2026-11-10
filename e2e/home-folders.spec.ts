@@ -212,4 +212,43 @@ test.describe('home folders panel', () => {
       await closeAndSaveVideo(launched, 'home-folders-new-file')
     }
   })
+
+  /**
+   * The OS hands the app a folder path (Finder "Open With" on a folder). The
+   * folder has no document to open, so it joins the home tree as a workspace
+   * root instead — the same slot the picker and the drag-and-drop use.
+   */
+  test('a folder opened from the OS joins the tree as a workspace', async () => {
+    const extra = realpathSync(mkdtempSync(join(tmpdir(), 'officecc-e2e-open-')))
+    mkdirSync(join(extra, 'Alpha'), { recursive: true })
+    writeFileSync(join(extra, 'Alpha', 'plan.md'), '# plan')
+    const launched = await launchShell({
+      settings: { defaultSaveDir: root },
+      openFile: extra,
+      videoDir: 'home-folders-open',
+    })
+    const { page, userDataDir } = launched
+    try {
+      const tree = page.locator('.folder-panel .tree')
+      const rootRows = tree.locator(':scope > .tree-item > .tree-row')
+      await expect(rootRows).toHaveCount(2)
+      await expect(rootRows.nth(1)).toContainText(extra.split('/').pop()!)
+      // the folder opens so its contents show right away
+      await expect(tree.locator('.tree-name', { hasText: 'Alpha' })).toBeVisible()
+      await tree.locator('.tree-name', { hasText: 'Alpha' }).click()
+      await expect(page.locator('.recent-list .recent-name', { hasText: 'plan.md' })).toBeVisible()
+      // it is remembered as a root, and nothing on disk was touched
+      await expect
+        .poll(() => {
+          const settings = JSON.parse(readFileSync(join(userDataDir, 'app-settings.json'), 'utf8'))
+          return settings.folderRoots
+        })
+        .toEqual([extra])
+      expect(existsSync(join(extra, 'Alpha', 'plan.md'))).toBe(true)
+      await page.screenshot({ path: screenshotPath('home-folders-opened-folder') })
+    } finally {
+      await closeAndSaveVideo(launched, 'home-folders-open')
+      rmSync(extra, { recursive: true, force: true })
+    }
+  })
 })

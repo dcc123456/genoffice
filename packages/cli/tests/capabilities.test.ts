@@ -1,15 +1,13 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import * as aiSearch from '@office-cc/ai-search'
 import { run, tempDir } from './helpers'
 
-// hasGskAuth reads process.env, not the command context: isolate the login state per test
+// the audit log follows OFFICECC_AUTH_DIR, not the command context: isolate it per test
 const saved: Record<string, string | undefined> = {}
 beforeEach(() => {
-  for (const k of ['OFFICECC_AUTH_DIR', 'AI_SEARCH_DISABLE_GSK']) saved[k] = process.env[k]
+  saved.OFFICECC_AUTH_DIR = process.env.OFFICECC_AUTH_DIR
   process.env.OFFICECC_AUTH_DIR = join(tempDir(), 'no-auth')
-  process.env.AI_SEARCH_DISABLE_GSK = '1'
 })
 afterEach(() => {
   vi.restoreAllMocks()
@@ -27,7 +25,7 @@ function settingsFile(dir: string, settings: Record<string, unknown>): string {
 }
 
 describe('officecc capabilities', () => {
-  it('reports nothing configured when signed out with default settings', async () => {
+  it('reports the keyless search as available and nothing else with default settings', async () => {
     const dir = tempDir()
     const r = await run(['capabilities', '--json'], {
       env: {
@@ -38,7 +36,7 @@ describe('officecc capabilities', () => {
     })
     expect(r.code).toBe(0)
     const d = r.json().detail
-    expect(d.search.available).toBe(false)
+    expect(d.search).toEqual({ available: true, via: 'parallel' })
     expect(d.image_search.available).toBe(false)
     expect(d.image_generation.available).toBe(false)
     expect(d.media_analysis.available).toBe(false)
@@ -101,24 +99,6 @@ describe('officecc capabilities', () => {
     expect(d.search).toEqual({ available: true, via: provider })
     expect(d.image_search.available).toBe(false)
   })
-
-  it.each(['tavily', 'parallel'])(
-    '%s does not advertise Genspark image search when signed in',
-    async (provider) => {
-      vi.spyOn(aiSearch, 'hasGskAuth').mockReturnValue(true)
-      const settings = settingsFile(tempDir(), {
-        search: { provider, providers: { [provider]: { apiKey: 'test-key' } } },
-      })
-      const r = await run(['capabilities', '--json'], {
-        env: { ...process.env, OFFICECC_AI_SETTINGS: settings },
-      })
-      const d = r.json().detail
-      expect(d.search).toEqual({ available: true, via: provider })
-      expect(d.image_search).toEqual({ available: false, via: null })
-      expect(d.image_generation).toEqual({ available: true, via: 'genspark' })
-      expect(d.media_analysis).toEqual({ available: true, via: 'genspark' })
-    },
-  )
 
   it('reports selected keyless Parallel as web search without requiring a login', async () => {
     const settings = settingsFile(tempDir(), {

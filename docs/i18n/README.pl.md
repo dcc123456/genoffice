@@ -48,8 +48,8 @@ i pokazuje precyzyjnie, czego dotknął.
   / PowerPoint, Markdown → Word i HTML → Word działają lokalnie. Jedynie
   zapytania do AI opuszczają maszynę — i trafiają do dostawcy, którego sam
   wybierzesz.
-- **Twoje klucze albo żadne.** Zaloguj się przez Genspark i pomiń klucze, albo
-  użyj własnego klucza dla Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen,
+- **Twoje klucze.** Użyj własnego klucza dla
+  Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen,
   Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty lub dowolnego endpointu
   zgodnego z OpenAI, w tym lokalnych serwerów.
 - **Skryptowalne i gotowe na agentów.** Aplikacja dostarcza wiersz poleceń
@@ -221,7 +221,7 @@ Word w widocznej karcie edytora, podczas gdy Ty patrzysz.
 - **AI, która edytuje sam dokument.** Śledzone zmiany w Docs, żywe formuły i
   wykresy w Sheets, prezentacje rysowane bezpośrednio na płótnie, każda tura
   AI to zapis, do którego można wrócić.
-- **Twój model, Twój klucz.** Zaloguj się przez Genspark albo użyj własnego
+- **Twój model, Twój klucz.** Użyj własnego
   klucza do Claude, OpenAI, Gemini, DeepSeek i innych, z lokalnymi serwerami i
   każdym endpointem zgodnym z OpenAI włącznie.
 - **PDF zrobiony właściwie.** Edytuj tekst wewnątrz strony i konwertuj PDF do
@@ -235,12 +235,7 @@ Word w widocznej karcie edytora, podczas gdy Ty patrzysz.
 
 ## Silniki AI
 
-**Zaloguj się przez Genspark** i nie musisz niczego konfigurować: wywołania
-modeli trafiają przez proxy Genspark (rodziny Claude, GPT i Gemini), a
-agenci dostają wyszukiwanie w internecie i obrazów, generowanie obrazów oraz
-analizę obrazu, audio i wideo.
-
-**Albo użyj własnego klucza.** Ustawienia → AI zawierają Claude, OpenAI,
+**Użyj własnego klucza.** Ustawienia → AI zawierają Claude, OpenAI,
 Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral,
 OpenRouter, Requesty oraz OpenCode Zen/Go, a także dowolny slot dla endpointu zgodnego
 z OpenAI (adres bazowy + klucz), w tym lokalnych serwerów modeli.
@@ -278,7 +273,7 @@ każdym klientem MCP.
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Ustawienia → Integracje** w aplikacji   | Wyświetla agentów znalezionych na tym komputerze; jedno kliknięcie zapisuje skill w każdym, którego wybierzesz. Gdy nowe wydanie Office-cc przynosi nowszy skill, pojawia się przycisk **Aktualizuj**. |
 | **Pobierz jako zip** na tej samej stronie | Układ, który claude.ai, aplikacje desktopowe Claude i inni asystenci przyjmują jako przesłany skill.                                                                                                   |
-| `npx skills add dcc123456/genoffice`    | Instaluje z tego repozytorium w dowolnym agencie obsługującym skille.                                                                                                                                  |
+| `npx skills add dcc123456/genoffice`      | Instaluje z tego repozytorium w dowolnym agencie obsługującym skille.                                                                                                                                  |
 
 Następnie zacznij nowy czat i poproś o dokument. Skill uczy agenta, kiedy
 sięgać po `officecc`, jak przeczytać plik przed jego edycją i jak sprawdzać
@@ -337,10 +332,10 @@ które nie mogą uruchomić terminala albo którym wolisz go nie dawać. Są dwa
 sposoby połączenia, oba pokazane z gotowymi do skopiowania fragmentami w
 **Ustawienia → Integracje → MCP**:
 
-| Sposób                             | Co to jest                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sposób                            | Co to jest                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **A · `officecc mcp`** (zalecane) | Serwer stdio, który asystent uruchamia sam; Office-cc nie musi być otwarte. Jedno narzędzie na polecenie (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) oraz etapowy przepływ prezentacji `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Operacje, specyfikacje i Markdown są przekazywane inline, więc działa też klient bez systemu plików. |
-| **B · Lokalny serwer HTTP**        | Działa wewnątrz aplikacji Office-cc pod adresem `http://127.0.0.1:3093/mcp` (Streamable HTTP, z przestarzałym SSE). Jego narzędzia sterują widoczną kartą edytora Word: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, a Ty obserwujesz, jak dokument nabiera kształtu. Domyślnie wyłączony; włącz go w tym samym panelu ustawień.                                                                                                                             |
+| **B · Lokalny serwer HTTP**       | Działa wewnątrz aplikacji Office-cc pod adresem `http://127.0.0.1:3093/mcp` (Streamable HTTP, z przestarzałym SSE). Jego narzędzia sterują widoczną kartą edytora Word: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, a Ty obserwujesz, jak dokument nabiera kształtu. Domyślnie wyłączony; włącz go w tym samym panelu ustawień.                                                                                                                             |
 
 ```bash
 # Claude Code
@@ -392,8 +387,8 @@ Office-cc.
 
 ## Pobierz
 
-| Platforma                               | Wymagania                                             | Pobierz                                                                                       |
-| --------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Platforma                               | Wymagania                                             | Pobierz                                                                                     |
+| --------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)       | macOS 11+                                             | [Najnowszy plik `.dmg` (arm64)](https://github.com/dcc123456/genoffice/releases/latest)     |
 | **macOS** — Intel (x64)                 | macOS 11+                                             | [Najnowszy plik `.dmg` (x64)](https://github.com/dcc123456/genoffice/releases/latest)       |
 | **Windows** (x64, większość komputerów) | Windows 10+, Intel/AMD                                | [Najnowszy instalator `-x64.exe`](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -513,7 +508,7 @@ Microsoft Office.
 Edycja dokumentów jest w pełni lokalna — pliki nigdy nie opuszczają Twojego
 urządzenia, aby zostać otwarte, edytowane, zapisane lub przekonwertowane.
 Funkcje AI (agenci, wyszukiwanie, narzędzia obrazu) wymagają połączenia
-sieciowego, wraz z logowaniem przez Genspark albo własnym kluczem API
+sieciowego, własnym kluczem API
 modelu.
 
 </details>
@@ -541,7 +536,7 @@ tekstu, a nie obrazu strony.
 <details>
 <summary><b>Czy mogę użyć własnego modelu AI lub klucza API?</b></summary>
 
-Tak. Oprócz bezkluczowego logowania przez Genspark, Office-cc wspiera
+Tak. Office-cc wspiera
 użycie własnego klucza dla Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM,
 Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty i OpenCode Zen/Go, a także
 dowolnego endpointu zgodnego z OpenAI — w tym lokalnych serwerów modeli.
@@ -648,6 +643,6 @@ Office-cc jest licencjonowane na warunkach [Apache License 2.0](../../LICENSE), 
 jednym wyjątkiem: katalog `ee/` jest zarezerwowany dla przyszłych modułów
 enterprise i jest objęty [Office-cc Enterprise License](../../ee/LICENSE).
 
-Nazwy i logo Office-cc oraz Genspark są znakami towarowymi Mainfunc, Inc.
+Nazwa i logo Office-cc są znakami towarowymi Mainfunc, Inc.
 Licencja Apache-2.0 nie daje prawa do ich używania (patrz sekcja 6); forki
 powinny korzystać z własnej marki.

@@ -59,8 +59,8 @@ soạn thảo đọc tệp, thực hiện thay đổi, và chỉ cho bạn chín
 - **Hỏi chính tệp của bạn, kèm nguồn.** Gắn sao một nhóm tài liệu và
   **Ask AI** trên màn hình chính sẽ trả lời câu hỏi trên toàn bộ nhóm đó,
   mỗi thông điệp đều trích dẫn tệp nguồn để bạn mở ra kiểm chứng.
-- **Khoá của bạn, hoặc không cần khoá.** Đăng nhập Genspark để khỏi cần
-  khoá, hoặc mang khoá riêng của bạn cho Claude, OpenAI, Gemini, DeepSeek,
+- **Khoá của bạn.** Mang khoá riêng của bạn cho
+  Claude, OpenAI, Gemini, DeepSeek,
   Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty,
   Opper, Cheaper Inference, Atlas Cloud, hoặc bất kỳ điểm cuối tương thích
   OpenAI nào, kể cả máy chủ mô hình cục bộ.
@@ -339,7 +339,7 @@ trình soạn thảo Word hiện rõ. Cả hai được mô tả ở
 - **Một AI tự chỉnh tài liệu.** Theo dõi thay đổi trong Docs, công thức và
   biểu đồ sống trong Sheets, slide vẽ thẳng lên khung vẽ, mỗi lượt AI là
   một bản chụp hoàn tác được.
-- **Mô hình của bạn, khoá của bạn.** Đăng nhập Genspark, hoặc mang khoá cho
+- **Mô hình của bạn, khoá của bạn.** Mang khoá cho
   Claude, OpenAI, Gemini, DeepSeek và nhiều nhà cung cấp khác, gồm cả máy
   chủ mô hình cục bộ và bất kỳ điểm cuối tương thích OpenAI nào.
 - **PDF được làm đúng kiểu.** Sửa chữ bên trong trang, và chuyển PDF sang
@@ -358,11 +358,7 @@ trình soạn thảo Word hiện rõ. Cả hai được mô tả ở
 
 ## Các backend AI
 
-**Đăng nhập Genspark** và không có gì phải cấu hình: các lời gọi mô hình đi
-qua proxy Genspark (họ Claude, GPT và Gemini) và các agent có tìm kiếm web
-và ảnh, tạo ảnh, cùng phân tích ảnh/âm thanh/video.
-
-**Hoặc mang khoá riêng của bạn.** Settings → AI liệt kê Claude, OpenAI,
+**Mang khoá riêng của bạn.** Settings → AI liệt kê Claude, OpenAI,
 Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral,
 OpenRouter, Requesty, Opper, Cheaper Inference, Atlas Cloud và OpenCode
 Zen/Go, cùng một ô tuỳ biến cho bất kỳ điểm cuối tương thích OpenAI nào
@@ -381,8 +377,8 @@ chính thiết bị này. Mặc định tính năng tắt; khi bật, đoạn tr
 quả cục bộ hàng đầu được gửi đi để phán đoán và không gì khác rời khỏi máy.
 
 **Parallel** hoạt động không cần tài khoản: Search MCP miễn phí của nó
-(giới hạn tần suất) là tìm kiếm web mặc định khi chưa có đăng nhập
-Genspark hay khoá tìm kiếm, và chạy trước bước scrape DuckDuckGo. Chọn
+(giới hạn tần suất) là tìm kiếm web mặc định khi chưa có
+khoá tìm kiếm, và chạy trước bước scrape DuckDuckGo. Chọn
 Parallel dưới Web search và nhập khoá
 [Parallel](https://platform.parallel.ai/) để dùng Search API thay thế.
 
@@ -410,7 +406,7 @@ OpenCode và Windsurf ngay từ đầu, bất kỳ agent nào đọc được sk
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Settings → Integrations** trong ứng dụng | Liệt kê các agent tìm thấy trên máy này; một cú bấm ghi skill vào từng agent bạn chọn. Nút **Update** xuất hiện khi một bản phát hành Office-cc mang skill mới hơn. |
 | **Download as zip** trên cùng trang        | Đúng cấu trúc claude.ai, ứng dụng Claude desktop và các trợ lý khác chấp nhận như skill tải lên.                                                                    |
-| `npx skills add dcc123456/genoffice`     | Cài từ kho lưu trữ này vào bất kỳ agent tương thích skills nào.                                                                                                     |
+| `npx skills add dcc123456/genoffice`       | Cài từ kho lưu trữ này vào bất kỳ agent tương thích skills nào.                                                                                                     |
 
 Sau đó mở một cuộc trò chuyện mới và yêu cầu một tài liệu. Skill dạy agent
 khi nào nên dùng tới `officecc`, cách đọc tệp trước khi sửa, và cách tự
@@ -466,10 +462,10 @@ không chạy được terminal hoặc mà bạn không muốn trao terminal. C�
 vào, cả hai đều có snippet sao-chép-ngay trong **Settings → Integrations →
 MCP**:
 
-| Cách                                  | Là gì                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Cách                                 | Là gì                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **A · `officecc mcp`** (khuyến nghị) | Một máy chủ stdio trợ lý tự khởi động; Office-cc không cần mở. Một công cụ cho mỗi lệnh (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) cùng luồng deck theo giai đoạn `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Ops, spec và Markdown được truyền inline, nên client không có hệ thống tệp vẫn dùng được. |
-| **B · Máy chủ HTTP cục bộ**           | Chạy bên trong ứng dụng Office-cc tại `http://127.0.0.1:3093/mcp` (Streamable HTTP, kèm SSE kiểu cũ). Các công cụ của nó điều khiển một tab trình soạn thảo Word hiện rõ: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, và bạn xem tài liệu thành hình. Mặc định tắt; bật trong cùng pane cài đặt.                                                                                                                             |
+| **B · Máy chủ HTTP cục bộ**          | Chạy bên trong ứng dụng Office-cc tại `http://127.0.0.1:3093/mcp` (Streamable HTTP, kèm SSE kiểu cũ). Các công cụ của nó điều khiển một tab trình soạn thảo Word hiện rõ: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, và bạn xem tài liệu thành hình. Mặc định tắt; bật trong cùng pane cài đặt.                                                                                                                             |
 | **C · `officecc mcp --http`**        | Bộ công cụ stdio dưới dạng máy chủ Streamable HTTP cho client trên máy khác: một container, một sandbox, một máy dùng chung trong mạng của bạn. Tệp đi cùng lời gọi: `PUT /files/<name>` tải lên một tệp và trả về URL, mọi tham số `file` nhận URL http(s), và công cụ ghi tệp trả lại dưới dạng URL tải xuống cùng, khi tệp nhỏ, các byte dưới dạng MCP resource. `--host 0.0.0.0` mở ra mạng, `--token` bảo vệ nó.                                                                |
 
 ```bash
@@ -536,8 +532,8 @@ hình trong Office-cc.
 
 ## Tải xuống
 
-| Nền tảng                             | Yêu cầu                                               | Tải xuống                                                                                   |
-| ------------------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Nền tảng                             | Yêu cầu                                               | Tải xuống                                                                                 |
+| ------------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [`.dmg` mới nhất (arm64)](https://github.com/dcc123456/genoffice/releases/latest)         |
 | **macOS** — Intel (x64)              | macOS 11+                                             | [`.dmg` mới nhất (x64)](https://github.com/dcc123456/genoffice/releases/latest)           |
 | **Windows** (x64, đa số máy tính)    | Windows 10+, Intel/AMD                                | [Trình cài `-x64.exe` mới nhất](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -657,7 +653,7 @@ Microsoft Office.
 
 Chỉnh sửa tài liệu hoàn toàn cục bộ — tệp không bao giờ rời máy của bạn để
 được mở, sửa, lưu hay chuyển đổi. Các tính năng AI (agent, tìm kiếm, công
-cụ ảnh) cần kết nối mạng, với đăng nhập Genspark hoặc khoá API mô hình của
+cụ ảnh) cần kết nối mạng, với khoá API mô hình của
 riêng bạn.
 
 </details>
@@ -683,7 +679,7 @@ thành chữ chỉnh sửa được thay vì một ảnh trang.
 <details>
 <summary><b>Có thể dùng mô hình AI hay khoá API riêng không?</b></summary>
 
-Có. Ngoài đăng nhập Genspark không cần khoá, Office-cc hỗ trợ mang khoá
+Có. Office-cc hỗ trợ mang khoá
 riêng cho Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao,
 MiniMax, Grok, Mistral, OpenRouter, Requesty, Opper, Cheaper Inference,
 Atlas Cloud và OpenCode Zen/Go, cùng bất kỳ điểm cuối tương thích OpenAI
@@ -782,6 +778,6 @@ Office-cc được cấp phép theo [Giấy phép Apache
 đun doanh nghiệp tương lai và chịu sự điều chỉnh của [Office-cc Enterprise
 License](../../ee/LICENSE).
 
-Tên và logo Office-cc và Genspark là nhãn hiệu của Mainfunc, Inc. Giấy phép
+Tên và logo Office-cc là nhãn hiệu của Mainfunc, Inc. Giấy phép
 Apache-2.0 không cấp quyền sử dụng chúng (xem mục 6); các fork nên dùng
 thương hiệu riêng của mình.

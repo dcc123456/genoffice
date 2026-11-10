@@ -2,7 +2,7 @@
 
 ## Membuka pengaturan
 
-Baris akun di kiri bawah Beranda membuka panel pengaturan (bacaannya Masuk saat Anda belum masuk). Panel ini punya enam bagian: Akun, Model AI, Media & Pencarian AI, Umum, Integrasi, dan Tentang.
+Entri pengaturan di kiri bawah Beranda membuka panel pengaturan. Panel ini punya lima bagian: Model AI, Media & Pencarian AI, Umum, Integrasi, dan Tentang.
 
 ![Pengaturan ▸ Umum, tempat bahasa, tema, Autosave, dan sakelar statistik penggunaan berada](img/settings-general.png)
 
@@ -46,12 +46,6 @@ Pengaturan dapat mendaftarkan Office-cc sebagai aplikasi penangan .docx / .xlsx 
 - Bantuan ▸ Pemberitahuan Perangkat Lunak Pihak Ketiga: inventaris lengkap lisensi OSS yang disertakan dengan aplikasi.
 - Bantuan ▸ Periksa Pembaruan…: memicu pemeriksaan manual; versi yang lebih baru menawarkan dipasang.
 
-## Masuk dengan Genspark
-
-- Jalur masuk (di pengaturan atau di daftar proyek cloud) memakai alur **device-code**: Office-cc menampilkan kode dan membuka login di browser; prosesnya dilanjutkan otomatis setelah selesai.
-- Login hanya dipakai untuk: daftar proyek cloud dan model terkelola Genspark. Tanpa login, semua fitur lokal dan model kustom tetap berfungsi.
-- Keluar cukup satu klik di pengaturan.
-
 ## Integrasi MCP (untuk pengguna lanjutan / klien AI)
 
 **Integrasi** adalah panel yang menghubungkan Office-cc dengan agen pemrograman, dan ia punya artikel tersendiri: Menghubungkan agen pemrograman. Versi singkat — pilih jalurnya (baris perintah, atau MCP), ikuti bagian itu, lalu mulai obrolan baru dan bertanya.
@@ -62,8 +56,8 @@ Di bawah **Server HTTP lokal**, aplikasi juga bisa menjalankan server itu sendir
 
 ## Lembar pintasan baris perintah
 
-| Perintah           | Fungsinya                |
-| ------------------ | ------------------------ |
+| Perintah          | Fungsinya                |
+| ----------------- | ------------------------ |
 | `officecc <file>` | membuka sebuah file      |
 | `officecc mcp`    | memulai server MCP lokal |
 | `officecc --help` | semua perintah dan opsi  |

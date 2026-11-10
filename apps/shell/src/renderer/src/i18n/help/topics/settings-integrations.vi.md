@@ -2,7 +2,7 @@
 
 ## Mở cài đặt
 
-Hàng tài khoản ở góc dưới bên trái của Trang chủ mở bảng cài đặt (khi bạn chưa đăng nhập, hàng đó ghi "Đăng nhập"). Bảng đó có sáu mục: Tài khoản, Mô hình AI, Phương tiện AI & Tìm kiếm, Chung, Tích hợp và Giới thiệu.
+Mục cài đặt ở góc dưới bên trái của Trang chủ mở bảng cài đặt. Bảng đó có năm mục: Mô hình AI, Phương tiện AI & Tìm kiếm, Chung, Tích hợp và Giới thiệu.
 
 ![Cài đặt ▸ Chung, nơi có ngôn ngữ, chủ đề, tự động lưu và công tắc thống kê sử dụng](img/settings-general.png)
 
@@ -46,12 +46,6 @@ Cài đặt có thể đăng ký Office-cc làm ứng dụng xử lý .docx / .x
 - Trợ giúp ▸ Thông báo của bên thứ ba: danh mục giấy phép nguồn mở đầy đủ đi kèm ứng dụng.
 - Trợ giúp ▸ Kiểm tra bản cập nhật: kích hoạt một lần kiểm tra thủ công; nếu có bản mới sẽ nhắc cài đặt.
 
-## Đăng nhập Genspark
-
-- Lối đăng nhập (trong cài đặt hoặc danh sách dự án đám mây) dùng luồng **mã thiết bị**: Office-cc hiển thị một mã và mở trang đăng nhập trong trình duyệt; xong thì nó tự tiếp tục.
-- Đăng nhập chỉ dùng cho: danh sách dự án đám mây và các mô hình đám mây của Genspark. Không đăng nhập thì mọi tính năng cục bộ và mô hình tùy chỉnh vẫn hoạt động bình thường.
-- Đăng xuất chỉ cần một cú nhấp trong cài đặt.
-
 ## Tích hợp MCP (dành cho người dùng nâng cao / ứng dụng AI)
 
 **Tích hợp** là bảng nối Office-cc với một tác nhân lập trình, và nó có bài riêng: Kết nối tác nhân lập trình. Nói ngắn gọn — chọn một lối (dòng lệnh, hoặc MCP), làm theo phần đó, rồi mở một cuộc trò chuyện mới và hỏi.
@@ -62,8 +56,8 @@ Dưới **Máy chủ HTTP cục bộ**, ứng dụng cũng có thể tự chạy
 
 ## Bảng tra nhanh dòng lệnh
 
-| Lệnh               | Tác dụng                     |
-| ------------------ | ---------------------------- |
+| Lệnh              | Tác dụng                     |
+| ----------------- | ---------------------------- |
 | `officecc <file>` | mở một tập tin               |
 | `officecc mcp`    | khởi động máy chủ MCP cục bộ |
 | `officecc --help` | mọi lệnh và tuỳ chọn         |

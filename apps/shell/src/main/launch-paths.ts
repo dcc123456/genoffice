@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs'
+import { existsSync, statSync } from 'node:fs'
 
 /** Every extension the suite opens; also the contract the packaged file
  *  associations must advertise (tests/file-associations.test.ts), so a file
@@ -44,15 +44,36 @@ function payloadLaunchPaths(additionalData: unknown): string[] {
   return paths
 }
 
+export function isDirectoryPath(path: string): boolean {
+  try {
+    return statSync(path).isDirectory()
+  } catch {
+    return false
+  }
+}
+
+/**
+ * The paths the OS handed the app: documents the suite opens, plus folders the
+ * user opened from Finder ("Open With" on a folder). A folder has no extension
+ * to match, so it is recognised by being a directory.
+ */
 export function collectLaunchPaths(
   argv: readonly string[],
   additionalData?: unknown,
   exists: (path: string) => boolean = existsSync,
+  isDirectory: (path: string) => boolean = isDirectoryPath,
 ): string[] {
-  const supported = argv.filter((path) => SUPPORTED_LAUNCH_RE.test(path) && exists(path))
+  // a folder the user opened from the OS carries no extension, so it is
+  // recognised by being a directory — the shell joins it to the home tree
+  const supported = argv.filter(
+    (path) => exists(path) && (SUPPORTED_LAUNCH_RE.test(path) || isDirectory(path)),
+  )
   const payload = payloadLaunchPaths(additionalData)
+  // a folder is not a document: it must not silence the "we cannot open this"
+  // fallback for an unsupported file that came in the same batch
+  const hasDocument = supported.some((path) => SUPPORTED_LAUNCH_RE.test(path))
   const fallback =
-    supported.length === 0 && payload.length === 0
+    !hasDocument && payload.length === 0
       ? argv.find((path) => UNSUPPORTED_LAUNCH_RE.test(path) && exists(path))
       : undefined
   return [...new Set([...supported, ...payload, ...(fallback ? [fallback] : [])])]

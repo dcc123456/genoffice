@@ -48,8 +48,8 @@ aangepast.
   opgeslagen en geconverteerd. PDF → Word / Excel / PowerPoint, Markdown →
   Word en HTML → Word draaien allemaal on-device. Alleen de AI-aanroepen
   verlaten de machine, naar de provider die jij kiest.
-- **Jouw eigen keys, of geen enkele.** Log in met Genspark en je hoeft niets te
-  regelen, of gebruik je eigen key voor Claude, OpenAI, Gemini, DeepSeek,
+- **Jouw eigen keys.** Gebruik je eigen key voor
+  Claude, OpenAI, Gemini, DeepSeek,
   Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty, of elk
   OpenAI-compatibel endpoint, inclusief lokale servers.
 - **Scriptbaar en klaar voor agents.** De app levert een
@@ -220,7 +220,7 @@ editortabblad terwijl je toekijkt.
 - **Een AI die het document zelf bewerkt.** Tracked changes in Docs, live
   formules en grafieken in Sheets, slides die direct op het canvas worden
   getekend, elke AI-beurt een snapshot waarnaar je kunt teruggaan.
-- **Je eigen model, je eigen key.** Log in met Genspark, of gebruik een key
+- **Je eigen model, je eigen key.** Gebruik een key
   voor Claude, OpenAI, Gemini, DeepSeek en meer, inclusief lokale servers en
   elk OpenAI-compatibel endpoint.
 - **PDF goed gedaan.** Bewerk tekst direct op de pagina en converteer PDF
@@ -234,12 +234,7 @@ editortabblad terwijl je toekijkt.
 
 ## AI-backends
 
-**Log in met Genspark** en er is niets te configureren: modelaanroepen lopen
-via de Genspark-proxy (de Claude-, GPT- en Gemini-families) en de agents
-krijgen toegang tot web- en beeldzoeken, beeldgeneratie en analyse van beeld,
-audio en video.
-
-**Of gebruik je eigen key.** Onder Settings → AI vind je Claude, OpenAI,
+**Gebruik je eigen key.** Onder Settings → AI vind je Claude, OpenAI,
 Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty
 en OpenCode Zen/Go, plus een aangepast slot voor elk OpenAI-compatibel
 endpoint (base URL + key), inclusief lokale modelservers. Zoeken en media
@@ -276,7 +271,7 @@ MCP-client.
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Instellingen → Integraties** in de app  | Toont de agents die op deze computer zijn gevonden; met één klik wordt de skill naar elke agent geschreven die je kiest. Er verschijnt een knop **Bijwerken** wanneer een Office-cc-release een nieuwere skill meebrengt. |
 | **Downloaden als zip** op dezelfde pagina | De indeling die claude.ai, de Claude-desktop-apps en andere assistenten accepteren als geüploade skill.                                                                                                                   |
-| `npx skills add dcc123456/genoffice`    | Installeert vanuit deze repository in elke agent die skills ondersteunt.                                                                                                                                                  |
+| `npx skills add dcc123456/genoffice`      | Installeert vanuit deze repository in elke agent die skills ondersteunt.                                                                                                                                                  |
 
 Start daarna een nieuwe chat en vraag om een document. De skill leert de
 agent wanneer hij naar `officecc` moet grijpen, hoe hij een bestand leest
@@ -335,10 +330,10 @@ assistenten die geen terminal kunnen draaien of waaraan je liever geen
 terminal geeft. Er zijn twee manieren om te verbinden, allebei getoond met
 kant-en-klare snippets in **Instellingen → Integraties → MCP**:
 
-| Manier                               | Wat het is                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Manier                              | Wat het is                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **A · `officecc mcp`** (aanbevolen) | Een stdio-server die de assistent zelf start; Office-cc hoeft niet open te staan. Eén tool per commando (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) plus de gefaseerde deck-flow `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Ops, specs en Markdown worden inline doorgegeven, dus werkt ook een client zonder bestandssysteem. |
-| **B · Lokale HTTP-server**           | Draait binnen de Office-cc-app op `http://127.0.0.1:3093/mcp` (Streamable HTTP, met legacy SSE). De tools ervan sturen een zichtbaar Word-editortabblad aan: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, en je ziet het document vorm aannemen. Standaard uit; zet hem aan in hetzelfde instellingenscherm.                                                                                                                                         |
+| **B · Lokale HTTP-server**          | Draait binnen de Office-cc-app op `http://127.0.0.1:3093/mcp` (Streamable HTTP, met legacy SSE). De tools ervan sturen een zichtbaar Word-editortabblad aan: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, en je ziet het document vorm aannemen. Standaard uit; zet hem aan in hetzelfde instellingenscherm.                                                                                                                                         |
 
 ```bash
 # Claude Code
@@ -390,8 +385,8 @@ Office-cc is geconfigureerd.
 
 ## Download
 
-| Platform                             | Vereisten                                               | Download                                                                                    |
-| ------------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Platform                             | Vereisten                                               | Download                                                                                  |
+| ------------------------------------ | ------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)    | macOS 11+                                               | [Nieuwste `.dmg` (arm64)](https://github.com/dcc123456/genoffice/releases/latest)         |
 | **macOS** — Intel (x64)              | macOS 11+                                               | [Nieuwste `.dmg` (x64)](https://github.com/dcc123456/genoffice/releases/latest)           |
 | **Windows** (x64, de meeste pc's)    | Windows 10+, Intel/AMD                                  | [Nieuwste `-x64.exe`-installer](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -509,8 +504,8 @@ werken in Microsoft Office.
 
 Documenten bewerken is volledig lokaal — bestanden verlaten je machine nooit
 om te worden geopend, bewerkt, opgeslagen of geconverteerd. De AI-functies
-(agents, search, beeldtools) hebben een netwerkverbinding nodig, met ofwel
-een Genspark-login of je eigen model-API-key.
+(agents, search, beeldtools) hebben een netwerkverbinding nodig, met
+je eigen model-API-key.
 
 </details>
 
@@ -537,7 +532,7 @@ pagina-afbeelding.
 <details>
 <summary><b>Kan ik mijn eigen AI-model of API-key gebruiken?</b></summary>
 
-Ja. Naast de keyless Genspark-login ondersteunt Office-cc je eigen key voor
+Ja. Office-cc ondersteunt je eigen key voor
 Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok,
 Mistral, OpenRouter, Requesty en OpenCode Zen/Go, plus elk OpenAI-compatibel endpoint —
 inclusief lokale modelservers. Search, beeldgeneratie en analyse van beeld en
@@ -641,6 +636,6 @@ Office-cc wordt uitgebracht onder de [Apache License 2.0](../../LICENSE), met
 enterprise-modules en valt onder de
 [Office-cc Enterprise License](../../ee/LICENSE).
 
-De namen en logo's van Office-cc en Genspark zijn handelsmerken van Mainfunc,
+De naam en het logo van Office-cc zijn handelsmerken van Mainfunc,
 Inc. De Apache-2.0-licentie geeft geen toestemming om deze te gebruiken (zie
 sectie 6); forks moeten hun eigen branding gebruiken.

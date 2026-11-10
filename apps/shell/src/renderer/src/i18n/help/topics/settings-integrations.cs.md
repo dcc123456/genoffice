@@ -2,7 +2,7 @@
 
 ## Otevření nastavení
 
-Řádek účtu vlevo dole na domovské stránce otevře panel nastavení (při nepřihlášení ukazuje Přihlásit se). Má šest částí: Účet, Model AI, AI média a vyhledávání, Obecné, Integrace a O aplikaci.
+Položka nastavení vlevo dole na domovské stránce otevře panel nastavení. Má pět částí: Model AI, AI média a vyhledávání, Obecné, Integrace a O aplikaci.
 
 ![Nastavení ▸ Obecné, kde žijí jazyk, motiv, automatické ukládání a přepínač statistik používání](img/settings-general.png)
 
@@ -46,12 +46,6 @@ Nastavení může zaregistrovat Office-cc jako aplikaci pro soubory .docx / .xls
 - Nápověda ▸ Informace o softwaru třetích stran: úplný přehled licencí open source dodávaných s aplikací.
 - Nápověda ▸ Zkontrolovat aktualizace…: spustí ruční kontrolu; novější verze vyzve k instalaci.
 
-## Přihlášení ke Genspark
-
-- Místo přihlášení (v nastavení nebo v seznamu cloudových projektů) používá postup s **kódem zařízení**: Office-cc zobrazí kód a otevře přihlašovací stránku v prohlížeči; po dokončení postup pokračuje automaticky.
-- Přihlášení slouží pouze k: seznamu cloudových projektů a modelům hostovaným Gensparkem. Bez něj fungují dál všechny místní funkce i vlastní modely.
-- Odhlášení je jedno kliknutí v nastavení.
-
 ## Integrace MCP (pro pokročilé uživatele a klienty AI)
 
 **Integrace** je panel, který propojí Office-cc s programovým agentem, a má o tom vlastní kapitolu: Připojení programového agenta. Zkrátka — vyberte cestu (příkazová řádka, nebo MCP), řiďte se danou částí a pak začněte nový chat a zeptejte se.
@@ -62,8 +56,8 @@ Pod **Místní HTTP server** umí aplikace server spustit sama — přepínač z
 
 ## Přehled příkazů
 
-| Příkaz               | Co dělá                     |
-| -------------------- | --------------------------- |
+| Příkaz              | Co dělá                     |
+| ------------------- | --------------------------- |
 | `officecc <soubor>` | otevře soubor               |
 | `officecc mcp`      | spustí místní server MCP    |
 | `officecc --help`   | všechny příkazy a přepínače |

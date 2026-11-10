@@ -49,8 +49,8 @@ kepada anda dengan tepat apa yang disentuhnya.
   ditukar terus pada mesin anda. PDF → Word / Excel / PowerPoint, Markdown →
   Word dan HTML → Word semuanya berjalan di peranti sendiri. Hanya panggilan
   AI yang keluar dari mesin, kepada pembekal pilihan anda.
-- **Kunci anda sendiri atau tiada langsung.** Log masuk dengan Genspark dan
-  anda tidak perlu sebarang kunci, atau bawa kunci anda sendiri untuk Claude,
+- **Kunci anda sendiri.** Bawa kunci anda sendiri untuk
+  Claude,
   OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral,
   OpenRouter, Requesty, atau mana-mana titik akhir yang serasi dengan OpenAI, termasuk
   pelayan setempat.
@@ -221,7 +221,7 @@ tab editor yang kelihatan sementara anda memerhati.
 - **AI yang menyunting dokumen itu sendiri.** Perubahan dijejak dalam Docs,
   formula dan carta langsung dalam Sheets, slaid dilukis terus pada kanvas,
   setiap pusingan AI adalah snapshot yang boleh anda kembalikan.
-- **Model anda, kunci anda.** Log masuk dengan Genspark, atau bawa kunci
+- **Model anda, kunci anda.** Bawa kunci
   untuk Claude, OpenAI, Gemini, DeepSeek dan lain-lain, termasuk pelayan
   setempat dan mana-mana endpoint serasi OpenAI.
 - **PDF yang diuruskan dengan betul.** Sunting teks terus dalam halaman, dan
@@ -236,12 +236,7 @@ tab editor yang kelihatan sementara anda memerhati.
 
 ## Bahagian belakang AI
 
-**Log masuk dengan Genspark** dan tidak ada apa-apa yang perlu ditetapkan:
-panggilan model disalurkan melalui proksi Genspark (keluarga Claude, GPT dan
-Gemini) dan agen mendapat carian web serta imej, penjanaan imej, dan analisis
-imej/audio/video.
-
-**Atau bawa kunci anda sendiri.** Settings → AI menyenaraikan Claude, OpenAI,
+**Bawa kunci anda sendiri.** Settings → AI menyenaraikan Claude, OpenAI,
 Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao, MiniMax, Grok, Mistral, OpenRouter, Requesty
 dan OpenCode Zen/Go, ditambah slot tersuai untuk mana-mana titik akhir yang
 serasi dengan OpenAI (URL asas + kunci), termasuk pelayan model setempat.
@@ -278,7 +273,7 @@ setiap klien MCP.
 | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Tetapan → Integrasi** dalam aplikasi            | Menyenaraikan agen yang ditemui pada komputer ini; satu klik menulis skill ke dalam setiap satu yang anda pilih. Butang **Update** muncul apabila keluaran Office-cc membawa skill yang lebih baharu. |
 | **Muat turun sebagai zip** pada halaman yang sama | Susun atur yang diterima oleh claude.ai, aplikasi desktop Claude dan pembantu lain sebagai skill yang dimuat naik.                                                                                    |
-| `npx skills add dcc123456/genoffice`            | Memasang daripada repositori ini ke dalam mana-mana agen yang serasi dengan skill.                                                                                                                    |
+| `npx skills add dcc123456/genoffice`              | Memasang daripada repositori ini ke dalam mana-mana agen yang serasi dengan skill.                                                                                                                    |
 
 Kemudian mulakan sembang baharu dan minta sesuatu dokumen. Skill itu mengajar
 agen bila perlu menggunakan `officecc`, cara membaca fail sebelum
@@ -336,10 +331,10 @@ untuk pembantu yang tidak boleh menjalankan terminal, atau yang anda lebih
 suka tidak diberi satu. Terdapat dua cara untuk masuk, kedua-duanya
 ditunjukkan dengan cebisan sedia salin dalam **Tetapan → Integrasi → MCP**:
 
-| Cara                                | Apa dia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cara                               | Apa dia                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **A · `officecc mcp`** (disyorkan) | Pelayan stdio yang pembantu mulakan sendiri; Office-cc tidak perlu dibuka. Satu alat bagi setiap arahan (`info`, `convert`, `create_docx`, `create_xlsx`, `create_pptx`, `create_pdf`, `docs_read` / `docs_apply` / `docs_check`, `sheet_*`, `slides_*`, `render`, `guide`, `search`, `image`, `media`, `open`) ditambah aliran deck berperingkat `deck_start` → `deck_page` → `deck_build` → `deck_replace`. Ops, spesifikasi dan Markdown dihantar terus dalam argumen, jadi klien tanpa sistem fail tetap berfungsi. |
-| **B · Pelayan HTTP tempatan**       | Berjalan di dalam aplikasi Office-cc pada `http://127.0.0.1:3093/mcp` (Streamable HTTP, dengan SSE lama). Alatnya memandu tab editor Word yang kelihatan: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, dan anda melihat dokumen itu terbentuk. Dimatikan secara lalai; hidupkan pada panel tetapan yang sama.                                                                                                                                                    |
+| **B · Pelayan HTTP tempatan**      | Berjalan di dalam aplikasi Office-cc pada `http://127.0.0.1:3093/mcp` (Streamable HTTP, dengan SSE lama). Alatnya memandu tab editor Word yang kelihatan: `create_session`, `insert_content`, `replace_blocks`, `apply_ops`, `read_document`, `save_session`, dan anda melihat dokumen itu terbentuk. Dimatikan secara lalai; hidupkan pada panel tetapan yang sama.                                                                                                                                                    |
 
 ```bash
 # Claude Code
@@ -390,8 +385,8 @@ meninggalkan mesin, kepada pembekal yang dikonfigurasikan dalam Office-cc.
 
 ## Muat Turun
 
-| Platform                             | Keperluan                                             | Muat Turun                                                                                |
-| ------------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Platform                             | Keperluan                                             | Muat Turun                                                                              |
+| ------------------------------------ | ----------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | **macOS** — Apple Silicon (arm64)    | macOS 11+                                             | [`.dmg` terkini (arm64)](https://github.com/dcc123456/genoffice/releases/latest)        |
 | **macOS** — Intel (x64)              | macOS 11+                                             | [`.dmg` terkini (x64)](https://github.com/dcc123456/genoffice/releases/latest)          |
 | **Windows** (x64, kebanyakan PC)     | Windows 10+, Intel/AMD                                | [Pemasang `-x64.exe` terkini](https://github.com/dcc123456/genoffice/releases/latest)   |
@@ -508,8 +503,8 @@ ditulis semula seadanya, jadi dokumen kekal berfungsi dalam Microsoft Office.
 
 Penyuntingan dokumen sepenuhnya setempat — fail tidak pernah keluar daripada
 mesin anda untuk dibuka, disunting, disimpan atau ditukar. Ciri-ciri AI
-(agen, carian, alat imej) memerlukan sambungan rangkaian, sama ada dengan log
-masuk Genspark atau kunci API model anda sendiri.
+(agen, carian, alat imej) memerlukan sambungan rangkaian,
+kunci API model anda sendiri.
 
 </details>
 
@@ -536,7 +531,7 @@ halaman.
 <details>
 <summary><b>Bolehkah saya menggunakan model AI atau kunci API saya sendiri?</b></summary>
 
-Ya. Selain log masuk Genspark tanpa kunci, Office-cc menyokong bawa kunci
+Ya. Office-cc menyokong bawa kunci
 anda sendiri untuk Claude, OpenAI, Gemini, DeepSeek, Kimi, GLM, Qwen, Doubao,
 MiniMax, Grok, Mistral, OpenRouter, Requesty dan OpenCode Zen/Go, ditambah mana-mana
 titik akhir serasi OpenAI — termasuk pelayan model setempat. Carian,
@@ -640,6 +635,6 @@ satu kekecualian: direktori `ee/` dikhususkan untuk modul perusahaan pada
 masa hadapan dan dilindungi oleh
 [Lesen Perusahaan Office-cc](../../ee/LICENSE).
 
-Nama dan logo Office-cc serta Genspark adalah tanda dagangan Mainfunc, Inc.
+Nama dan logo Office-cc adalah tanda dagangan Mainfunc, Inc.
 Lesen Apache-2.0 tidak memberikan kebenaran untuk menggunakannya (lihat
 seksyen 6); fork perlulah menggunakan penjenamaan mereka sendiri.

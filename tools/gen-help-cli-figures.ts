@@ -281,7 +281,7 @@ async function shootInstall(): Promise<void> {
     })
     await page.waitForTimeout(2500)
     await dismissStarPrompt(page)
-    await page.locator('.account-btn').click()
+    await page.locator('.settings-btn').click()
     // the nav label is localized, so match the class and the English word
     const about = page.locator('.set-nav-item').filter({ hasText: /About/ }).first()
     await about.waitFor({ state: 'visible', timeout: 20_000 })
@@ -310,9 +310,7 @@ async function main(): Promise<void> {
   if (take('cli')) {
     ensureCliBundle()
     await shootHtml(
-      figureHtml('officecc --help', [
-        { command: 'officecc --help', output: capture(['--help']) },
-      ]),
+      figureHtml('officecc --help', [{ command: 'officecc --help', output: capture(['--help']) }]),
       'cli',
     )
   }

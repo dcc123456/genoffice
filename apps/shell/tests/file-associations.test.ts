@@ -50,4 +50,24 @@ describe('packaged file associations', () => {
       expect(winExts, `.${ext} missing from the Windows associations`).toContain(ext)
     }
   })
+
+  /**
+   * Launch Services only offers the apps that declare the public.folder
+   * content type, so without this entry Office-cc never appears in a
+   * folder's "Open With" menu. The role stays Viewer: the app shows the
+   * folder in its tree, it does not edit it.
+   */
+  it('declares the folder type so the OS offers the app on a folder', () => {
+    const types = config.mac.extendInfo.CFBundleDocumentTypes as Array<{
+      LSItemContentTypes?: string[]
+      CFBundleTypeRole?: string
+    }>
+    const folder = types.find((type) => type.LSItemContentTypes?.includes('public.folder'))
+    expect(folder, 'no public.folder document type declared for mac').toBeTruthy()
+    expect(folder!.CFBundleTypeRole).toBe('Viewer')
+  })
+
+  it('declares the folder mime type for the linux desktop entry', () => {
+    expect(config.linux.mimeTypes).toContain('inode/directory')
+  })
 })

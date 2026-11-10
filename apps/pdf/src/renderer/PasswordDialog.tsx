@@ -1,8 +1,8 @@
 /**
  * Password prompt dialog shown when opening an encrypted PDF, matching the
- * docs PasswordDialog (mockups/protect-dialogs-genspark.html §1/2): top-left
- * title, description with the quoted file name, labelled password field with
- * a reveal toggle, inline error, cancel / open footer buttons.
+ * docs PasswordDialog: top-left title, description with the quoted file name,
+ * labelled password field with a reveal toggle, inline error, cancel / open
+ * footer buttons.
  *
  * Value / wrong state live in App's retry loop (status === 'password').
  */
