@@ -2,7 +2,7 @@ import type { Lang } from '@office-cc/i18n'
 
 /** Labels for the AI feature entry bar at the top of every editor's AI panel. */
 export interface AiFeatureBubbleLabels {
-  /** caption of the trigger row, e.g. "AI 功能" */
+  /** the trigger row's caption */
   title: string
   /** trigger tooltip while the bubble is hidden */
   expand: string

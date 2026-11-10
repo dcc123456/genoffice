@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { IconPalette, IconSummarize, IconWand } from '../components/icons'
 import { t as tGlobal, type StringKey } from '../i18n/locale'
 
-/** The look directions 主题 offers, each its own request to the model. */
+/** The look directions the Theme entry offers, each its own request to the model. */
 const THEME_DIRECTIONS: StringKey[] = [
   'aiThemeMinimal',
   'aiThemeEditorial',
