@@ -22,10 +22,21 @@ name: Release
 # The release itself is created by the "release" job, which reads the notes
 # from .github/release-notes/<tag>.md, so both installers have a release to
 # attach to and the page carries the right text.
+#
+# A manual run (workflow_dispatch) rebuilds a tag it already has a release for:
+# the "release" step leaves an existing release untouched and the publish step
+# re-uploads with --clobber, which is how a half-finished release is recovered
+# without deleting and re-pushing the tag.
 
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Version tag to build and publish, e.g. v0.0.2
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -37,11 +48,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # build the tagged tree, never the branch the dispatch was started from
+          ref: ${{ inputs.tag || github.ref }}
 
       - name: Create the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
           if gh release view "$TAG" >/dev/null 2>&1; then
@@ -62,6 +76,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -143,6 +159,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -205,6 +223,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag || github.ref }}
 
       - name: Download the macOS installer
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
@@ -221,7 +241,7 @@ jobs:
       - name: Attach the installers to the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
           ls -l dist/macos dist/windows
@@ -235,7 +255,7 @@ jobs:
       - name: Verify the release carries both installers
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
           version="${TAG#v}"
