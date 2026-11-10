@@ -13,6 +13,8 @@ import { ATTACHMENT_IMAGE_EXTS } from '../../shared/ipc'
 import type { AttachmentAddResult, AttachmentMeta } from '../../shared/ipc'
 import {
   AiComposer,
+  AiFeatureBubble,
+  AI_FEATURE_BUBBLE_LABELS,
   AiQueueStrip,
   AI_QUEUE_LABELS,
   AiScopeQuote,
@@ -55,6 +57,7 @@ import {
 import type { BriefDecision, ClarifyQuestion, HtmlDocAccess } from './tools'
 import type { Brief } from '../document/brief'
 import { isDocEmpty } from '../document/blank'
+import { HTML_FEATURE_ENTRIES } from './AiFeatureEntries'
 import { ClarifyCard } from '../components/ClarifyCard'
 import { BriefCard } from '../components/BriefCard'
 import { createSearchSkill } from './search-skill'
@@ -1047,6 +1050,15 @@ export function AiPanel({
     setPrompt('')
   }
 
+  /** A feature entry sends a request the user would otherwise have to type. While
+   * a reply runs it joins the queue exactly like an Enter does — a silent no-op
+   * button would look broken. */
+  const runFeature = (entry: (typeof HTML_FEATURE_ENTRIES)[number]): void => {
+    const text = entry.prompt()
+    if (busy) msgQueue.enqueue(text, [])
+    else send(text)
+  }
+
   const stop = (): void => {
     msgQueue.hold()
     dismissCards()
@@ -1221,6 +1233,19 @@ export function AiPanel({
           </button>
         </div>
       </header>
+
+      {/* the AI feature entries left the Home ribbon for here: the trigger row
+          clicks open a bubble, and the buttons themselves live in that bubble */}
+      <AiFeatureBubble
+        labels={AI_FEATURE_BUBBLE_LABELS[lang]}
+        storageKey="html-ai-feature-bubble"
+        items={HTML_FEATURE_ENTRIES.map((entry) => ({
+          id: entry.id,
+          label: entry.label(),
+          icon: entry.icon,
+          select: () => runFeature(entry),
+        }))}
+      />
 
       <div className="ai-chat" ref={chatRef} onScroll={onChatScroll}>
         {chat.length === 0 && (

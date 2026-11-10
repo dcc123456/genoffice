@@ -5,11 +5,13 @@ import {
   type AiModelPickerBridge,
 } from '@office-cc/ui'
 import { useEffect, useRef, useState } from 'react'
-import type { PointerEvent as ReactPointerEvent, ReactElement } from 'react'
+import type { PointerEvent as ReactPointerEvent, ReactElement, ReactNode } from 'react'
 import { AgentLoop } from '@office-cc/agent-core'
 import { imageGenerationAvailable, type AiSettings } from '@office-cc/ai-provider/browser'
 import {
   AiComposer,
+  AiFeatureBubble,
+  AI_FEATURE_BUBBLE_LABELS,
   AiQueueStrip,
   AI_QUEUE_LABELS,
   AiScopeQuote,
@@ -20,8 +22,9 @@ import {
   type AiScopeQuoteData,
   type AiTokenUsageView,
 } from '@office-cc/ui'
-import { aiLangDirective, t as tGlobal, useI18n } from '../i18n/locale'
+import { aiLangDirective, t as tGlobal, useI18n, type StringKey } from '../i18n/locale'
 import { createFileNav, Markdown } from '@office-cc/ui'
+import { IconAiKeyPoints, IconAiSummarize, IconFormAiFill } from '../icons'
 import sendEnterOn from '../assets/send-enter-on.png'
 import sendEnterOff from '../assets/send-enter-off.png'
 import sendStop from '../assets/send-stop.png'
@@ -96,6 +99,52 @@ const MODEL_BRIDGE: AiModelPickerBridge = {
   onSettingsChanged: (handler) => window.pdfApi.onAiSettingsChanged(handler),
   openModelSettings: () => window.pdfApi.openAiModelSettings().catch(() => {}),
 }
+
+/** The ribbon's AI feature buttons moved into the panel's bubble at the top.
+    `rangePrompt` runs instead of `prompt` while a text selection scopes the chat. */
+const PDF_FEATURE_ENTRIES: {
+  id: string
+  label: StringKey
+  prompt: StringKey
+  rangePrompt?: StringKey
+  icon: ReactNode
+  needsEdit?: boolean
+}[] = [
+  {
+    id: 'summarize',
+    label: 'aiSummarizeBtn',
+    prompt: 'aiQuickSummaryPrompt',
+    rangePrompt: 'aiQuickSummarySelPrompt',
+    icon: <IconAiSummarize />,
+  },
+  {
+    id: 'keyPoints',
+    label: 'aiKeyPointsBtn',
+    prompt: 'aiQuickKeyPointsPrompt',
+    rangePrompt: 'aiQuickKeyPointsSelPrompt',
+    icon: <IconAiKeyPoints />,
+  },
+  {
+    id: 'reviewSummary',
+    label: 'aiReviewSummaryBtn',
+    prompt: 'aiReviewSummaryPrompt',
+    icon: <IconAiSummarize />,
+  },
+  {
+    id: 'processNotes',
+    label: 'aiProcessNotesBtn',
+    prompt: 'aiProcessNotesPrompt',
+    icon: <AiMark size={20} />,
+    needsEdit: true,
+  },
+  {
+    id: 'fillForm',
+    label: 'aiFillFormBtn',
+    prompt: 'aiFillFormPrompt',
+    icon: <IconFormAiFill />,
+    needsEdit: true,
+  },
+]
 
 export function AiPanel({
   api,
@@ -616,6 +665,13 @@ export function AiPanel({
   const scopeSel = api.selection()
   const hasScopeSelection = !!scopeSel && scopeSel.text.trim().length > 0
 
+  /** A bubble button: same prompt the ribbon fired, queued if a reply is already running */
+  const runFeature = (entry: (typeof PDF_FEATURE_ENTRIES)[number]): void => {
+    const text = t(hasScopeSelection && entry.rangePrompt ? entry.rangePrompt : entry.prompt)
+    if (busy) msgQueue.enqueue(text, undefined)
+    else send(text)
+  }
+
   const selectionScopeQuote = (): AiScopeQuoteData | undefined => {
     const sel = api.selection()
     const text = sel?.text.replace(/\s+/g, ' ').trim() ?? ''
@@ -698,31 +754,25 @@ export function AiPanel({
         </div>
       </header>
 
+      {/* the AI feature entries left the ribbon for here: the trigger row clicks open
+          a bubble, and the buttons themselves live in that bubble */}
+      <AiFeatureBubble
+        labels={AI_FEATURE_BUBBLE_LABELS[lang]}
+        storageKey="pdf-ai-feature-bubble"
+        items={PDF_FEATURE_ENTRIES.map((entry) => ({
+          id: entry.id,
+          label: t(entry.label),
+          icon: entry.icon,
+          disabled: entry.needsEdit && api.readOnly(),
+          select: () => runFeature(entry),
+        }))}
+      />
+
       <div className="ai-chat" ref={chatRef} onScroll={onChatScroll}>
         {chat.length === 0 && (
           <div className="ai-chat-empty">
             <div className="ai-chat-empty-title">{t('aiEmptyTitle')}</div>
             <div className="ai-chat-empty-body">{t('aiEmptyBody')}</div>
-            <div className="ai-quick-actions">
-              <button
-                className="ai-quick-btn"
-                onClick={() =>
-                  send(t(hasScopeSelection ? 'aiQuickSummarySelPrompt' : 'aiQuickSummaryPrompt'))
-                }
-              >
-                {t('aiQuickSummary')}
-              </button>
-              <button
-                className="ai-quick-btn"
-                onClick={() =>
-                  send(
-                    t(hasScopeSelection ? 'aiQuickKeyPointsSelPrompt' : 'aiQuickKeyPointsPrompt'),
-                  )
-                }
-              >
-                {t('aiQuickKeyPoints')}
-              </button>
-            </div>
           </div>
         )}
         {chat.map((entry, i) => {

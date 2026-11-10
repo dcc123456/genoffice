@@ -286,7 +286,6 @@ import {
   IconPreviousField,
   IconNextField,
   IconCompleteForm,
-  IconFormAiFill,
   IconFormText,
   IconFieldText,
   IconFieldCheckbox,
@@ -345,8 +344,6 @@ import {
   IconCrop,
   IconCutout,
   IconOpacity,
-  IconAiSummarize,
-  IconAiKeyPoints,
 } from './icons'
 
 GlobalWorkerOptions.workerSrc = workerUrl
@@ -7394,38 +7391,6 @@ export default function App() {
                     </span>
                     <span>AI</span>
                   </button>
-                  <button
-                    className="rb-big ai-entry"
-                    data-tip={t('aiSummarizeBtn')}
-                    onClick={() =>
-                      runAiPreset(
-                        t(aiSelection ? 'aiQuickSummarySelPrompt' : 'aiQuickSummaryPrompt'),
-                      )
-                    }
-                  >
-                    <span className="rb-big-icon">
-                      <span className="ai-feature-icon" aria-hidden="true">
-                        <IconAiSummarize />
-                      </span>
-                    </span>
-                    <span>{t('aiSummarizeBtn')}</span>
-                  </button>
-                  <button
-                    className="rb-big ai-entry"
-                    data-tip={t('aiKeyPointsBtn')}
-                    onClick={() =>
-                      runAiPreset(
-                        t(aiSelection ? 'aiQuickKeyPointsSelPrompt' : 'aiQuickKeyPointsPrompt'),
-                      )
-                    }
-                  >
-                    <span className="rb-big-icon">
-                      <span className="ai-feature-icon" aria-hidden="true">
-                        <IconAiKeyPoints />
-                      </span>
-                    </span>
-                    <span>{t('aiKeyPointsBtn')}</span>
-                  </button>
                 </div>
               </div>
               <div className="ribbon-sep" />
@@ -7514,36 +7479,6 @@ export default function App() {
           )}
           {ribbonTab === 'annotate' && (
             <>
-              <div className="ribbon-group">
-                <div className="ribbon-group-items">
-                  <button
-                    className="rb-big ai-entry"
-                    data-tip={t('aiReviewSummaryBtn')}
-                    onClick={() => runAiPreset(t('aiReviewSummaryPrompt'))}
-                  >
-                    <span className="rb-big-icon">
-                      <span className="ai-feature-icon" aria-hidden="true">
-                        <IconAiSummarize />
-                      </span>
-                    </span>
-                    <span>{t('aiReviewSummaryBtn')}</span>
-                  </button>
-                  <button
-                    className="rb-big ai-entry"
-                    disabled={readOnly}
-                    data-tip={t('aiProcessNotesBtn')}
-                    onClick={() => runAiPreset(t('aiProcessNotesPrompt'))}
-                  >
-                    <span className="rb-big-icon">
-                      <span className="ai-feature-icon" aria-hidden="true">
-                        <AiMark size={20} />
-                      </span>
-                    </span>
-                    <span>{t('aiProcessNotesBtn')}</span>
-                  </button>
-                </div>
-              </div>
-              <div className="ribbon-sep" />
               {markupGroup}
               <div className="ribbon-sep" />
               <div className="ribbon-group">
@@ -7732,17 +7667,6 @@ export default function App() {
             <>
               <div className="ribbon-group">
                 <div className="ribbon-group-items">
-                  <button
-                    className="rb-big ai-entry"
-                    disabled={readOnly}
-                    data-tip={t('aiFillFormBtn')}
-                    onClick={() => runAiPreset(t('aiFillFormPrompt'))}
-                  >
-                    <span className="rb-big-icon">
-                      <IconFormAiFill />
-                    </span>
-                    <span>{t('aiFillFormBtn')}</span>
-                  </button>
                   <button
                     className={`rb-big${pendingStaticFill === 'text' ? ' active' : ''}`}
                     disabled={readOnly}

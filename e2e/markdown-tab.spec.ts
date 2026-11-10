@@ -163,7 +163,7 @@ test.describe('markdown editor', () => {
     }
   })
 
-  test('ribbon AI preset button opens the panel and sends the instruction', async () => {
+  test('the panel feature bubble sends the summarize instruction', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'officecc-md-'))
     const mdPath = join(dir, 'summary.md')
     await writeFile(mdPath, '# Topic\n\nSome content worth summarizing.\n')
@@ -177,14 +177,21 @@ test.describe('markdown editor', () => {
       const editorPage = await waitForPageWithUrl(app, '://markdown/')
       await expect(editorPage.locator('.doc-editor h1')).toHaveText('Topic')
 
-      const summarizeBtn = editorPage.locator('.rb-big.ai-entry', {
-        hasText: /AI Summarize/,
-      })
+      // the entries left the ribbon for the panel: only the assistant toggle stays there
+      await expect(editorPage.locator('.ribbon .ai-entry')).toHaveCount(1)
+      if (!(await editorPage.locator('.copilot').isVisible())) {
+        await editorPage.locator('.ribbon .ai-entry').first().click()
+      }
+      await expect(editorPage.locator('.copilot')).toBeVisible()
+
+      // the bubble is collapsible and remembers the last click; arm it before use
+      const trigger = editorPage.locator('.ai-feature-trigger')
+      if ((await trigger.getAttribute('aria-expanded')) !== 'true') await trigger.click()
+      const summarizeBtn = editorPage.locator('.ai-feature-btn', { hasText: /AI Summarize/ })
       await expect(summarizeBtn).toBeEnabled()
       await summarizeBtn.click()
 
-      await expect(editorPage.locator('.copilot')).toBeVisible()
-      // the preset lands as a sent user message (the model reply itself needs credentials)
+      // the request lands as a sent user message (the model reply itself needs credentials)
       await expect(editorPage.locator('.ai-msg-user')).toContainText(/Summarize/)
       await editorPage.screenshot({ path: screenshotPath('markdown-ai-preset') })
     } finally {

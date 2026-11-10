@@ -7847,55 +7847,6 @@ body.docs-crop-active
   color: var(--color-text-primary);
 }
 
-/* the AI feature entries, moved off the Home ribbon into the expanded panel:
-   a wrapping row of glyph + label pills, each explained by its ScreenTip */
-.ai-quick-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--color-border-default);
-}
-
-.ai-quick-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 8px;
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-8);
-  background: var(--color-bg-subtle);
-  color: var(--color-text-primary);
-  font-size: 12px;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.ai-quick-btn:hover:not(:disabled) {
-  border-color: var(--color-brand-secondary);
-  color: var(--color-brand-secondary);
-}
-
-/* an action with no text to work on: greyed, not hidden (the ribbon greyed them too) */
-.ai-quick-btn:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-
-.ai-quick-btn .ai-feature-icon {
-  width: 18px;
-  height: 18px;
-}
-
-.ai-quick-btn .ai-feature-icon svg {
-  /* 18px out of a 24-unit viewBox paints a 1.5 stroke at 0.75px, so the CSS
-     stroke width restores the 1:16 standard the 24px ribbon glyphs follow */
-  width: 18px;
-  height: 18px;
-  stroke-width: 2;
-}
-
 /* collapsed AI sidebar: thin rail on the left edge */
 .ai-rail {
   display: flex;

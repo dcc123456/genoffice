@@ -1,0 +1,106 @@
+/* AI feature entry bar: trigger row + the click-opened bubble of feature
+   buttons (see AiFeatureBubble.tsx). Shared by all six editors. */
+
+.ai-feature-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--color-bg-subtle);
+}
+
+.ai-feature-entry .ai-feature-trigger {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-8);
+  background: none;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.ai-feature-entry .ai-feature-trigger:hover {
+  background: var(--hover);
+  color: var(--color-text-primary);
+}
+
+.ai-feature-entry .ai-feature-caret {
+  display: inline-flex;
+  transition: transform 0.12s ease;
+}
+
+/* closed: the chevron points sideways, the way an expandable row does */
+.ai-feature-entry .ai-feature-trigger[aria-expanded='false'] .ai-feature-caret {
+  transform: rotate(-90deg);
+}
+
+/* The bubble itself — a card anchored under the trigger, one caret pointing
+   back up at it. Inline rather than absolutely positioned so the panel's
+   scroll container can never clip it. */
+.ai-feature-entry .ai-feature-bubble {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-8);
+  background: var(--canvas);
+}
+
+.ai-feature-entry .ai-feature-bubble::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 18px;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  background: var(--canvas);
+}
+
+.ai-feature-entry .ai-feature-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-8);
+  background: var(--color-bg-subtle);
+  font-size: var(--text-caption);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.ai-feature-entry .ai-feature-btn:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--hover);
+}
+
+.ai-feature-entry .ai-feature-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ai-feature-entry .ai-feature-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-secondary);
+}
+
+/* 18px out of a 24-unit viewBox paints a 1.5 stroke at 1.125px: the CSS stroke
+   width restores the weight the 24px ribbon glyphs had before the entries moved */
+.ai-feature-entry .ai-feature-btn-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}

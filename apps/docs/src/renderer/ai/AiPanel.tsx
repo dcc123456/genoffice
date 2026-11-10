@@ -1,4 +1,6 @@
 import {
+  AiFeatureBubble,
+  AI_FEATURE_BUBBLE_LABELS,
   aiPanelWidthAtPointer,
   AiPanelSideButton,
   AiModelPicker,
@@ -153,11 +155,11 @@ const EDIT_STARTER_PROMPTS: StringKey[] = [
 
 /**
  * The AI feature entries, which live in the expanded panel now that they have
- * left the Home ribbon: one icon button each, whose ScreenTip names the action
- * and spells out the request (the prompt doubles as the detail line — it is
- * already written as one, in all 21 languages). `needsDoc` greys out an action
- * with no text to work on; `fillsComposer` asks for the user's own topic
- * instead of sending, because a draft has none without it.
+ * left the Home ribbon: the panel's trigger row clicks open a bubble holding
+ * one button each. `needsDoc` greys out an action with no text to work on;
+ * `fillsComposer` asks for the user's own topic instead of sending, because a
+ * draft has none without it. `rangePrompt` is the wording used while a range of
+ * text is selected.
  */
 const AI_QUICK_ACTIONS: {
   kind: AiFeatureIconKind
@@ -1461,27 +1463,19 @@ export function AiPanel({
         </div>
       </div>
 
-      {/* the AI feature entries left the Home ribbon for here: icon button + ScreenTip */}
-      <div className="ai-quick-actions" role="group" aria-label={t('ribbonAiAssistant')}>
-        {AI_QUICK_ACTIONS.map((action) => (
-          <button
-            key={action.kind}
-            type="button"
-            className="ai-quick-btn"
-            disabled={action.needsDoc && docEmpty}
-            data-tip={t(action.label)}
-            data-tip-detail={t(
-              action.rangePrompt && hasScopeSelection ? action.rangePrompt : action.prompt,
-            )}
-            onClick={() => runQuickAction(action)}
-          >
-            <span className="ai-feature-icon">
-              <AiFeatureIcon kind={action.kind} />
-            </span>
-            <span>{t(action.label)}</span>
-          </button>
-        ))}
-      </div>
+      {/* the AI feature entries left the Home ribbon for here: the trigger row
+          clicks open a bubble, and the buttons themselves live in that bubble */}
+      <AiFeatureBubble
+        labels={AI_FEATURE_BUBBLE_LABELS[lang]}
+        storageKey="docs-ai-feature-bubble"
+        items={AI_QUICK_ACTIONS.map((action) => ({
+          id: action.kind,
+          label: t(action.label),
+          icon: <AiFeatureIcon kind={action.kind} />,
+          disabled: action.needsDoc && docEmpty,
+          select: () => runQuickAction(action),
+        }))}
+      />
 
       <div ref={logRef} className="ai-chat" onScroll={onLogScroll}>
         {/* past conversation (read-only transcript, not fed to the model), shown continuously with the current turn */}

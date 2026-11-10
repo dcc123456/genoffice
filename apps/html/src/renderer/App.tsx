@@ -1578,11 +1578,6 @@ export default function App() {
         onInsert={(kind, opts) => void insertElement(kind, opts)}
         onInsertSkeleton={insertSkeleton}
         canInsertSkeleton={canvasMode === 'edit' && isDocEmpty(textRef.current)}
-        onAiPreset={(text) => {
-          flushPending()
-          setAiOpen(true)
-          setAiPreset({ text, nonce: Date.now() })
-        }}
         canvasMode={canvasMode}
         onPresent={startPresent}
       />

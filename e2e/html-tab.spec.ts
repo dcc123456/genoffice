@@ -241,24 +241,19 @@ test.describe('html editor', () => {
       await toggle.click()
       await expect(editorPage.locator('.ai-msg-user')).toContainText('Rename the heading')
 
-      // page-wide AI entries: Theme opens a direction menu, a pick sends the instruction
-      // (or parks it in the composer while a run is still busy); Summarize sends right away
-      await editorPage
-        .locator('.ribbon')
-        .getByRole('button', { name: /^Theme$/ })
-        .click()
-      const themeMenu = editorPage.locator('.rb-menu')
-      await expect(themeMenu.getByRole('menuitem')).toHaveCount(5)
-      await themeMenu.getByRole('menuitem', { name: /Minimal/ }).click()
-      await expect(themeMenu).toBeHidden()
+      // the page-wide AI entries left the ribbon for the panel bubble, where each theme
+      // direction is a button of its own; a pick sends the instruction (or parks it in
+      // the composer while a run is still busy) and Summarize sends right away
+      const trigger = editorPage.locator('.ai-feature-trigger')
+      if ((await trigger.getAttribute('aria-expanded')) !== 'true') await trigger.click()
+      const bubble = editorPage.locator('.ai-feature-bubble')
+      await expect(bubble.locator('.ai-feature-btn')).toHaveCount(7)
+      await bubble.getByRole('button', { name: /Minimal/ }).click()
       const instructionText = async () =>
         (await editorPage.locator('.ai-msg-user').last().textContent()) +
         (await editorPage.locator('.copilot textarea').inputValue())
       await expect.poll(instructionText).toMatch(/Minimal/)
-      await editorPage
-        .locator('.ribbon')
-        .getByRole('button', { name: /^AI Summarize$/ })
-        .click()
+      await bubble.getByRole('button', { name: /AI Summarize/ }).click()
       await expect.poll(instructionText).toMatch(/Summarize/)
     } finally {
       await closeAndSaveVideo(launched, 'html-ai-panel')

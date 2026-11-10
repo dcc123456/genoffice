@@ -7,6 +7,8 @@ import {
 import React, { useEffect, useRef, useState } from 'react'
 import {
   AiComposer,
+  AiFeatureBubble,
+  AI_FEATURE_BUBBLE_LABELS,
   AiQueueStrip,
   AI_QUEUE_LABELS,
   AiScopeQuote,
@@ -17,9 +19,10 @@ import {
   useChatRunQueue,
 } from '@office-cc/ui'
 import { AiSparkIcon } from '../ribbon-icons'
+import { AiFeatureIcon, type AiFeatureIconKind } from './AiFeatureIcon'
 import type { ChangePlan } from '@office-cc/xlsx-gateway/domain/workbook.types'
 import { ATTACHMENT_IMAGE_EXTS, type AttachmentMeta } from '../../shared/desktop-api'
-import { useI18n, type TFunc } from '../i18n/locale'
+import { useI18n, type StringKey, type TFunc } from '../i18n/locale'
 import { createFileNav, Markdown } from '@office-cc/ui'
 import { SHEET_NAV_SCHEME } from './sheet-nav'
 import sendEnterOn from '../assets/send-enter-on.png'
@@ -230,6 +233,21 @@ const MODEL_BRIDGE: AiModelPickerBridge = {
   onSettingsChanged: (handler) => window.desktopApi.onAiSettingsChanged(handler),
   openModelSettings: () => window.desktopApi.openAiModelSettings().catch(() => {}),
 }
+
+/**
+ * The AI feature entries, which live in the expanded panel now that they have
+ * left the Home ribbon: the panel's trigger row clicks open a bubble holding
+ * one button each. `needsContent` greys out an action with no cells to work on.
+ */
+const AI_FEATURE_ENTRIES: {
+  kind: AiFeatureIconKind
+  label: StringKey
+  prompt: StringKey
+  needsContent: boolean
+}[] = [
+  { kind: 'check', label: 'aiCheckBtn', prompt: 'aiCheckPrompt', needsContent: true },
+  { kind: 'analyze', label: 'aiAnalyzeBtn', prompt: 'aiAnalyzePrompt', needsContent: true },
+]
 
 export function AiChatPanel({
   isOpen,
@@ -515,6 +533,15 @@ export function AiChatPanel({
     onPromptChange('')
   }
 
+  /** A feature entry sends a request the user would otherwise have to type. While
+   * a reply runs it joins the queue exactly like an Enter does — a silent no-op
+   * button would look broken. */
+  const runFeature = (entry: (typeof AI_FEATURE_ENTRIES)[number]): void => {
+    const text = t(entry.prompt)
+    if (aiBusy) msgQueue.enqueue(text, [])
+    else onSend(text)
+  }
+
   const onDrop = (e: React.DragEvent): void => {
     e.preventDefault()
     e.stopPropagation()
@@ -598,6 +625,20 @@ export function AiChatPanel({
           </button>
         </div>
       </header>
+
+      {/* the AI feature entries left the Home ribbon for here: the trigger row
+          clicks open a bubble, and the buttons themselves live in that bubble */}
+      <AiFeatureBubble
+        labels={AI_FEATURE_BUBBLE_LABELS[lang]}
+        storageKey="sheets-ai-feature-bubble"
+        items={AI_FEATURE_ENTRIES.map((entry) => ({
+          id: entry.kind,
+          label: t(entry.label),
+          icon: <AiFeatureIcon kind={entry.kind} />,
+          disabled: entry.needsContent && !hasContent,
+          select: () => runFeature(entry),
+        }))}
+      />
 
       <div className="ai-chat" ref={chatRef} onScroll={onChatScroll}>
         {/* Past conversation (read-only transcript), shown continuously with the current turn */}

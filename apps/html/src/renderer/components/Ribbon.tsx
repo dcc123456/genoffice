@@ -19,7 +19,6 @@ import {
   IconGlobe,
   IconHeading,
   IconPlay,
-  IconPalette,
   IconPicture,
   IconPilcrow,
   IconPlus,
@@ -29,21 +28,11 @@ import {
   IconSearch,
   IconSection,
   IconSplitView,
-  IconSummarize,
   IconTable,
   IconUndo,
-  IconWand,
 } from './icons'
 
 export type ViewMode = 'preview' | 'split' | 'source'
-
-const THEME_DIRECTIONS: StringKey[] = [
-  'aiThemeMinimal',
-  'aiThemeEditorial',
-  'aiThemeTech',
-  'aiThemePlayful',
-  'aiThemeDark',
-]
 
 export const VIEW_MODES: ViewMode[] = ['preview', 'split', 'source']
 
@@ -82,8 +71,6 @@ interface Props {
   onInsertSkeleton: () => void
   /** false once the page has content: a skeleton would only duplicate the document */
   canInsertSkeleton: boolean
-  /** page-wide AI actions: send this instruction to the assistant right away */
-  onAiPreset: (text: string) => void
   canvasMode: CanvasMode
   onPresent: (kind: PresentKind) => void
 }
@@ -137,19 +124,6 @@ export function Ribbon(p: Props) {
     collapse: t('ribbonCollapse'),
     expand: t('ribbonExpand'),
   })
-  const [themeOpen, setThemeOpen] = useState(false)
-  const themeRef = useRef<HTMLDivElement>(null)
-  useDismissablePopover(themeOpen, () => setThemeOpen(false), {
-    inside: () => [themeRef.current],
-  })
-  useEffect(() => {
-    if (!themeOpen) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setThemeOpen(false)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [themeOpen])
   const [presentOpen, setPresentOpen] = useState(false)
   const presentRef = useRef<HTMLDivElement>(null)
   useDismissablePopover(presentOpen, () => setPresentOpen(false), {
@@ -289,73 +263,6 @@ export function Ribbon(p: Props) {
                 <AiMark size={26} />
               </span>
               <span>AI</span>
-            </button>
-            <button
-              type="button"
-              className="rb-big ai-entry"
-              data-tip={t('aiRestyleBtn')}
-              disabled={off}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => p.onAiPreset(t('aiRestylePrompt'))}
-            >
-              <span className="rb-big-icon">
-                <span className="ai-feature-icon" aria-hidden="true">
-                  <IconWand size={24} />
-                </span>
-              </span>
-              <span>{t('aiRestyleBtn')}</span>
-            </button>
-            <div className="rb-menu-wrap" ref={themeRef}>
-              <button
-                type="button"
-                className={`rb-big ai-entry${themeOpen ? ' active' : ''}`}
-                data-tip={t('aiThemeBtn')}
-                aria-haspopup="menu"
-                aria-expanded={themeOpen}
-                disabled={off}
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setThemeOpen((v) => !v)}
-              >
-                <span className="rb-big-icon">
-                  <span className="ai-feature-icon" aria-hidden="true">
-                    <IconPalette size={24} />
-                  </span>
-                </span>
-                <span>{t('aiThemeBtn')}</span>
-              </button>
-              {themeOpen && (
-                <div className="rb-menu" role="menu">
-                  {THEME_DIRECTIONS.map((key) => (
-                    <button
-                      key={key}
-                      type="button"
-                      role="menuitem"
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => {
-                        setThemeOpen(false)
-                        p.onAiPreset(t('aiThemePrompt', { direction: t(key) }))
-                      }}
-                    >
-                      {t(key)}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-            <button
-              type="button"
-              className="rb-big ai-entry"
-              data-tip={t('aiSummarizeBtn')}
-              disabled={off}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => p.onAiPreset(t('aiSummarizePrompt'))}
-            >
-              <span className="rb-big-icon">
-                <span className="ai-feature-icon" aria-hidden="true">
-                  <IconSummarize size={24} />
-                </span>
-              </span>
-              <span>{t('aiSummarizeBtn')}</span>
             </button>
           </div>
         </div>

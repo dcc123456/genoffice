@@ -1167,10 +1167,6 @@ export default function App() {
         sourceHistory={sourceMode ? sourceHistory : undefined}
         aiOpen={aiOpen}
         onToggleAi={() => setAiOpen((v) => !v)}
-        onAiPreset={(text) => {
-          setAiOpen(true)
-          setAiPreset((prev) => ({ text, nonce: (prev?.nonce ?? 0) + 1 }))
-        }}
         redactEnabled={redactEnabled}
         onToggleRedact={(on) => {
           setRedactEnabled(on)

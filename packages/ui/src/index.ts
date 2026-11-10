@@ -1,6 +1,12 @@
 export { AiPanelSideButton } from './AiPanelSideButton'
 export { AiComposer } from './AiComposer'
 export { AiQueueStrip } from './AiQueueStrip'
+export {
+  AiFeatureBubble,
+  type AiFeatureBubbleItem,
+  type AiFeatureBubbleProps,
+} from './AiFeatureBubble'
+export { AI_FEATURE_BUBBLE_LABELS, type AiFeatureBubbleLabels } from './strings-ai-feature-bubble'
 export { useChatRunQueue, type ChatRunQueue, type QueuedChatMessage } from './chat-run-queue'
 export { AI_QUEUE_LABELS, type AiQueueStripLabels } from './strings-ai-queue'
 export { AiUsageChip, addTokenUsage, formatTokenCount, type AiTokenUsageView } from './AiUsageChip'

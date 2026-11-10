@@ -436,20 +436,6 @@ button {
   background: transparent;
 }
 
-.ai-feature-icon {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  color: var(--color-brand-secondary);
-}
-
-.ai-feature-icon svg {
-  /* 24px renders the 24-unit viewBox 1:1, so the 1.5 stroke paints 1.5px */
-  width: 24px;
-  height: 24px;
-}
-
 .rb-col {
   display: flex;
   flex-direction: column;
@@ -3855,37 +3841,6 @@ button {
   font-size: var(--text-small);
   font-weight: 400;
   line-height: 1.5;
-}
-
-/* Starter pills: same metrics as the slides .ai-starter list (stacked, centered) */
-.ai-quick-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.ai-quick-btn {
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--color-border-default);
-  background: var(--color-bg-page);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.ai-quick-btn:hover {
-  border-color: var(--color-border-strong);
-  background: var(--color-bg-subtle);
-}
-
-.ai-quick-btn:active {
-  filter: brightness(0.88);
 }
 
 /* Chat messages (scaled to the 14px panel): user = gray pill, AI = plain text without a bubble, no accent colors */

@@ -1,5 +1,5 @@
-// The AI feature entries left the Home ribbon for the expanded panel: icon buttons
-// whose ScreenTip spells out the request, and a click that sends it.
+// The AI feature entries left the Home ribbon for the expanded panel: a trigger
+// row that clicks open a bubble, and the buttons themselves live in that bubble.
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { act, createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
@@ -8,6 +8,8 @@ import { editorExtensions } from '../src/renderer/editor/extensions'
 import { AiPanel } from '../src/renderer/ai/AiPanel'
 import { t } from '../src/renderer/i18n/locale'
 import { AI_PROVIDERS, type AiSettings } from '../src/shared/ipc'
+
+const BUBBLE_KEY = 'docs-ai-feature-bubble'
 
 const settings: AiSettings = {
   provider: 'anthropic',
@@ -54,13 +56,19 @@ function panelProps(editor: Editor, overrides: Record<string, unknown> = {}) {
   return { editor, blocks: [], settings, open: true, ...overrides }
 }
 
-function quickButtons(container: HTMLElement): HTMLButtonElement[] {
-  return Array.from(container.querySelectorAll<HTMLButtonElement>('.ai-quick-btn'))
+function trigger(container: HTMLElement): HTMLButtonElement {
+  const found = container.querySelector<HTMLButtonElement>('.ai-feature-trigger')
+  if (!found) throw new Error('no AI feature trigger in the panel')
+  return found
 }
 
-function buttonByTip(container: HTMLElement, tip: string): HTMLButtonElement {
-  const found = quickButtons(container).find((b) => b.getAttribute('data-tip') === tip)
-  if (!found) throw new Error(`no quick action titled ${tip}`)
+function featureButtons(container: HTMLElement): HTMLButtonElement[] {
+  return Array.from(container.querySelectorAll<HTMLButtonElement>('.ai-feature-btn'))
+}
+
+function buttonByLabel(container: HTMLElement, label: string): HTMLButtonElement {
+  const found = featureButtons(container).find((b) => b.textContent === label)
+  if (!found) throw new Error(`no feature button titled ${label}`)
   return found
 }
 
@@ -100,23 +108,49 @@ beforeAll(() => {
   Element.prototype.scrollTo ??= () => {}
 })
 
-describe('the AI quick actions in the expanded panel', () => {
-  it('carries one button per entry, each titled and described by its ScreenTip', () => {
+describe('the AI feature bubble in the expanded panel', () => {
+  it('opens by default and holds one button per entry', () => {
     const editor = createEditor()
     const { container, cleanup } = mount(createElement(AiPanel, panelProps(editor)))
     try {
-      const buttons = quickButtons(container)
-      expect(buttons.map((b) => b.textContent)).toEqual([
+      expect(trigger(container).getAttribute('aria-expanded')).toBe('true')
+      expect(featureButtons(container).map((b) => b.textContent)).toEqual([
         t('aiSummarizeBtn'),
         t('aiPolishBtn'),
         t('aiTidyBtn'),
         t('aiGenerateBtn'),
         t('aiMindMapBtn'),
       ])
-      // the bubble's detail line is the request itself, so what it promises is what goes
-      for (const button of buttons) {
-        expect(button.getAttribute('data-tip-detail')).toBeTruthy()
+      for (const button of featureButtons(container)) {
+        // the bubble shows the buttons, not a description of them
+        expect(button.getAttribute('data-tip')).toBeNull()
         expect(button.disabled).toBe(false)
+      }
+    } finally {
+      cleanup()
+      editor.destroy()
+    }
+  })
+
+  it('clicking the trigger collapses the bubble and remembers the choice', () => {
+    const editor = createEditor()
+    const { container, cleanup } = mount(createElement(AiPanel, panelProps(editor)))
+    try {
+      act(() => trigger(container).click())
+      expect(trigger(container).getAttribute('aria-expanded')).toBe('false')
+      expect(container.querySelectorAll('.ai-feature-btn').length).toBe(0)
+      expect(localStorage.getItem(BUBBLE_KEY)).toBe('0')
+
+      // a fresh panel honours the remembered state instead of re-opening
+      cleanup()
+      const second = mount(createElement(AiPanel, panelProps(editor)))
+      try {
+        expect(trigger(second.container).getAttribute('aria-expanded')).toBe('false')
+        act(() => trigger(second.container).click())
+        expect(featureButtons(second.container).length).toBe(5)
+        expect(localStorage.getItem(BUBBLE_KEY)).toBe('1')
+      } finally {
+        second.cleanup()
       }
     } finally {
       cleanup()
@@ -130,14 +164,12 @@ describe('the AI quick actions in the expanded panel', () => {
       createElement(AiPanel, panelProps(editor, { docEmpty: true })),
     )
     try {
-      const buttons = quickButtons(container)
-      expect(buttons.filter((b) => b.disabled).map((b) => b.textContent)).toEqual([
-        t('aiSummarizeBtn'),
-        t('aiPolishBtn'),
-        t('aiTidyBtn'),
-        t('aiMindMapBtn'),
-      ])
-      expect(buttonByTip(container, t('aiGenerateBtn')).disabled).toBe(false)
+      expect(
+        featureButtons(container)
+          .filter((b) => b.disabled)
+          .map((b) => b.textContent),
+      ).toEqual([t('aiSummarizeBtn'), t('aiPolishBtn'), t('aiTidyBtn'), t('aiMindMapBtn')])
+      expect(buttonByLabel(container, t('aiGenerateBtn')).disabled).toBe(false)
     } finally {
       cleanup()
       editor.destroy()
@@ -150,7 +182,7 @@ describe('the AI quick actions in the expanded panel', () => {
       createElement(AiPanel, panelProps(editor, { docEmpty: true })),
     )
     try {
-      act(() => buttonByTip(container, t('aiGenerateBtn')).click())
+      act(() => buttonByLabel(container, t('aiGenerateBtn')).click())
       const textarea = container.querySelector<HTMLTextAreaElement>('.ai-input-box textarea')!
       expect(textarea.value).toBe(t('aiGeneratePrompt'))
       expect(container.querySelectorAll('.ai-msg').length).toBe(0)
@@ -166,11 +198,10 @@ describe('the AI quick actions in the expanded panel', () => {
     const { container, cleanup } = mount(createElement(AiPanel, panelProps(editor)))
     try {
       await act(async () => {
-        buttonByTip(container, t('aiSummarizeBtn')).click()
+        buttonByLabel(container, t('aiSummarizeBtn')).click()
         await flush()
       })
-      const first = container.querySelector('.ai-msg-user')
-      expect(first?.textContent).toContain(t('aiSummarizePrompt'))
+      expect(container.querySelector('.ai-msg-user')?.textContent).toContain(t('aiSummarizePrompt'))
     } finally {
       cleanup()
       editor.destroy()
@@ -178,20 +209,23 @@ describe('the AI quick actions in the expanded panel', () => {
     }
   })
 
-  it('targets the selection once text is selected, and the bubble says so', () => {
+  it('targets the selection once text is selected', async () => {
+    const restoreStream = stubStream()
     const editor = createEditor()
     const { container, cleanup } = mount(createElement(AiPanel, panelProps(editor)))
     try {
-      expect(buttonByTip(container, t('aiPolishBtn')).getAttribute('data-tip-detail')).toBe(
-        t('aiPolishPrompt'),
-      )
       act(() => editor.commands.setTextSelection({ from: 6, to: 10 }))
-      expect(buttonByTip(container, t('aiPolishBtn')).getAttribute('data-tip-detail')).toBe(
-        t('aiPolishSelectionPrompt'),
-      )
+      await act(async () => {
+        buttonByLabel(container, t('aiPolishBtn')).click()
+        await flush()
+      })
+      const user = container.querySelector('.ai-msg-user')?.textContent ?? ''
+      expect(user).toContain(t('aiPolishSelectionPrompt'))
+      expect(user).not.toContain(t('aiPolishPrompt'))
     } finally {
       cleanup()
       editor.destroy()
+      restoreStream()
     }
   })
 })

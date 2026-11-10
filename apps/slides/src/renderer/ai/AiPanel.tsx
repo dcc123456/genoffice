@@ -45,8 +45,10 @@ import {
   screenshotAllowed,
   settingsSupportVision,
 } from './slide-qc'
-import { useI18n, t as tGlobal, aiLangDirective, type TFunc } from '../i18n/locale'
+import { useI18n, t as tGlobal, aiLangDirective, type StringKey, type TFunc } from '../i18n/locale'
 import {
+  AiFeatureBubble,
+  AI_FEATURE_BUBBLE_LABELS,
   AiQueueStrip,
   AI_QUEUE_LABELS,
   AiScopeQuote,
@@ -58,7 +60,14 @@ import {
   type AiScopeQuoteData,
   type AiTokenUsageView,
 } from '@office-cc/ui'
-import { IconAiPanel, IconNewChat, IconSidebarCollapseLeft } from '../components/icons'
+import {
+  IconAiBeautify,
+  IconAiFactCheck,
+  IconAiImage,
+  IconAiPanel,
+  IconNewChat,
+  IconSidebarCollapseLeft,
+} from '../components/icons'
 import sendEnterOn from '../assets/send-enter-on.png'
 import sendEnterOff from '../assets/send-enter-off.png'
 import sendStop from '../assets/send-stop.png'
@@ -372,6 +381,35 @@ const MODEL_BRIDGE: AiModelPickerBridge = {
   openModelSettings: () => window.slidesApi.openAiModelSettings().catch(() => {}),
 }
 
+/**
+ * The AI feature entries, which live in the expanded panel now that they have
+ * left the Home ribbon: the panel's trigger row clicks open a bubble holding
+ * one button each. Beautify sends the slide as an image, so it is the deck's own
+ * appearance it critiques; the three need slides to work on.
+ */
+const AI_FEATURE_ENTRIES: {
+  id: string
+  label: StringKey
+  prompt: StringKey
+  icon: React.ReactNode
+  slideShot?: boolean
+}[] = [
+  {
+    id: 'beautify',
+    label: 'aiBeautifyBtn',
+    prompt: 'aiBeautifyPrompt',
+    icon: <IconAiBeautify />,
+    slideShot: true,
+  },
+  {
+    id: 'factCheck',
+    label: 'aiFactCheckBtn',
+    prompt: 'aiFactCheckPrompt',
+    icon: <IconAiFactCheck />,
+  },
+  { id: 'image', label: 'aiImageBtn', prompt: 'aiImagePrompt', icon: <IconAiImage /> },
+]
+
 export function AiPanel({
   slides,
   current,
@@ -410,6 +448,8 @@ export function AiPanel({
   const msgQueue = useChatRunQueue<{
     attachments: AttachmentMeta[]
     scope: AiScopeQuoteData | undefined
+    /** the feature entry sends the rendered slide along with the request */
+    slideShot?: boolean
   }>({
     busy,
     submit: (text, meta) => {
@@ -417,7 +457,11 @@ export function AiPanel({
       if (qcRunningRef.current || runStartingRef.current) return false
       const loop = loopRef.current
       if (!loop || loop.busy) return false
-      runWith(text, text, { attachments: meta.attachments, scope: meta.scope })
+      runWith(text, text, {
+        attachments: meta.attachments,
+        scope: meta.scope,
+        ...(meta.slideShot ? { slideShot: true } : {}),
+      })
       return true
     },
   })
@@ -1490,6 +1534,30 @@ export function AiPanel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preset?.nonce])
 
+  /** A feature entry sends a request the user would otherwise have to type. While
+   * a reply runs it joins the queue exactly like an Enter does — a silent no-op
+   * button would look broken. */
+  const runFeature = (entry: (typeof AI_FEATURE_ENTRIES)[number]) => {
+    const text = t(entry.prompt)
+    const scope =
+      selectedRef.current.length > 0
+        ? {
+            label: `${t('aiScopeSlide', { n: current + 1 })} · ${t('aiScopeSelection', { count: selectedRef.current.length })}`,
+          }
+        : undefined
+    if (busy)
+      msgQueue.enqueue(text, {
+        attachments: attachmentsRef.current,
+        scope,
+        ...(entry.slideShot ? { slideShot: true } : {}),
+      })
+    else
+      runWith(text, undefined, {
+        ...(entry.slideShot ? { slideShot: true } : {}),
+        ...(scope ? { scope } : {}),
+      })
+  }
+
   // `open` dep: re-expanding lands on messages streamed while collapsed
   useEffect(() => {
     if (stickToBottomRef.current) {
@@ -2109,6 +2177,20 @@ export function AiPanel({
           )}
         </div>
       </div>
+
+      {/* the AI feature entries left the Home ribbon for here: the trigger row
+          clicks open a bubble, and the buttons themselves live in that bubble */}
+      <AiFeatureBubble
+        labels={AI_FEATURE_BUBBLE_LABELS[lang]}
+        storageKey="slides-ai-feature-bubble"
+        items={AI_FEATURE_ENTRIES.map((entry) => ({
+          id: entry.id,
+          label: t(entry.label),
+          icon: entry.icon,
+          disabled: deckEmpty,
+          select: () => runFeature(entry),
+        }))}
+      />
 
       <div ref={logRef} className="ai-chat" onScroll={onLogScroll}>
         {/* Past conversation (read-only transcript, not fed to the model), displayed continuously with the current turn */}

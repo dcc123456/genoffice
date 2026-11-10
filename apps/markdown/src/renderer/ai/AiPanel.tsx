@@ -10,6 +10,8 @@ import { AgentLoop, composeSkills, streamText, type MindMapTreeNode } from '@off
 import { imageGenerationAvailable, type AiSettings } from '@office-cc/ai-provider/browser'
 import {
   AiComposer,
+  AiFeatureBubble,
+  AI_FEATURE_BUBBLE_LABELS,
   AiQueueStrip,
   AI_QUEUE_LABELS,
   AiScopeQuote,
@@ -23,7 +25,7 @@ import {
   type AiTokenUsageView,
 } from '@office-cc/ui'
 import type { Editor } from '@tiptap/core'
-import { aiLangDirective, t as tGlobal, useI18n } from '../i18n/locale'
+import { aiLangDirective, t as tGlobal, useI18n, type StringKey } from '../i18n/locale'
 import sendEnterOn from '../assets/send-enter-on.png'
 import sendEnterOff from '../assets/send-enter-off.png'
 import sendStop from '../assets/send-stop.png'
@@ -50,6 +52,7 @@ import {
   type EditQueueItem,
 } from './edit-queue'
 import { DOC_NAV_SCHEME, navigateToBlock, parseDocNavHref } from './doc-nav'
+import { AiFeatureIcon, type AiFeatureIconKind } from './AiFeatureIcon'
 
 // Word-parity count (docs word-count.ts): Asian chars one by one + non-Asian words
 const ASIAN_RE =
@@ -154,6 +157,35 @@ const MODEL_BRIDGE: AiModelPickerBridge = {
   onSettingsChanged: (handler) => window.markdownApi.onAiSettingsChanged(handler),
   openModelSettings: () => window.markdownApi.openAiModelSettings().catch(() => {}),
 }
+
+/**
+ * The AI feature entries, which live in the expanded panel now that they have
+ * left the Home ribbon: the panel's trigger row clicks open a bubble holding
+ * one button each. Polish and tidy work on the selection when there is one and
+ * on the whole document otherwise; summarize stays whole-doc.
+ */
+const AI_FEATURE_ENTRIES: {
+  kind: AiFeatureIconKind
+  label: StringKey
+  prompt: StringKey
+  /** used instead of `prompt` while a range of text is selected */
+  rangePrompt?: StringKey
+}[] = [
+  { kind: 'summarize', label: 'aiSummarizeBtn', prompt: 'aiSummarizePrompt' },
+  {
+    kind: 'polish',
+    label: 'aiPolishBtn',
+    prompt: 'aiPolishPrompt',
+    rangePrompt: 'aiPolishSelectionPrompt',
+  },
+  {
+    kind: 'tidy',
+    label: 'aiTidyBtn',
+    prompt: 'aiTidyPrompt',
+    rangePrompt: 'aiTidySelectionPrompt',
+  },
+  { kind: 'mindmap', label: 'aiMindMapBtn', prompt: 'aiMindMapPrompt' },
+]
 
 export function AiPanel({
   deps,
@@ -639,6 +671,15 @@ export function AiPanel({
   const retry = (): void =>
     send(runInstructionRef.current, runDisplayRef.current, lastScopeRef.current ?? null)
 
+  /** A feature entry sends a request the user would otherwise have to type. While
+   * a reply runs it joins the queue exactly like an Enter does — a silent no-op
+   * button would look broken. */
+  const runFeature = (entry: (typeof AI_FEATURE_ENTRIES)[number]): void => {
+    const text = t(entry.rangePrompt && hasScopeSelection ? entry.rangePrompt : entry.prompt)
+    if (busy) msgQueue.enqueue(text, undefined)
+    else send(text)
+  }
+
   // keep the scope chip & queue rows in sync with the editor selection/content
   useEffect(() => {
     const editor = depsRef.current.getEditor()
@@ -845,6 +886,20 @@ export function AiPanel({
           </button>
         </div>
       </header>
+
+      {/* the AI feature entries left the Home ribbon for here: the trigger row
+          clicks open a bubble, and the buttons themselves live in that bubble */}
+      <AiFeatureBubble
+        labels={AI_FEATURE_BUBBLE_LABELS[lang]}
+        storageKey="markdown-ai-feature-bubble"
+        items={AI_FEATURE_ENTRIES.map((entry) => ({
+          id: entry.kind,
+          label: t(entry.label),
+          icon: <AiFeatureIcon kind={entry.kind} />,
+          disabled: editor?.isEmpty ?? true,
+          select: () => runFeature(entry),
+        }))}
+      />
 
       <div className="ai-chat" ref={chatRef} onScroll={onChatScroll}>
         {chat.length === 0 && (
