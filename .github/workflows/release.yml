@@ -71,7 +71,11 @@ jobs:
 
   macos:
     needs: release
-    runs-on: macos-14
+    # macos-14 was retired from GitHub Actions on 2026-11-02 — the day v0.0.1
+    # shipped — and a job on it is cancelled at once with "configuration
+    # 'macos-14-arm64-us-default' is not supported", which turns the run into
+    # a cancelled release with no assets. Keep the label on a live image.
+    runs-on: macos-15
     timeout-minutes: 60
     steps:
       - name: Checkout
